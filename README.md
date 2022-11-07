@@ -1,16 +1,3 @@
 # team
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+메인 페이지, + 눌렀을 때 3개 나오는거 까지 만들었습니다.
+달력에 표시되게 하는 건 어캐하는건지 아직 모르겠고 구글링 열심히 해야할 것 같습니다.
