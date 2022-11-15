@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:team/main.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepPurple,
       ),
       home: const MyHomePage(title: '팀프로젝트'),
     );
@@ -33,12 +35,8 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
     Home(),
-    Text(
-      '개발 전',
-    ),
-    Text(
-      '개발 전',
-    ),
+    Text('개발 전'),
+    Text('개발 전'),
   ];
 
   void _onItemTapped(int index) {
@@ -48,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    // 메인
     return Scaffold(
       body: Center(
          child: _widgetOptions.elementAt(_selectedIndex),
@@ -62,63 +60,65 @@ class _MyHomePageState extends State<MyHomePage> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: (){
-          showDialog(
-
-              context: context,
-            barrierDismissible: true,
-            builder: (BuildContext context){
-                return AlertDialog(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(22.0))),
-                  content: const addList(),
-
-                );
-            }
-          );
-        },
-      ),
     );
   }
 }
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
-
-
   @override
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
-  var _selectedDay;
-  var _focusedDay = DateTime.now();
-  var _calendarFormat = CalendarFormat.month;
-
+class _HomeState extends State<Home> {         // 메인 페이지
+ DateTime selectedDay = DateTime(
+   DateTime.now().year,
+   DateTime.now().month,
+   DateTime.now().day,
+ );
+ DateTime focuseDay = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('팀프로젝트'),
+        actions: [ // 오른쪽에 버튼 추가
+          IconButton(
+              icon: const Icon(
+                Icons.add,
+              ),
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    barrierDismissible: true,
+                    builder: (BuildContext context){
+                      return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(22.0))),
+                            content: addList(),
+                      );
+                    }
+                );
+              }
+          ),
+        ],
       ),
       body: Center(
         child: Column(
           children: <Widget>[
             TableCalendar(
               firstDay: DateTime(2022, 11, 1),
-              lastDay: DateTime(2022, 12, 1),
-              focusedDay: _focusedDay,
+              lastDay: DateTime(2022, 12, 30),
+              focusedDay: focuseDay,
 
-              selectedDayPredicate: (day) {
-                return isSameDay(_selectedDay, day);
-              },
               onDaySelected: (selectedDay, focusedDay) {
                 setState(() {
-                  _selectedDay = selectedDay;
-                  _focusedDay = focusedDay;
+                  this.selectedDay = selectedDay;
+                  this.focuseDay = focusedDay;
                 });
+              },
+              selectedDayPredicate: (DateTime day) {
+                return isSameDay(selectedDay, day);
               },
             ),
 
@@ -140,18 +140,33 @@ class _HomeState extends State<Home> {
   }
 }
 
-class addList extends StatelessWidget {
+class addList extends StatelessWidget {         // 추가
   const addList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             OutlinedButton(
-              onPressed: () {},
-              child: Text("과목 추가", style: TextStyle(fontSize: 25, color: Colors.black), ),
+              onPressed: () { // 과목
+                showDialog(
+                    context: context,
+                    barrierDismissible: true,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('과목추가'),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(22.0))),
+                        content: AddSubjects(),
+                      );
+                    }
+                );
+              },
+              child: Text(
+                "과목 추가", style: TextStyle(fontSize: 25, color: Colors.black),),
               style: OutlinedButton.styleFrom(
                   primary: Colors.green,
                   side: BorderSide(
@@ -163,19 +178,21 @@ class addList extends StatelessWidget {
             SizedBox(height: 20,),
             OutlinedButton(
               onPressed: () {},
-              child: Text("과제/시험 일정 추가", style: TextStyle(fontSize: 25, color: Colors.black), ),
+              child: Text("과제/시험 일정 추가",
+                style: TextStyle(fontSize: 25, color: Colors.black),),
               style: OutlinedButton.styleFrom(
-                  primary: Colors.green,
-                  side: BorderSide(
-                      color: Colors.deepPurpleAccent,
-                      width: 3.5,
-                  )
+                primary: Colors.green,
+                side: BorderSide(
+                  color: Colors.deepPurpleAccent,
+                  width: 3.5,
+                ),
               ),
             ),
             SizedBox(height: 20,),
             OutlinedButton(
               onPressed: () {},
-              child: Text("개인 일정 추가", style: TextStyle(fontSize: 25, color: Colors.black), ),
+              child: Text("개인 일정 추가",
+                style: TextStyle(fontSize: 25, color: Colors.black),),
               style: OutlinedButton.styleFrom(
                   primary: Colors.green,
                   side: BorderSide(
@@ -190,3 +207,90 @@ class addList extends StatelessWidget {
     );
   }
 }
+
+class AddSubjects extends StatefulWidget {
+  const AddSubjects({Key? key}) : super(key: key);
+
+  @override
+  State<AddSubjects> createState() => _AddSubjectsState();
+}
+
+class _AddSubjectsState extends State<AddSubjects> {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('과목'),
+          SizedBox(
+            height: 20,
+          ),
+          TextFormField(
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: '과목명',
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          TextFormField(
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: '학점',
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Text('평가 비율'),
+          SizedBox(
+            height: 20,
+          ),
+          TextFormField(
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: '중간고사',
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          TextFormField(
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: '기말고사',
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          TextFormField(
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: '과제',
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          TextFormField(
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: '출결',
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          OutlinedButton(
+              onPressed: (){},
+              child: Text('확인'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
