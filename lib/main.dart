@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {    // 메인
     return Scaffold(
       body: Center(
-         child: _widgetOptions.elementAt(_selectedIndex),
+        child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
@@ -71,12 +71,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {         // 메인 페이지
- DateTime selectedDay = DateTime(
-   DateTime.now().year,
-   DateTime.now().month,
-   DateTime.now().day,
- );
- DateTime focuseDay = DateTime.now();
+  DateTime selectedDay = DateTime(
+    DateTime.now().year,
+    DateTime.now().month,
+    DateTime.now().day,
+  );
+  DateTime focuseDay = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,9 +93,9 @@ class _HomeState extends State<Home> {         // 메인 페이지
                     barrierDismissible: true,
                     builder: (BuildContext context){
                       return AlertDialog(
-                            shape: RoundedRectangleBorder(
+                        shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(22.0))),
-                            content: addList(),
+                        content: addList(),
                       );
                     }
                 );
@@ -285,8 +285,8 @@ class _AddSubjectsState extends State<AddSubjects> {
             height: 20,
           ),
           OutlinedButton(
-              onPressed: (){},
-              child: Text('확인'),
+            onPressed: (){},
+            child: Text('확인'),
           ),
         ],
       ),
