@@ -130,7 +130,7 @@ class _HomeState extends State<Home> {         // 메인 페이지
                     border: Border.all(color: Colors.black12, width: 3)), //테두리
                 width: 550,
                 height: 180,
-                child: Text('\n     여기에', style: TextStyle(fontSize: 30),),
+                child: Text('\n    김유미깃', style: TextStyle(fontSize: 30),),
               ),
             ),
           ],
