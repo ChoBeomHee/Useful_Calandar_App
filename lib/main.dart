@@ -129,7 +129,7 @@ class _HomeState extends State<Home> {         // 메인 페이지
                     borderRadius: BorderRadius.circular(50), //모서리를 둥글게
                     border: Border.all(color: Colors.black12, width: 3)), //테두리
                 width: 550,
-                height: 180,
+                height: 150,
                 child: Text('\n    김유미깃', style: TextStyle(fontSize: 30),),
               ),
             ),
@@ -159,7 +159,7 @@ class addList extends StatelessWidget {         // 추가
                         title: Text('과목추가'),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
-                                Radius.circular(22.0))),
+                                Radius.circular(12.0))),
                         content: AddSubjects(),
                       );
                     }
@@ -175,7 +175,7 @@ class addList extends StatelessWidget {         // 추가
                   )
               ),
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             OutlinedButton(
               onPressed: () {},
               child: Text("과제/시험 일정 추가",
@@ -188,7 +188,7 @@ class addList extends StatelessWidget {         // 추가
                 ),
               ),
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             OutlinedButton(
               onPressed: () {},
               child: Text("개인 일정 추가",
@@ -216,77 +216,108 @@ class AddSubjects extends StatefulWidget {
 }
 
 class _AddSubjectsState extends State<AddSubjects> {
+  bool _ischecked = false;
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('과목'),
-          SizedBox(
-            height: 20,
+          const Text('과목'),
+          const SizedBox(
+            height: 10,
           ),
-          TextFormField(
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: '과목명',
+          SizedBox(
+            height: 40,
+            child: TextFormField(
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: '과목명',
+              ),
             ),
           ),
-          SizedBox(
-            height: 20,
+          const SizedBox(
+            height: 10,
           ),
-          TextFormField(
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: '학점',
+          SizedBox(
+            height: 40,
+            child: TextFormField(
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: '학점',
+              ),
             ),
           ),
-          SizedBox(
-            height: 20,
+          const SizedBox(
+            height: 10,
           ),
-          Text('평가 비율'),
-          SizedBox(
-            height: 20,
+          const Text('평가 비율'),
+          const SizedBox(
+            height: 10,
           ),
-          TextFormField(
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: '중간고사',
+          SizedBox(
+            height: 40,
+            child: TextFormField(
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: '중간고사',
+              ),
             ),
           ),
-          SizedBox(
-            height: 20,
+          const SizedBox(
+            height: 10,
           ),
-          TextFormField(
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: '기말고사',
+          SizedBox(
+            height: 40,
+            child: TextFormField(
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: '기말고사',
+              ),
             ),
           ),
-          SizedBox(
-            height: 20,
+          const SizedBox(
+            height: 10,
           ),
-          TextFormField(
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: '과제',
+          SizedBox(
+            height: 40,
+            child: TextFormField(
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: '과제',
+              ),
             ),
           ),
-          SizedBox(
-            height: 20,
+          const SizedBox(
+            height: 10,
           ),
-          TextFormField(
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: '출결',
+          SizedBox(
+            height: 40,
+            child: TextFormField(
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: '출결',
+              ),
             ),
           ),
-          SizedBox(
-            height: 20,
+          const SizedBox(
+            height: 10,
+          ),
+          CheckboxListTile(
+            title: const Text('영어 강의 여부'),
+            value: _ischecked,
+            onChanged: (value){
+              setState(() {
+                _ischecked = value!;
+              });
+            },
+          ),
+          const SizedBox(
+            height: 10,
           ),
           OutlinedButton(
             onPressed: (){},
-            child: Text('확인'),
+            child:const Text('확인'),
           ),
         ],
       ),
