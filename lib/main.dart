@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:team/main.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-void main() {
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -52,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
           BottomNavigationBarItem(icon: Icon(Icons.subject), label: '일정'),
           BottomNavigationBarItem(icon: Icon(Icons.info), label: '과목'),
@@ -81,7 +88,7 @@ class _HomeState extends State<Home> {         // 메인 페이지
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('팀프로젝트'),
+        title: const Text('팀프로젝트'),
         actions: [ // 오른쪽에 버튼 추가
           IconButton(
               icon: const Icon(
@@ -92,7 +99,7 @@ class _HomeState extends State<Home> {         // 메인 페이지
                     context: context,
                     barrierDismissible: true,
                     builder: (BuildContext context){
-                      return AlertDialog(
+                      return const AlertDialog(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(22.0))),
                         content: addList(),
@@ -155,7 +162,7 @@ class addList extends StatelessWidget {         // 추가
                     context: context,
                     barrierDismissible: true,
                     builder: (BuildContext context) {
-                      return AlertDialog(
+                      return const AlertDialog(
                         title: Text('과목추가'),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
@@ -165,11 +172,11 @@ class addList extends StatelessWidget {         // 추가
                     }
                 );
               },
-              child: Text(
+              child: const Text(
                 "과목 추가", style: TextStyle(fontSize: 25, color: Colors.black),),
               style: OutlinedButton.styleFrom(
                   primary: Colors.green,
-                  side: BorderSide(
+                  side: const BorderSide(
                     color: Colors.deepPurpleAccent,
                     width: 3.5,
                   )
@@ -178,11 +185,11 @@ class addList extends StatelessWidget {         // 추가
             const SizedBox(height: 20,),
             OutlinedButton(
               onPressed: () {},
-              child: Text("과제/시험 일정 추가",
-                style: TextStyle(fontSize: 25, color: Colors.black),),
+              child: const Text("과제/시험 일정 추가",
+                style: const TextStyle(fontSize: 25, color: Colors.black),),
               style: OutlinedButton.styleFrom(
                 primary: Colors.green,
-                side: BorderSide(
+                side: const BorderSide(
                   color: Colors.deepPurpleAccent,
                   width: 3.5,
                 ),
@@ -191,17 +198,17 @@ class addList extends StatelessWidget {         // 추가
             const SizedBox(height: 20,),
             OutlinedButton(
               onPressed: () {},
-              child: Text("개인 일정 추가",
-                style: TextStyle(fontSize: 25, color: Colors.black),),
+              child: const Text("개인 일정 추가",
+                style: const TextStyle(fontSize: 25, color: Colors.black),),
               style: OutlinedButton.styleFrom(
                   primary: Colors.green,
-                  side: BorderSide(
+                  side: const BorderSide(
                     color: Colors.deepPurpleAccent,
                     width: 3.5,
                   )
               ),
             ),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
           ]
       ),
     );
@@ -216,9 +223,23 @@ class AddSubjects extends StatefulWidget {
 }
 
 class _AddSubjectsState extends State<AddSubjects> {
-  bool _ischecked = false;
+  bool? _ischecked = false;
+  int? MidTest = 0;
+  int? FinalTest = 0;
+  int? task = 0;
+  int? attendance = 0;
+  String? Subject = '';
+  int? credit = 0;
+
   @override
   Widget build(BuildContext context) {
+    final _controller1 = TextEditingController();
+    final _controller2 = TextEditingController();
+    final _controller3 = TextEditingController();
+    final _controller4 = TextEditingController();
+    final _controller5 = TextEditingController();
+    final _controller6 = TextEditingController();
+
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -230,10 +251,14 @@ class _AddSubjectsState extends State<AddSubjects> {
           SizedBox(
             height: 40,
             child: TextFormField(
+              controller: _controller1,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: '과목명',
               ),
+              onChanged: (value) {
+                Subject = value;
+              },
             ),
           ),
           const SizedBox(
@@ -242,10 +267,14 @@ class _AddSubjectsState extends State<AddSubjects> {
           SizedBox(
             height: 40,
             child: TextFormField(
+              controller: _controller2,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: '학점',
               ),
+              onChanged: (value) {
+                credit = int.parse(value);
+              },
             ),
           ),
           const SizedBox(
@@ -258,10 +287,14 @@ class _AddSubjectsState extends State<AddSubjects> {
           SizedBox(
             height: 40,
             child: TextFormField(
+              controller: _controller3,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: '중간고사',
               ),
+              onChanged: (value) {
+                MidTest = int.parse(value);
+              },
             ),
           ),
           const SizedBox(
@@ -270,10 +303,14 @@ class _AddSubjectsState extends State<AddSubjects> {
           SizedBox(
             height: 40,
             child: TextFormField(
+              controller: _controller4,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: '기말고사',
               ),
+              onChanged: (value) {
+                FinalTest = int.parse(value);
+              },
             ),
           ),
           const SizedBox(
@@ -282,10 +319,14 @@ class _AddSubjectsState extends State<AddSubjects> {
           SizedBox(
             height: 40,
             child: TextFormField(
+              controller: _controller5,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: '과제',
               ),
+              onChanged: (value) {
+                task = int.parse(value);
+              },
             ),
           ),
           const SizedBox(
@@ -294,10 +335,14 @@ class _AddSubjectsState extends State<AddSubjects> {
           SizedBox(
             height: 40,
             child: TextFormField(
+              controller: _controller6,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: '출결',
               ),
+              onChanged: (value) {
+                attendance = int.parse(value);
+              },
             ),
           ),
           const SizedBox(
@@ -306,7 +351,7 @@ class _AddSubjectsState extends State<AddSubjects> {
           CheckboxListTile(
             title: const Text('영어 강의 여부'),
             value: _ischecked,
-            onChanged: (value){
+            onChanged: (value) {
               setState(() {
                 _ischecked = value!;
               });
@@ -316,8 +361,26 @@ class _AddSubjectsState extends State<AddSubjects> {
             height: 10,
           ),
           OutlinedButton(
-            onPressed: (){},
-            child:const Text('확인'),
+            onPressed: () async {
+             final subjectadd = FirebaseFirestore.instance.collection('Subject').doc(Subject);
+              subjectadd.set({
+                "Midterm" : MidTest,
+                "Finalterm" : FinalTest,
+                "task" : task,
+                "credit" : credit,
+                "attandence" : attendance,
+                "English" : _ischecked,
+                "SubjectName" : Subject,
+              });
+             _controller1.clear();
+             _controller2.clear();
+             _controller3.clear();
+             _controller4.clear();
+             _controller5.clear();
+             _controller6.clear();
+
+            },
+            child: const Text('확인'),
           ),
         ],
       ),
