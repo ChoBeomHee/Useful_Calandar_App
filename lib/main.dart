@@ -229,7 +229,7 @@ class _AddSubjectsState extends State<AddSubjects> {
   int? task = 0;
   int? attendance = 0;
   String? Subject = '';
-  int? credit = 0;
+  double? credit = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -273,7 +273,7 @@ class _AddSubjectsState extends State<AddSubjects> {
                 labelText: '학점',
               ),
               onChanged: (value) {
-                credit = int.parse(value);
+                credit = double.parse(value);
               },
             ),
           ),
