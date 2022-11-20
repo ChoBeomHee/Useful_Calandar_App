@@ -432,10 +432,10 @@ class AddAssignExam extends StatefulWidget {
 }
 
 class _AddAssignExamState extends State<AddAssignExam> {
-  final _type = ['시험/과제/퀴즈 중 고르세요','시험', '과제', '퀴즈'];
-  var _typeSelected = '시험/과제/퀴즈 중 고르세요';
+  final _type = ['- Choose -','Exam', 'Assignment', 'Quiz'];
+  var _typeSelected = '- Choose -';
 
-  String? Subject = '';
+  String? Subject = 'Database';
   String? typeAssignExam;
   String? AssignExamName;
   int? rate;
@@ -529,13 +529,13 @@ class _AddAssignExamState extends State<AddAssignExam> {
           ),
           const SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: const Text('분류'),
               ),
-              const SizedBox(width: 15,),
+              const SizedBox(width: 80,),
               DropdownButton(
                   value: _typeSelected,
                   items: _type.map(
@@ -643,7 +643,7 @@ class _AddAssignExamState extends State<AddAssignExam> {
               const SizedBox(width: 15,),
               Expanded(
                 child: GestureDetector(
-                  onTap: startYearMonthDayTimePicker,
+                  onTap: endYearMonthDayTimePicker,
                   child: AbsorbPointer(
                     child: TextFormField(
                       controller: ymdtEndController,
