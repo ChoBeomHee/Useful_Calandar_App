@@ -720,6 +720,9 @@ class AddPersonal extends StatefulWidget {
 }
 
 class _AddPersonalState extends State<AddPersonal> {
+  final _alramList = ['no alarm','before 30 minutes','before 1 hour', 'before 12 hours',
+    'before one day', 'before 3 days'];
+  var _alarmSelected = 'no alarm';
   String? personalTitle;
   String? personalTime;
   String? whenAlarm;
@@ -786,13 +789,10 @@ class _AddPersonalState extends State<AddPersonal> {
           ),
           const SizedBox(height: 10,),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left : 8.0),
-                child: const Text('약속시간'),
-              ),
-              const SizedBox(width: 15,),
+              const Text('약속시간'),
+              const SizedBox(width: 25,),
               Expanded(
                 child: GestureDetector(
                   onTap: personalYearMonthDayTimePicker,
@@ -828,18 +828,21 @@ class _AddPersonalState extends State<AddPersonal> {
                 padding: const EdgeInsets.only(left : 8.0),
                 child: const Text('알림'),
               ),
-              const SizedBox(width: 15,),
-              //우선 dropbox 대신 이걸 써볼게요 바꿔야돼!!!!!!!!!!!!!!!
-              Expanded(
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                  ),
-                  onChanged: (value) {
-                    whenAlarm = value;
-                  },
-                ),
-              ),
+              const SizedBox(width: 40,),
+              DropdownButton(
+                  value: _alarmSelected,
+                  items: _alramList.map(
+                          (value){
+                        return DropdownMenuItem(
+                            value: value,
+                            child: Text(value));
+                      }).toList(),
+                  onChanged: (value){
+                    setState(() {
+                      _alarmSelected = value as String;
+                    });
+                  }
+              )
             ],
           ),
           const SizedBox(height: 10,),
