@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 class ScheduleDetail extends StatelessWidget {
   ScheduleDetail({Key? key}) : super(key: key);
 
-  List<Subject> todoList = [
+  List<Subject> todoList = [                          // 그냥 예시입니다!!
     Subject('DB','13:00-14:30','DB레포트 작성'),
     Subject('Graphics', '15:00-18:00', 'Texture, Lighting, 할거 짱 많네 아오'),
     Subject('Algorithm', '21:00-23:00', 'BFS'),
@@ -89,7 +89,7 @@ class SubjectTile extends StatelessWidget {
             context: context,
             barrierDismissible: true,
             builder: (BuildContext context) => AlertDialog(
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(22.0))),
                 title: Padding(
                   padding: const EdgeInsets.all(16.0),
