@@ -432,6 +432,9 @@ class AddAssignExam extends StatefulWidget {
 }
 
 class _AddAssignExamState extends State<AddAssignExam> {
+  final _type = ['시험/과제/퀴즈 중 고르세요','시험', '과제', '퀴즈'];
+  var _typeSelected = '시험/과제/퀴즈 중 고르세요';
+
   String? Subject = '';
   String? typeAssignExam;
   String? AssignExamName;
@@ -532,30 +535,21 @@ class _AddAssignExamState extends State<AddAssignExam> {
                 padding: const EdgeInsets.only(left: 8.0),
                 child: const Text('분류'),
               ),
-              // DropdownButtonFormField(
-              //     decoration: const InputDecoration(
-              //       border: OutlineInputBorder(),
-              //       //labelText: '과제/시험/퀴즈',
-              //     ),
-              //     value: typeAssignExam,
-              //     items: List.generate(3, (i) {
-              //       if (i == 0){
-              //         return DropdownMenuItem(
-              //           value: '과제',
-              //           child: const Text('과제'),
-              //         );
-              //       }
-              //       else if (i == 1 ){
-              //         return DropdownMenuItem(value: '시험',child: Text('시험'));
-              //       }
-              //       return DropdownMenuItem(value: '퀴즈',child: Text('퀴즈'));
-              //     }),
-              //     onChanged: (value){
-              //       setState(() {
-              //         typeAssignExam = (value!) as String?;
-              //       });
-              //     }),
               const SizedBox(width: 15,),
+              DropdownButton(
+                  value: _typeSelected,
+                  items: _type.map(
+                        (value){
+                    return DropdownMenuItem(
+                        value: value,
+                        child: Text(value));
+                  }).toList(),
+                  onChanged: (value){
+                    setState(() {
+                      _typeSelected = value as String;
+                    });
+                  }
+              )
             ],
           ),
           const SizedBox(height: 10,),
