@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:team/info.dart';
 import 'package:team/main.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'schedule.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,8 +43,8 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
     Home(),
-    Text('개발 전'),
-    Text('개발 전'),
+    ScheduleDetail(),
+    SubjectInfo(),
   ];
 
   void _onItemTapped(int index) {
@@ -61,8 +62,8 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
-          BottomNavigationBarItem(icon: Icon(Icons.subject), label: '일정'),
-          BottomNavigationBarItem(icon: Icon(Icons.info), label: '과목'),
+          BottomNavigationBarItem(icon: Icon(Icons.subject), label: '상세 일정'),
+          BottomNavigationBarItem(icon: Icon(Icons.info), label: '과목 정보'),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
@@ -129,7 +130,7 @@ class _HomeState extends State<Home> {         // 메인 페이지
               },
             ),
 
-            SizedBox(height: 30,),
+            const SizedBox(height: 30,),
             Center(
               child: Container(
                 decoration: BoxDecoration(
