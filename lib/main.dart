@@ -228,7 +228,21 @@ class addList extends StatelessWidget {         // 추가
                   )
               ),
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(height: 100,),
+            OutlinedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("닫기",
+                style: const TextStyle(fontSize: 25, color: Colors.black),),
+              style: OutlinedButton.styleFrom(
+                  primary: Colors.deepPurple,
+                  side: const BorderSide(
+                    color: Colors.deepPurpleAccent,
+                    width: 3.5,
+                  )
+              ),
+            ),
           ]
       ),
     );
@@ -398,7 +412,7 @@ class _AddSubjectsState extends State<AddSubjects> {
              _controller4.clear();
              _controller5.clear();
              _controller6.clear();
-
+             Navigator.of(context).pop();
             },
             child: const Text('확인'),
           ),
@@ -692,7 +706,9 @@ class _AddAssignExamState extends State<AddAssignExam> {
                 "startYMDT" : ymdtStart,
                 "endYMDT" : ymdtEnd
               });
-              Navigator.pop(context);
+              ymdtStartController.clear();
+              ymdtEndController.clear();
+              Navigator.of(context).pop();
               },
             child: const Text('확인'),
           ),
