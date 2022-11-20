@@ -684,9 +684,16 @@ class _AddAssignExamState extends State<AddAssignExam> {
           ),
           OutlinedButton(
             onPressed: () async {
-              final assignexamAdd = FirebaseFirestore.instance.collection('AssignExam').doc(AssignExamName);
-
-            },
+              final assignexamAdd = FirebaseFirestore.instance
+                  .collection('Subject').doc(Subject).collection(typeAssignExam!).doc(AssignExamName);
+              assignexamAdd.set({
+                "subject" : Subject,
+                "rate" : rate,
+                "startYMDT" : ymdtStart,
+                "endYMDT" : ymdtEnd
+              });
+              Navigator.pop(context);
+              },
             child: const Text('확인'),
           ),
         ],
@@ -697,14 +704,170 @@ class _AddAssignExamState extends State<AddAssignExam> {
 
 class AddPersonal extends StatefulWidget {
   const AddPersonal({Key? key}) : super(key: key);
-
   @override
   State<AddPersonal> createState() => _AddPersonalState();
 }
 
 class _AddPersonalState extends State<AddPersonal> {
+  String? personalTitle;
+  String? personalTime;
+  String? whenAlarm;
+  String? memo;
+  TextEditingController ymdtPersonalController = TextEditingController();
+
+  personalYearMonthDayTimePicker() async {
+    final year = DateTime
+        .now()
+        .year;
+    String hour, min;
+
+    final DateTime? dateTime = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(year),
+      lastDate: DateTime(year + 10),);
+
+    if (dateTime != null) {
+      final TimeOfDay? pickedTime = await showTimePicker(context: context,
+          initialTime: TimeOfDay(hour: 0, minute: 0));
+
+      if (pickedTime != null) {
+        if (pickedTime.hour < 10) {
+          hour = '0' + pickedTime.hour.toString();
+        } else {
+          hour = pickedTime.hour.toString();
+        }
+        if (pickedTime.minute < 10) {
+          min = '0' + pickedTime.minute.toString();
+        } else {
+          min = pickedTime.minute.toString();
+        }
+        ymdtPersonalController.text = '${dateTime.toString().split(' ')[0]} $hour:$min';
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left : 8.0),
+                child: const Text('제목'),
+              ),
+              const SizedBox(width: 15,),
+              Expanded(
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                  onChanged: (value) {
+                    personalTitle = value;
+                  },
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left : 8.0),
+                child: const Text('약속시간'),
+              ),
+              const SizedBox(width: 15,),
+              Expanded(
+                child: GestureDetector(
+                  onTap: personalYearMonthDayTimePicker,
+                  child: AbsorbPointer(
+                    child: TextFormField(
+                      controller: ymdtPersonalController,
+                      decoration: InputDecoration(
+                        labelText: '약속 연월일 시간',
+                        border: OutlineInputBorder(),
+                        filled: true,
+                      ),
+                      onChanged: (val) {
+                        ymdtPersonalController.text = val;
+                        personalTime = ymdtPersonalController.text;
+                      },
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return '입력해주세요';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left : 8.0),
+                child: const Text('알림'),
+              ),
+              const SizedBox(width: 15,),
+              //우선 dropbox 대신 이걸 써볼게요 바꿔야돼!!!!!!!!!!!!!!!
+              Expanded(
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                  onChanged: (value) {
+                    whenAlarm = value;
+                  },
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left : 8.0),
+                child: const Text('메모'),
+              ),
+              const SizedBox(width: 15,),
+              Expanded(
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                  onChanged: (value) {
+                    memo = value;
+                  },
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10,),
+          OutlinedButton(
+            onPressed: () async {
+              final personalAdd = FirebaseFirestore.instance.collection('Personal').doc(personalTitle);
+              personalAdd.set({
+                "title" : personalTitle,
+                "time" : personalTime,
+                "alarm" : whenAlarm,
+                "memo" : memo,
+              });
+              Navigator.pop(context);
+            },
+            child: const Text('확인'),
+          ),
+        ],
+      ),
+    );
   }
 }
