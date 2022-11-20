@@ -26,10 +26,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -53,10 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAN2Y63zrWncDoKPLiB-7pjYr9bsBjehvg',
-    appId: '1:621319880169:android:64988ea8588719e1611f78',
-    messagingSenderId: '621319880169',
-    projectId: 'first-firebase-bb0c8',
-    storageBucket: 'first-firebase-bb0c8.appspot.com',
+    apiKey: 'AIzaSyCmqnN3lVdt3Ox5q33c9NJCufxX-Mfwu4E',
+    appId: '1:71672904529:android:9c77efb27c939a22f7f170',
+    messagingSenderId: '71672904529',
+    projectId: 'team-project-test-js-01',
+    storageBucket: 'team-project-test-js-01.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyA694vfOJtpVRaQsSK_ulmGpuPJ83CO3qU',
+    appId: '1:71672904529:ios:98b462a607a9e00ef7f170',
+    messagingSenderId: '71672904529',
+    projectId: 'team-project-test-js-01',
+    storageBucket: 'team-project-test-js-01.appspot.com',
+    iosClientId: '71672904529-alrpcr3kf30mh9gd7sph3a6mc188ankd.apps.googleusercontent.com',
+    iosBundleId: 'com.example.team',
   );
 }
