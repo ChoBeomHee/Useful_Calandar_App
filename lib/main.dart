@@ -175,7 +175,7 @@ class addList extends StatelessWidget {         // 추가
               child: const Text(
                 "과목 추가", style: TextStyle(fontSize: 25, color: Colors.black),),
               style: OutlinedButton.styleFrom(
-                  primary: Colors.green,
+                  primary: Colors.deepPurple,
                   side: const BorderSide(
                     color: Colors.deepPurpleAccent,
                     width: 3.5,
@@ -184,11 +184,21 @@ class addList extends StatelessWidget {         // 추가
             ),
             const SizedBox(height: 20,),
             OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(context: context,
+                    barrierDismissible: true,
+                    builder: (BuildContext context){
+                      return const AlertDialog(
+                        title: Text('과제/시험 일정 추가'),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12))),
+                        content: AddAssignExam(),
+                      );
+                    });
+              },
               child: const Text("과제/시험 일정 추가",
                 style: const TextStyle(fontSize: 25, color: Colors.black),),
               style: OutlinedButton.styleFrom(
-                primary: Colors.green,
+                primary: Colors.deepPurple,
                 side: const BorderSide(
                   color: Colors.deepPurpleAccent,
                   width: 3.5,
@@ -197,11 +207,21 @@ class addList extends StatelessWidget {         // 추가
             ),
             const SizedBox(height: 20,),
             OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(context: context,
+                    barrierDismissible: true,
+                    builder: (BuildContext context){
+                      return const AlertDialog(
+                        title: Text('개인 일정 추가'),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12))),
+                        content: AddPersonal(),
+                      );
+                });
+              },
               child: const Text("개인 일정 추가",
                 style: const TextStyle(fontSize: 25, color: Colors.black),),
               style: OutlinedButton.styleFrom(
-                  primary: Colors.green,
+                  primary: Colors.deepPurple,
                   side: const BorderSide(
                     color: Colors.deepPurpleAccent,
                     width: 3.5,
@@ -388,3 +408,303 @@ class _AddSubjectsState extends State<AddSubjects> {
   }
 }
 
+class AddAssignExam extends StatefulWidget {
+  const AddAssignExam({Key? key}) : super(key: key);
+
+
+  @override
+  State<AddAssignExam> createState() => _AddAssignExamState();
+}
+
+class _AddAssignExamState extends State<AddAssignExam> {
+  String? Subject = '';
+  String? typeAssignExam;
+  String? AssignExamName;
+  int? rate;
+  String? memo;
+
+  String? ymdtStart;
+  String? ymdtEnd;
+  TextEditingController ymdtStartController = TextEditingController();
+  TextEditingController ymdtEndController = TextEditingController();
+
+  startYearMonthDayTimePicker() async {
+    final year = DateTime
+        .now()
+        .year;
+    String hour, min;
+
+    final DateTime? dateTime = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(year),
+      lastDate: DateTime(year + 10),);
+
+    if (dateTime != null) {
+      final TimeOfDay? pickedTime = await showTimePicker(context: context,
+          initialTime: TimeOfDay(hour: 0, minute: 0));
+
+      if (pickedTime != null) {
+        if (pickedTime.hour < 10) {
+          hour = '0' + pickedTime.hour.toString();
+        } else {
+          hour = pickedTime.hour.toString();
+        }
+        if (pickedTime.minute < 10) {
+          min = '0' + pickedTime.minute.toString();
+        } else {
+          min = pickedTime.minute.toString();
+        }
+        ymdtStartController.text = '${dateTime.toString().split(' ')[0]} $hour:$min';
+      }
+    }
+  }
+
+  endYearMonthDayTimePicker() async {
+    final year = DateTime
+        .now()
+        .year;
+    String hour, min;
+
+    final DateTime? dateTime = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(year),
+      lastDate: DateTime(year + 10),);
+
+    if (dateTime != null) {
+      final TimeOfDay? pickedTime = await showTimePicker(context: context,
+          initialTime: TimeOfDay(hour: 0, minute: 0));
+
+      if (pickedTime != null) {
+        if (pickedTime.hour < 10) {
+          hour = '0' + pickedTime.hour.toString();
+        } else {
+          hour = pickedTime.hour.toString();
+        }
+        if (pickedTime.minute < 10) {
+          min = '0' + pickedTime.minute.toString();
+        } else {
+          min = pickedTime.minute.toString();
+        }
+        ymdtEndController.text = '${dateTime.toString().split(' ')[0]} $hour:$min';
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left : 8.0),
+                child: const Text('과목명'),
+              ),
+              const SizedBox(width: 15,),
+
+            ],
+          ),
+          const SizedBox(height: 10,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: const Text('분류'),
+              ),
+              // DropdownButtonFormField(
+              //     decoration: const InputDecoration(
+              //       border: OutlineInputBorder(),
+              //       //labelText: '과제/시험/퀴즈',
+              //     ),
+              //     value: typeAssignExam,
+              //     items: List.generate(3, (i) {
+              //       if (i == 0){
+              //         return DropdownMenuItem(
+              //           value: '과제',
+              //           child: const Text('과제'),
+              //         );
+              //       }
+              //       else if (i == 1 ){
+              //         return DropdownMenuItem(value: '시험',child: Text('시험'));
+              //       }
+              //       return DropdownMenuItem(value: '퀴즈',child: Text('퀴즈'));
+              //     }),
+              //     onChanged: (value){
+              //       setState(() {
+              //         typeAssignExam = (value!) as String?;
+              //       });
+              //     }),
+              const SizedBox(width: 15,),
+            ],
+          ),
+          const SizedBox(height: 10,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: const Text('이름'),
+              ),
+              const SizedBox(width: 15,),
+              Expanded(
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: '과제/시험 이름',
+                    ),
+                    onChanged: (value) {
+                      AssignExamName = value;
+                    },
+                  ),
+                ),
+            ],
+          ),
+          const SizedBox(height: 10,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: const Text('비율'),
+              ),
+              const SizedBox(width: 15,),
+              Expanded(
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: '숫자만 입력',
+                  ),
+                  onChanged: (value) {
+                    rate = int.parse(value);
+                  },
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: const Text('시작'),
+              ),
+              const SizedBox(width: 15,),
+              Expanded(
+                child: GestureDetector(
+                  onTap: startYearMonthDayTimePicker,
+                  child: AbsorbPointer(
+                    child: TextFormField(
+                      controller: ymdtStartController,
+                      decoration: InputDecoration(
+                        labelText: '시작 연월일 시간',
+                        border: OutlineInputBorder(),
+                        filled: true,
+                      ),
+                      onSaved: (val) {
+                        ymdtStart = ymdtStartController.text;
+                      },
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return '입력해주세요';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+              ),
+
+            ],
+          ),
+          const SizedBox(height: 10,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left : 8.0),
+                child: const Text('종료'),
+              ),
+              const SizedBox(width: 15,),
+              Expanded(
+                child: GestureDetector(
+                  onTap: startYearMonthDayTimePicker,
+                  child: AbsorbPointer(
+                    child: TextFormField(
+                      controller: ymdtEndController,
+                      decoration: InputDecoration(
+                        labelText: '종료 연월일 시간',
+                        border: OutlineInputBorder(),
+                        filled: true,
+                      ),
+                      onSaved: (val) {
+                        ymdtEnd = ymdtEndController.text;
+                      },
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return '입력해주세요';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: const Text('메모'),
+              ),
+              const SizedBox(width: 15,),
+              Expanded(
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                  onChanged: (value) {
+                    memo = value;
+                  },
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          OutlinedButton(
+            onPressed: () async {
+              final assignexamAdd = FirebaseFirestore.instance.collection('AssignExam').doc(AssignExamName);
+
+            },
+            child: const Text('확인'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AddPersonal extends StatefulWidget {
+  const AddPersonal({Key? key}) : super(key: key);
+
+  @override
+  State<AddPersonal> createState() => _AddPersonalState();
+}
+
+class _AddPersonalState extends State<AddPersonal> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
