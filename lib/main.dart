@@ -723,9 +723,9 @@ class _AddPersonalState extends State<AddPersonal> {
   final _alramList = ['no alarm','before 30 minutes','before 1 hour', 'before 12 hours',
     'before one day', 'before 3 days'];
   var _alarmSelected = 'no alarm';
+  bool? autovalidate = false;
   String? personalTitle;
   String? personalTime;
-  String? whenAlarm;
   String? memo;
   TextEditingController ymdtPersonalController = TextEditingController();
 
@@ -805,7 +805,7 @@ class _AddPersonalState extends State<AddPersonal> {
                         filled: true,
                       ),
                       onChanged: (val) {
-                        ymdtPersonalController.text = val;
+                        ymdtPersonalController.text = val.toString();
                         personalTime = ymdtPersonalController.text;
                       },
                       validator: (val) {
@@ -837,9 +837,9 @@ class _AddPersonalState extends State<AddPersonal> {
                             value: value,
                             child: Text(value));
                       }).toList(),
-                  onChanged: (value){
+                  onChanged: (String? value){
                     setState(() {
-                      _alarmSelected = value as String;
+                      _alarmSelected = value!;
                     });
                   }
               )
@@ -873,7 +873,7 @@ class _AddPersonalState extends State<AddPersonal> {
               personalAdd.set({
                 "title" : personalTitle,
                 "time" : personalTime,
-                "alarm" : whenAlarm,
+                "alarm" : _alarmSelected,
                 "memo" : memo,
               });
               Navigator.pop(context);
