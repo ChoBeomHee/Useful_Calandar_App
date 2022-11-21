@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:team/info.dart';
-import 'package:team/main.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -727,6 +726,7 @@ class _AddPersonalState extends State<AddPersonal> {
   String? personalTitle;
   String? personalTime;
   String? memo;
+  String? Time;
   TextEditingController ymdtPersonalController = TextEditingController();
 
   personalYearMonthDayTimePicker() async {
@@ -756,6 +756,7 @@ class _AddPersonalState extends State<AddPersonal> {
         } else {
           min = pickedTime.minute.toString();
         }
+        Time = '${dateTime.toString().split(' ')[0]} $hour:$min';
         ymdtPersonalController.text = '${dateTime.toString().split(' ')[0]} $hour:$min';
       }
     }
@@ -804,9 +805,11 @@ class _AddPersonalState extends State<AddPersonal> {
                         border: OutlineInputBorder(),
                         filled: true,
                       ),
-                      onChanged: (val) {
-                        ymdtPersonalController.text = val.toString();
-                        personalTime = ymdtPersonalController.text;
+                      onChanged: (String? val) {
+                      //  ymdtPersonalController.text = val.toString();
+                      //  personalTime = ymdtPersonalController.text;
+                      personalTime = val;
+                      print('$personalTime');
                       },
                       validator: (val) {
                         if (val == null || val.isEmpty) {
