@@ -433,9 +433,15 @@ class AddAssignExam extends StatefulWidget {
 class _AddAssignExamState extends State<AddAssignExam> {
   final _type = ['- Choose -','Exam', 'Assignment', 'Quiz'];
   var _typeSelected = '- Choose -';
+  dynamic subjectSelected;
+  Stream<QuerySnapshot>? _subjectSelect;
+  @override
+  void initState() {
+    _subjectSelect= FirebaseFirestore.instance.collection("Subject").snapshots();
+    return super.initState();
+  }
 
-  String? Subject = 'Database';
-  String? typeAssignExam;
+  String? Subject;
   String? AssignExamName;
   int? rate;
   String? memo;
@@ -516,14 +522,33 @@ class _AddAssignExamState extends State<AddAssignExam> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Padding(
                 padding: const EdgeInsets.only(left : 8.0),
                 child: const Text('과목명'),
               ),
-              const SizedBox(width: 15,),
-
+              const SizedBox(width: 75,),
+              Row(
+                children: <Widget>[
+                  StreamBuilder<QuerySnapshot>(
+                      stream: _subjectSelect,
+                      builder: (context, snapshot){
+                        return DropdownButton(
+                            value: subjectSelected,
+                            items: snapshot.data?.docs.map((subjectData){
+                              return DropdownMenuItem(
+                                  value: subjectData.id,
+                                  child: Text(subjectData.id),);
+                            }).toList(),
+                            onChanged: (value){
+                              setState(() {
+                                subjectSelected = value!;
+                              });
+                            });
+                      })
+                ],
+              ),
             ],
           ),
           const SizedBox(height: 10,),
@@ -693,16 +718,17 @@ class _AddAssignExamState extends State<AddAssignExam> {
           OutlinedButton(
             onPressed: () async {
               final assignexamAdd = FirebaseFirestore.instance
-                  .collection('Subject').doc(Subject).collection(typeAssignExam!).doc(AssignExamName);
+                  .collection('Subject').doc(subjectSelected).collection(_typeSelected).doc(AssignExamName);
               assignexamAdd.set({
-                "subject" : Subject,
+                "subject" : subjectSelected,
                 "rate" : rate,
                 "startYMDT" : ymdtStart,
-                "endYMDT" : ymdtEnd
+                "endYMDT" : ymdtEnd,
+                "memo" : memo
               });
               ymdtStartController.clear();
               ymdtEndController.clear();
-              Navigator.of(context).pop();
+              Navigator.pop(context);
               },
             child: const Text('확인'),
           ),
