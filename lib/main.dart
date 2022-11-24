@@ -140,7 +140,7 @@ class _HomeState extends State<Home> {         // 메인 페이지
                     border: Border.all(color: Colors.black12, width: 3)), //테두리
                 width: 550,
                 height: 150,
-                child: const Text('\n    진성 깃 일까??', style: TextStyle(fontSize: 30),),
+                child: const Text('\n    깃 브랜치 나누기 연습 ', style: TextStyle(fontSize: 30),),
               ),
             ),
           ],
