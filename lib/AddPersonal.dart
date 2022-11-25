@@ -94,12 +94,6 @@ class _AddPersonalState extends State<AddPersonal> {
                         border: OutlineInputBorder(),
                         filled: true,
                       ),
-                      onChanged: (val) {
-                        //  ymdtPersonalController.text = val.toString();
-                        //  personalTime = ymdtPersonalController.text;
-                        personalTime = val;
-                        print('$personalTime');
-                      },
                       validator: (val) {
                         if (val == null || val.isEmpty) {
                           return '입력해주세요';
@@ -164,7 +158,7 @@ class _AddPersonalState extends State<AddPersonal> {
               final personalAdd = FirebaseFirestore.instance.collection('Personal').doc(personalTitle);
               personalAdd.set({
                 "title" : personalTitle,
-                "time" : personalTime,
+                "time" : ymdtPersonalController.text,
                 "alarm" : _alarmSelected,
                 "memo" : memo,
               });
