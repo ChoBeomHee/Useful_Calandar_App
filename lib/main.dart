@@ -82,6 +82,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {         // 메인 페이지
+  // 달력 정보를 저장할 변수
   DateTime selectedDay = DateTime(
     DateTime.now().year,
     DateTime.now().month,
@@ -93,19 +94,25 @@ class _HomeState extends State<Home> {         // 메인 페이지
     return Scaffold(
       appBar: AppBar(
         title: const Text('팀프로젝트'),
-        actions: [ // 오른쪽에 버튼 추가
+        actions: [
+          // 오른쪽 상단에 add 버튼
           IconButton(
               icon: const Icon(
                 Icons.add,
               ),
               onPressed: () {
+                // add 버튼을 눌렀을 때 팝업창 뜸
+                // 팝업 메세지를 뜨게 하려면, showDialog 와 AlertDialog 2개를 써야함
                 showDialog(
                     context: context,
+                    // barrierDismissible 는 팝업 메세지가 띄어졌을 때 뒷 배경의 touchEvent 가능 여부에 대한 값
+                    // true: 뒷 배경 touch 하면 팝업 메세지가 닫힘, false: 안 닫힘
                     barrierDismissible: true,
                     builder: (BuildContext context){
                       return const AlertDialog(
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(22.0))),
+                            borderRadius: BorderRadius.all(Radius.circular(22.0))), // 모서리를 둥글게
+                        // 팝업 메세지에 addList 를 불러옴
                         content: addList(),
                       );
                     }
@@ -117,7 +124,9 @@ class _HomeState extends State<Home> {         // 메인 페이지
       body: Center(
         child: Column(
           children: <Widget>[
+            // 달력 위젯
             TableCalendar(
+              // 달력에서 나타날 최소 날짜와 최대 날짜 설정
               firstDay: DateTime(2022, 11, 1),
               lastDay: DateTime(2022, 12, 30),
               focusedDay: focuseDay,
@@ -134,11 +143,13 @@ class _HomeState extends State<Home> {         // 메인 페이지
             ),
 
             const SizedBox(height: 30,),
+            // 상세 과목 일정을 나타냄
+            // 상세 과목 일정 나타내야함 ◀◀◀◀◀◀
             Center(
               child: Container(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50), //모서리를 둥글게
-                    border: Border.all(color: Colors.black12, width: 3)), //테두리
+                    borderRadius: BorderRadius.circular(50), // 모서리를 둥글게
+                    border: Border.all(color: Colors.black12, width: 3)), // 테두리
                 width: 550,
                 height: 150,
                 child: const Text('\n    깃 브랜치 나누기 연습 ', style: TextStyle(fontSize: 30),),

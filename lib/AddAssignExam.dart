@@ -6,6 +6,7 @@ import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'schedule.dart';
 
+// 과제/시험 일정 추가 버튼 클릭 시 AddAssignExam 나옴
 class AddAssignExam extends StatefulWidget {
   const AddAssignExam({Key? key}) : super(key: key);
 
