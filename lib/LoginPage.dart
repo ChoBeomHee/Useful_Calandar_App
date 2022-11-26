@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:team/CalendarPage.dart';
 import 'RegisterPage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
@@ -78,8 +79,8 @@ class _LoginFormState extends State<LoginForm> {
                       if (currentUser.user != null) {
                         _formkey.currentState!.reset();
                         if (!mounted) return;
-                        //Navigator.push(context,
-                        //MaterialPageRoute(builder: (context) => ChatPage()));
+                        Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => CalendarPage()));
                       }
                     } catch (e) {
                       print(e);
