@@ -13,6 +13,7 @@ import 'CalendarPage.dart';
 import 'LoginPage.dart';
 import 'RegisterPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 
 Future<void> main() async { // 1. await이 있기 떄문에 main 옆에 async 선언
@@ -60,3 +61,34 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+/* 푸시 알림 함수
+_initFirebaseMessaging(BuildContext context) {
+  FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+    print(event.notification!.title);
+    print(event.notification!.body);
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("알림"),
+            content: Text(event.notification!.body!),
+            actions: [
+              TextButton(
+                child: Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
+  });
+}
+
+_getToken() async {
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  print("messaging.getToken(), ${await messaging.getToken()}");
+}
+*/
+
