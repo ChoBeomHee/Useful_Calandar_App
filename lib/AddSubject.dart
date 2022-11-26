@@ -40,8 +40,9 @@ class _AddSubjectsState extends State<AddSubjects> {
   int? FinalTest = 0; // 기말고사 평가 비율
   int? task = 0; // 과제 평가 피율
   int? attendance = 0; // 출결 평가 비율
+  int? credit = 0; // 학점
   String? Subject = ''; // 과목명
-  double? credit = 0; // 학점
+
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +95,7 @@ class _AddSubjectsState extends State<AddSubjects> {
               onChanged: (value) {
                 // TextFormField 에 입력한 정보를 변수에 저장
                 // 입력받은 value 를 double 형으로 변환하여 저장
-                credit = double.parse(value);
+                credit = int.parse(value);
               },
             ),
           ),
