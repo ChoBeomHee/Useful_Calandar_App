@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:team/CalendarPage.dart';
+import 'package:team/CalendarHomePage.dart';
 import 'package:team/LoginPage.dart';
 
 class RegisterPage extends StatelessWidget {
