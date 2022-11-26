@@ -43,18 +43,19 @@ class _AddSubjectsState extends State<AddSubjects> {
   int? credit = 0; // 학점
   String? Subject = ''; // 과목명
 
+  final _controller1 = TextEditingController();
+  final _controller2 = TextEditingController();
+  final _controller3 = TextEditingController();
+  final _controller4 = TextEditingController();
+  final _controller5 = TextEditingController();
+  final _controller6 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     // 각각 칸에 해당하는 컨트롤러
     // input field 로 부터 텍스트를 읽고, 텍스트를 전송한 뒤에 clear 하는데 사용함
     // 값이 입력되는 즉시 해당 값을 가져올 수 있음
-    final _controller1 = TextEditingController();
-    final _controller2 = TextEditingController();
-    final _controller3 = TextEditingController();
-    final _controller4 = TextEditingController();
-    final _controller5 = TextEditingController();
-    final _controller6 = TextEditingController();
+
 
     return Center(
       child: Column(
