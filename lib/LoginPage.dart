@@ -92,7 +92,6 @@ class _LoginFormState extends State<LoginForm> {
                   TextButton(
                     child: const Text('Register your email'),
                     onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage()));
                       // 페이지 넘어가면 다시 없어지게 해야지
                       setState(() {
                         showSpinner = false;
