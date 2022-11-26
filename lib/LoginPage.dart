@@ -69,9 +69,9 @@ class _LoginFormState extends State<LoginForm> {
                     try {
                       // onPressed 누르고 직후부터 로그인 되기전까지 돌리고 싶음
                       // onPressed 누르고 바로 하게 하기 위해 setState를 통해 새로 빌드를 해야겠지
-                      //setState(() {
-                      //  showSpinner = true;
-                      //});
+                      setState(() {
+                        showSpinner = true;
+                      });
                       // future Type
                       final currentUser = await _authentication
                           .signInWithEmailAndPassword(
@@ -95,9 +95,9 @@ class _LoginFormState extends State<LoginForm> {
                     onPressed: (){
                       Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage()));
                       // 페이지 넘어가면 다시 없어지게 해야지
-                      //setState(() {
-                      //  showSpinner = false;
-                      //});
+                      setState(() {
+                        showSpinner = false;
+                      });
                     },
                   ),
                 ],
