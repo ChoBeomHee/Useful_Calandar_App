@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 // 과목 추가 버튼 클릭 시 AddSubjects 나옴
 class AddSubjects extends StatefulWidget {
@@ -10,6 +11,29 @@ class AddSubjects extends StatefulWidget {
 }
 
 class _AddSubjectsState extends State<AddSubjects> {
+
+  final _authentication = FirebaseAuth.instance;
+  User? loggedUser;
+  // 이 페이지가 생성될 그 때만 인스턴스 전달만 해주면 됨
+
+  @override
+  // State가 처음 만들어졌을때만 하는 것
+  void initState() {
+    // TODO: implement initState
+    super.initState(); // 이걸 먼저 해줘야함(부모 클래스로부터 받아옴, Stateful 위젯 안에 initState가 있기때문에)
+    getCurrentUser();
+  }
+
+  void getCurrentUser() {
+    try {
+      final user = _authentication.currentUser; // _authentication 의 currentUser을 대입
+      if (user != null) {
+        loggedUser = user;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
   // 각각 정보를 저장할 변수
   bool? _ischecked = false; // 영어 강의 여부
   int? MidTest = 0; // 중간고사 평가 비율
@@ -186,6 +210,7 @@ class _AddSubjectsState extends State<AddSubjects> {
                 "attandence" : attendance,
                 "English" : _ischecked,
                 "SubjectName" : Subject,
+                "uid" : _authentication.currentUser!.uid, // 이 값이 현재 로그인 되어 있는 uid와 같은지 확인
               });
               // 입력 받은 정보들을 추가하고 나면 TextFormField 를 빈칸으로 clear 하겠다.
               _controller1.clear();
