@@ -31,7 +31,7 @@ class _SubjectInfoState extends State<SubjectInfo> {
                   itemCount: docs.length,
                   itemBuilder: (context, index) {
                     return ListTile(title: Text(
-                      docs[index]['SubjectName'] + ' (' + docs[index]['credit'].toString()+')',
+                      '${docs[index]['SubjectName']}(${docs[index]['credit'].toString()})',
                         style: const TextStyle(height: 1, fontSize: 15, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.left
                       ),

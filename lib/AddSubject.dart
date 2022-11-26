@@ -176,16 +176,17 @@ class _AddSubjectsState extends State<AddSubjects> {
           OutlinedButton(
             onPressed: () async {
               // FirebaseFirestore 의 데이터베이스에 연결하여 'Subject' collection 의 'Subject' document 에 접근하겠다.
-              final subjectadd = FirebaseFirestore.instance.collection('Subject').doc(Subject);
+              final subjectadd =
+                  FirebaseFirestore.instance.collection('Subject').doc(Subject);
               // 'Subject' collection 의 'Subject' document 에 현재 입력 받은 정보들을 추가하겠다.
               subjectadd.set({
-                "Midterm" : MidTest,
-                "Finalterm" : FinalTest,
-                "task" : task,
-                "credit" : credit,
-                "attandence" : attendance,
-                "English" : _ischecked,
-                "SubjectName" : Subject,
+                "Midterm": MidTest,
+                "Finalterm": FinalTest,
+                "task": task,
+                "credit": credit,
+                "attandence": attendance,
+                "English": _ischecked,
+                "SubjectName": Subject,
               });
               // 입력 받은 정보들을 추가하고 나면 TextFormField 를 빈칸으로 clear 하겠다.
               _controller1.clear();
