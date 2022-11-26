@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 class SubjectInfo extends StatefulWidget {
@@ -10,6 +11,28 @@ class SubjectInfo extends StatefulWidget {
 }
 
 class _SubjectInfoState extends State<SubjectInfo> {
+  final _authentication = FirebaseAuth.instance;
+  User? loggedUser;
+  // 이 페이지가 생성될 그 때만 인스턴스 전달만 해주면 됨
+
+  @override
+  // State가 처음 만들어졌을때만 하는 것
+  void initState() {
+    // TODO: implement initState
+    super.initState(); // 이걸 먼저 해줘야함(부모 클래스로부터 받아옴, Stateful 위젯 안에 initState가 있기때문에)
+    getCurrentUser();
+  }
+
+  void getCurrentUser() {
+    try {
+      final user = _authentication.currentUser; // _authentication 의 currentUser을 대입
+      if (user != null) {
+        loggedUser = user;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +43,7 @@ class _SubjectInfoState extends State<SubjectInfo> {
         children: [
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance.collection('Subject')
+              stream: FirebaseFirestore.instance.collection('Subject').where('uid',isEqualTo: _authentication.currentUser!.uid)
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
