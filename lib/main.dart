@@ -9,9 +9,15 @@ import 'AddAssignExam.dart';
 import 'AddPersonal.dart';
 import 'AddSubject.dart';
 import 'AddList.dart';
+import 'CalendarPage.dart';
+import 'LoginPage.dart';
+import 'RegisterPage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+
+Future<void> main() async { // 1. await이 있기 떄문에 main 옆에 async 선언
+  WidgetsFlutterBinding.ensureInitialized(); // 2. 이 문장 추가
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -19,144 +25,37 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
+        primarySwatch: Colors.purple,
       ),
-      home: const MyHomePage(title: '팀프로젝트'),
-    );
-  }
-}
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 0;
-  static List<Widget> _widgetOptions = <Widget>[
-    Home(),
-    ScheduleDetail(),
-    SubjectInfo(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {    // 메인
-    return Scaffold(
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
-          BottomNavigationBarItem(icon: Icon(Icons.subject), label: '상세 일정'),
-          BottomNavigationBarItem(icon: Icon(Icons.info), label: '과목 정보'),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-      ),
-    );
-  }
-}
-
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
-  @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {         // 메인 페이지
-  // 달력 정보를 저장할 변수
-  DateTime selectedDay = DateTime(
-    DateTime.now().year,
-    DateTime.now().month,
-    DateTime.now().day,
-  );
-  DateTime focuseDay = DateTime.now();
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('팀프로젝트'),
-        actions: [
-          // 오른쪽 상단에 add 버튼
-          IconButton(
-              icon: const Icon(
-                Icons.add,
-              ),
-              onPressed: () {
-                // add 버튼을 눌렀을 때 팝업창 뜸
-                // 팝업 메세지를 뜨게 하려면, showDialog 와 AlertDialog 2개를 써야함
-                showDialog(
-                    context: context,
-                    // barrierDismissible 는 팝업 메세지가 띄어졌을 때 뒷 배경의 touchEvent 가능 여부에 대한 값
-                    // true: 뒷 배경 touch 하면 팝업 메세지가 닫힘, false: 안 닫힘
-                    barrierDismissible: true,
-                    builder: (BuildContext context){
-                      return const AlertDialog(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(22.0))), // 모서리를 둥글게
-                        // 팝업 메세지에 addList 를 불러옴
-                        content: addList(),
-                      );
-                    }
-                );
-              }
-          ),
-        ],
-      ),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            // 달력 위젯
-            TableCalendar(
-              // 달력에서 나타날 최소 날짜와 최대 날짜 설정
-              firstDay: DateTime(2022, 11, 1),
-              lastDay: DateTime(2022, 12, 30),
-              focusedDay: focuseDay,
-
-              onDaySelected: (selectedDay, focusedDay) {
-                setState(() {
-                  this.selectedDay = selectedDay;
-                  this.focuseDay = focusedDay;
-                });
-              },
-              selectedDayPredicate: (DateTime day) {
-                return isSameDay(selectedDay, day);
-              },
-            ),
-
-            const SizedBox(height: 30,),
-            // 상세 과목 일정을 나타냄
-            // 상세 과목 일정 나타내야함 ◀◀◀◀◀◀
-            Center(
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50), // 모서리를 둥글게
-                    border: Border.all(color: Colors.black12, width: 3)), // 테두리
-                width: 550,
-                height: 150,
-                child: const Text('\n    깃 브랜치 나누기 연습 ', style: TextStyle(fontSize: 30),),
-              ),
-            ),
-          ],
-        ),
+      // 로그인 되었을 때는, Success Page 가 Home 화면이 되도록 해보겠다
+      // StreamBuilder 사용, 파이어베이스에서 어떤 변화가 생겼을 때 변화를 감지할 수 있도록 도와주는 stream을 받아옴
+      // 변화가 생겼다는게 감지가 되는 순간 반응을 할 수 있는 클래스
+      home: StreamBuilder(
+        // 2개 속성이 필요
+        // 1. stream: 어떤 것을 계속 듣고 싶어 하냐 Stream<user?> Type
+        // 로그인 되었는지, 로그아웃 되었는지 변화 감지해서 알려줌
+          stream: FirebaseAuth.instance.authStateChanges(),
+          // 전달되었을 때 어떤걸 할거냐 어떤걸 빌드할거냐
+          builder: (context, snapshot) {
+            // change 감지 하면 잠깐 스냅샷을 찍고 그 상태를 빌더에 전달하는거라고 생각
+            // 스냅샷 전달 받은 이후 이 상황에서 내가 무얼 할거냐. 스냅샷을 통해 액션을 취하게 됨
+            // 12강 11분 40초 ★★★★★★
+            if (snapshot.hasData) { // 스냅샷이 hasData가 있다면(로그인 된 상태)면
+              // chat 페이지를 navigator.push를 통해 했었는데, 바뀐 다음엔 제거 해야됩니다. 중복성때문에
+              // chat 페이지와 로그인 페이지의 navigator에 해당하는 부분(push,pop)을 지워야 함
+              return const CalendarHomePage(title: '',);
+            } else {
+              return const LoginPage();
+            }
+          }
       ),
     );
   }
