@@ -89,10 +89,8 @@ _initFirebaseMessaging(BuildContext context) {
         });
   });
 }
-
 _getToken() async {
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   print("messaging.getToken(), ${await messaging.getToken()}");
 }
 */
-
