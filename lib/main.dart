@@ -9,7 +9,7 @@ import 'AddAssignExam.dart';
 import 'AddPersonal.dart';
 import 'AddSubject.dart';
 import 'AddList.dart';
-import 'CalendarHomePage.dart';
+import 'CalendarPage.dart';
 import 'LoginPage.dart';
 import 'RegisterPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.hasData) { // 스냅샷이 hasData가 있다면(로그인 된 상태)면
               // chat 페이지를 navigator.push를 통해 했었는데, 바뀐 다음엔 제거 해야됩니다. 중복성때문에
               // chat 페이지와 로그인 페이지의 navigator에 해당하는 부분(push,pop)을 지워야 함
-              return const CalendarHomePage(title: '팀프로젝트',);
+              return const CalendarHomePage(title: '',);
             } else {
               return const LoginPage();
             }
