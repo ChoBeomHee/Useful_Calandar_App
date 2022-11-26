@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:team/CalendarHomePage.dart';
+import 'SuccessRegisterPage.dart';
 import 'package:team/LoginPage.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -92,7 +93,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       _formkey.currentState!.reset(); // 빨간줄 -> null이 되면 안된다 -> ! 붙여주기
                       if (!mounted) return;
                       // state가 tree에 마운트가 되었다를 확인하고 push를 하는게 좋음(오류 없음)
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> const SuccessRegisterPage()));
                     }
                   } catch (e) { // 익명함수 e를 받음
                     print(e);
