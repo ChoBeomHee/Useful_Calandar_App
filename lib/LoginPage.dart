@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:team/CalendarPage.dart';
+import 'package:team/CalendarHomePage.dart';
 import 'RegisterPage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
@@ -79,8 +79,11 @@ class _LoginFormState extends State<LoginForm> {
                       if (currentUser.user != null) {
                         _formkey.currentState!.reset();
                         if (!mounted) return;
-                        Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => CalendarPage()));
+                        setState(() {
+                          showSpinner = false;
+                        });
+                        // Navigator.push(context,
+                        // MaterialPageRoute(builder: (context) => CalendarHomePage(title: '팀프로젝트',)));
                       }
                     } catch (e) {
                       print(e);
