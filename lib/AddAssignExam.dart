@@ -62,9 +62,7 @@ class _AddAssignExamState extends State<AddAssignExam> {
   TextEditingController ymdtEndController = TextEditingController();
 
   startYearMonthDayTimePicker() async {
-    final year = DateTime
-        .now()
-        .year;
+    final year = DateTime.now().year;
     String hour, min;
 
     final DateTime? dateTime = await showDatePicker(
