@@ -59,6 +59,7 @@ class Subject {
   Subject(this.title, this.time, this.todo);
 }
 
+
 class SubjectTile extends StatelessWidget {
   SubjectTile(this._subject);
 
@@ -84,7 +85,7 @@ class SubjectTile extends StatelessWidget {
             overflow: TextOverflow.ellipsis,),
         ],
       ),
-      onTap: (){        // 리스트 타일이 클릭되면
+      onTap: (){        // 리스트 타일을 클릭하면
         showDialog(
             context: context,
             barrierDismissible: true,
