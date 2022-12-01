@@ -12,6 +12,7 @@ class SubjectInfo extends StatefulWidget {
 }
 
 class _SubjectInfoState extends State<SubjectInfo> {
+
   final _authentication = FirebaseAuth.instance;
   User? loggedUser;
   // 이 페이지가 생성될 그 때만 인스턴스 전달만 해주면 됨
@@ -38,8 +39,16 @@ class _SubjectInfoState extends State<SubjectInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('과목 상세 정보'),
-      ),
+        title:
+            Row(
+              children: [
+                const Text('과목 상세 정보'),
+                const SizedBox(width: 160,),
+                Text('총 학점', style: TextStyle(fontSize: 18),),
+              ],
+            ),
+        ),
+
       body: Column(
         children: [
           Expanded(
@@ -54,7 +63,8 @@ class _SubjectInfoState extends State<SubjectInfo> {
                 return ListView.separated(
                   itemCount: docs.length,
                   itemBuilder: (context, index) {
-                    return ListTile(title: Text(
+                    return ListTile(
+                      title: Text(
                       '${docs[index]['SubjectName']}(${docs[index]['credit'].toString()})',
                         style: const TextStyle(height: 1, fontSize: 15, fontWeight: FontWeight.bold),
                         textAlign: TextAlign.left
