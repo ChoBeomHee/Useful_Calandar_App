@@ -41,9 +41,7 @@ class ScheduleDetail extends StatelessWidget {
                   if (index == 0) {
                     return SizedBox.shrink();
                   }
-                  return const Divider(
-                    thickness: 3.0,
-                  );
+                  return const Divider();
                 },
               ),
             ),
@@ -81,7 +79,9 @@ class SubjectTile extends StatelessWidget {
           const SizedBox(width: 30,),
           Text(_subject.time),
           const SizedBox(width: 30,),
-          Expanded(child: Text(_subject.todo,)),            // '할 일' 잘리는 것 방지
+          Text(_subject.todo,
+            maxLines:2,
+            overflow: TextOverflow.ellipsis,),
         ],
       ),
       onTap: (){        // 리스트 타일이 클릭되면
@@ -98,12 +98,8 @@ class SubjectTile extends StatelessWidget {
                       Text(_subject.title, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 3),
-                      const SizedBox(width: 15),
-                      Expanded(                                 // '할 일' 잘리는 것 방지
-                        child: Text(_subject.todo,
-                          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-                          ),
-                      ),
+                      const SizedBox(width: 20),
+                      Text(_subject.todo, style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),),
                     ],
                   ),
                 ),
