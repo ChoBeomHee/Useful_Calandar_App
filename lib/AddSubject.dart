@@ -216,6 +216,10 @@ class _AddSubjectsState extends State<AddSubjects> {
                 "SubjectName" : Subject,
                 "uid" : _authentication.currentUser!.uid, // 이 값이 현재 로그인 되어 있는 uid와 같은지 확인
               });
+              subjectadd.collection('Assignment').doc().set({"init" : 'creat'});
+              subjectadd.collection('Exam').doc().set({"init" : 'creat'});
+              subjectadd.collection('Quiz').doc().set({"init" : 'creat'});
+
               // 입력 받은 정보들을 추가하고 나면 TextFormField 를 빈칸으로 clear 하겠다.
               _controller1.clear();
               _controller2.clear();

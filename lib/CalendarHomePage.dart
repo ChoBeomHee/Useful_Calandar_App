@@ -9,7 +9,8 @@ import 'AddSubject.dart';
 import 'AddList.dart';
 import 'info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:provider/provider.dart';
+import 'SubjectsProvider.dart';
 class CalendarHomePage extends StatefulWidget {
   const CalendarHomePage({Key? key, required this.title}) : super(key: key);
   final String title;

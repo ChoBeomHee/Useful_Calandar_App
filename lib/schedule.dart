@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:team/SubjectsProvider.dart';
-List<Subject> Daylist = [];
+import 'dart:convert';
 class Subject {
   String title;
   String time;
@@ -14,7 +14,6 @@ class Subject {
 
   Subject(this.title, this.time, this.todo, this.memo);
 }
-
 class ScheduleDetail extends StatefulWidget {
   ScheduleDetail({Key? key}) : super(key: key);
 
@@ -36,33 +35,66 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
   ];*/
   final _authentication = FirebaseAuth.instance;
   User? loggedUser;
+
   // 이 페이지가 생성될 그 때만 인스턴스 전달만 해주면 됨
+  Future<void> setSchedure_Exam() async {
+    print('check');
+    var sub = FirebaseFirestore.instance.collection('Subject').
+    where('uid', isEqualTo: _authentication.currentUser!.uid).get();
+    var check = await sub;
 
-  void setSchedure() async{
-     var sub = FirebaseFirestore.instance.collection('Subject').
-      where('uid', isEqualTo: _authentication.currentUser!.uid).get();
-      var check = await sub;
+    for (int i = 0; i < check.docs.length; i++) {
+      var today = FirebaseFirestore.instance.collection('Subject').
+      doc(check.docs[i]['SubjectName']).collection('Exam').get();
 
-      for(int i = 0; i < check.docs.length; i++) {
-        var today = FirebaseFirestore.instance.collection('Subject').
-        doc(check.docs[i]['SubjectName']).collection('Assignment').get();
-
-        var list = await today;
-        Daylist.add(Subject(list.docs[0]['subject'], '시작',
-            '끝', list.docs[0]['memo']));
+      var list = await today;
+      for(int i = 0; i < list.docs.length; i++){
+        context.read<Subs>().prov_subjectname_exam.add(list.docs[i]['subject']);
+        context.read<Subs>().prov_memo_exam.add(list.docs[i]['memo']);
+        context.read<Subs>().start_exam.add('시작');
+        context.read<Subs>().end_exam.add('끝');
+        print('aa'+ context.read<Subs>().prov_subjectname_exam[i]);
       }
- }
+
+    }
+  }
+  Future<void> setSchedure_Assingment() async {
+    var sub = FirebaseFirestore.instance.collection('Subject').
+    where('uid', isEqualTo: _authentication.currentUser!.uid).get();
+    var check = await sub;
+
+    for (int i = 0; i < check.docs.length; i++) {
+      var today = FirebaseFirestore.instance.collection('Subject').
+      doc(check.docs[i]['SubjectName']).collection('Assignment').get();
+
+      var list = await today;
+      for(int i = 0; i < list.docs.length; i++){
+        context.read<Subs>().prov_subjectname.add(list.docs[i]['subject']);
+        context.read<Subs>().prov_memo.add(list.docs[i]['memo']);
+        context.read<Subs>().start.add('시작');
+        context.read<Subs>().end.add('끝');
+        print('dd'+ context.read<Subs>().prov_subjectname[i]);
+
+      }
+
+    }
+  }
+
+
+
   @override
   // State가 처음 만들어졌을때만 하는 것
   void initState() {
     // TODO: implement initState
-    super.initState(); // 이걸 먼저 해줘야함(부모 클래스로부터 받아옴, Stateful 위젯 안에 initState가 있기때문에)
+    super
+        .initState(); // 이걸 먼저 해줘야함(부모 클래스로부터 받아옴, Stateful 위젯 안에 initState가 있기때문에)
     getCurrentUser();
   }
 
   void getCurrentUser() {
     try {
-      final user = _authentication.currentUser; // _authentication 의 currentUser을 대입
+      final user = _authentication
+          .currentUser; // _authentication 의 currentUser을 대입
       if (user != null) {
         loggedUser = user;
       }
@@ -70,69 +102,99 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
       print(e);
     }
   }
-  @override
-  Widget build(BuildContext context)  {
 
-    setSchedure();
-    return Scaffold (
+  @override
+  Widget build(BuildContext context) {
+    context
+        .read<Subs>()
+        .prov_subjectname
+        .clear();
+
+    context
+        .read<Subs>()
+        .prov_subjectname_exam
+        .clear();
+    return 
+      Scaffold(
         appBar: AppBar(
-           title: const Text('상세 일정'),
+          title: const Text('상세 일정'),
         ),
-      body:
-          Column(
-            children: [
-              Expanded(
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: ListView.separated(
-                      itemCount: Daylist.length,
-                      itemBuilder: (context, index) {
-                        if (index == 0) {
-                          return Padding (
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 10.0),
-                            child: Text('오늘 일정(${getToday()})', style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
-                          );
-                        }
-                        return SubjectTile(Daylist[index]);
-                      },
-                      separatorBuilder: (context, index) {
-                        return const Divider(
-                          thickness: 3.0,
-                        );
-                      },
-                    ),
-                    /*StreamBuilder<QuerySnapshot>(
-                      stream: FirebaseFirestore.instance.collection('Subject').
-                      doc().
-                      collection('Assignment').
-                      where('UID', isEqualTo: _authentication.currentUser!.uid).snapshots(),
-                      builder: (context, snapshot){
-                        if(snapshot.connectionState == ConnectionState.waiting){
-                          return const Center(child: CircularProgressIndicator(),);
-                        }
-                        final docs = snapshot.data!.docs;
-                        return ListView.separated(
-                          itemCount: docs.length,
-                          itemBuilder: (context, index) {
-                            return SubjectTile(Subject(docs[index]['subject'], docs[index]['subject'], docs[index]['subject']));
-                          },
-                          separatorBuilder: (context, index) {
-                            if (index == 0) {
-                              return SizedBox.shrink();
-                            }
-                            return const Divider(
-                              thickness: 3.0,
-                            );
-                          },
-                        );
-                      },
-                    )*/
-                  ),
-                ),
-              ),
-            ],
-          )
+        body: Column(
+          children: <Widget>[
+            Text('오늘 일정(${getToday()})',
+                style: const TextStyle(fontSize: 17,
+                    fontWeight: FontWeight.bold)),
+            Text('공부 일정'),
+            FutureBuilder(
+                future: setSchedure_Assingment(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Text('');
+                  }
+                  else {
+                    return Expanded(
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: ListView.separated(
+                            itemCount: context
+                                .read<Subs>()
+                                .prov_subjectname
+                                .length,
+                            itemBuilder: (context, index) {
+                              return SubjectTile(Subject(context.read<Subs>().prov_subjectname[index],
+                                  context.read<Subs>().start[index],
+                                  context.read<Subs>().end[index],
+                                  context.read<Subs>().prov_memo[index]));
+                            },
+                            separatorBuilder: (context, index) {
+                              return const Divider(
+                                thickness: 3.0,
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                }
+            ),
+            FutureBuilder(
+                future: setSchedure_Exam(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Text('');
+                  }
+                  else {
+                    return Expanded(
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: ListView.separated(
+                            itemCount: context
+                                .read<Subs>()
+                                .prov_subjectname_exam
+                                .length,
+                            itemBuilder: (context, index) {
+                              return SubjectTile(Subject(context.read<Subs>().prov_subjectname[index],
+                                  context.read<Subs>().start_exam[index],
+                                  context.read<Subs>().end_exam[index],
+                                  context.read<Subs>().prov_memo_exam[index]));
+                            },
+                            separatorBuilder: (context, index) {
+                              return const Divider(
+                                thickness: 3.0,
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                }
+            ),
+          ],
+        )
     );
   }
 }
@@ -239,7 +301,6 @@ class _SubjectTileState extends State<SubjectTile> {
     );
   }
 }
-
 String getToday(){      // 오늘 날짜 가져오는 함수
   var now = DateTime.now();
   String formatDate = DateFormat('MM/dd').format(now);
