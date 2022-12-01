@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:team/CalendarHomePage.dart';
+import 'package:team/CalendarPage.dart';
 import 'RegisterPage.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
@@ -69,9 +69,9 @@ class _LoginFormState extends State<LoginForm> {
                     try {
                       // onPressed 누르고 직후부터 로그인 되기전까지 돌리고 싶음
                       // onPressed 누르고 바로 하게 하기 위해 setState를 통해 새로 빌드를 해야겠지
-                      //setState(() {
-                      //  showSpinner = true;
-                      //});
+                      setState(() {
+                        showSpinner = true;
+                      });
                       // future Type
                       final currentUser = await _authentication
                           .signInWithEmailAndPassword(
@@ -79,11 +79,6 @@ class _LoginFormState extends State<LoginForm> {
                       if (currentUser.user != null) {
                         _formkey.currentState!.reset();
                         if (!mounted) return;
-                        setState(() {
-                          showSpinner = false;
-                        });
-                        // Navigator.push(context,
-                        // MaterialPageRoute(builder: (context) => CalendarHomePage(title: '팀프로젝트',)));
                       }
                     } catch (e) {
                       print(e);
@@ -98,9 +93,9 @@ class _LoginFormState extends State<LoginForm> {
                     onPressed: (){
                       Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage()));
                       // 페이지 넘어가면 다시 없어지게 해야지
-                      //setState(() {
-                      //  showSpinner = false;
-                      //});
+                      setState(() {
+                        showSpinner = false;
+                      });
                     },
                   ),
                 ],

@@ -13,6 +13,7 @@ import 'CalendarHomePage.dart';
 import 'LoginPage.dart';
 import 'RegisterPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 
 Future<void> main() async { // 1. await이 있기 떄문에 main 옆에 async 선언
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.hasData) { // 스냅샷이 hasData가 있다면(로그인 된 상태)면
               // chat 페이지를 navigator.push를 통해 했었는데, 바뀐 다음엔 제거 해야됩니다. 중복성때문에
               // chat 페이지와 로그인 페이지의 navigator에 해당하는 부분(push,pop)을 지워야 함
-              return const CalendarHomePage(title: '팀프로젝트',);
+              return const CalendarHomePage(title: '',);
             } else {
               return const LoginPage();
             }
@@ -60,3 +61,34 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+/* 푸시 알림 함수
+_initFirebaseMessaging(BuildContext context) {
+  FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+    print(event.notification!.title);
+    print(event.notification!.body);
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("알림"),
+            content: Text(event.notification!.body!),
+            actions: [
+              TextButton(
+                child: Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
+  });
+}
+
+_getToken() async {
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  print("messaging.getToken(), ${await messaging.getToken()}");
+}
+*/
+

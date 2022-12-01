@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:team/SubjectsProvider.dart';
 
 // 과목 추가 버튼 클릭 시 AddSubjects 나옴
 class AddSubjects extends StatefulWidget {
@@ -10,26 +13,51 @@ class AddSubjects extends StatefulWidget {
 }
 
 class _AddSubjectsState extends State<AddSubjects> {
+
+  final _authentication = FirebaseAuth.instance;
+  User? loggedUser;
+  // 이 페이지가 생성될 그 때만 인스턴스 전달만 해주면 됨
+
+  @override
+  // State가 처음 만들어졌을때만 하는 것
+  void initState() {
+    // TODO: implement initState
+    super.initState(); // 이걸 먼저 해줘야함(부모 클래스로부터 받아옴, Stateful 위젯 안에 initState가 있기때문에)
+    getCurrentUser();
+  }
+
+  void getCurrentUser() {
+    try {
+      final user = _authentication.currentUser; // _authentication 의 currentUser을 대입
+      if (user != null) {
+        loggedUser = user;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
   // 각각 정보를 저장할 변수
   bool? _ischecked = false; // 영어 강의 여부
   int? MidTest = 0; // 중간고사 평가 비율
   int? FinalTest = 0; // 기말고사 평가 비율
   int? task = 0; // 과제 평가 피율
   int? attendance = 0; // 출결 평가 비율
+  int? credit = 0; // 학점
   String? Subject = ''; // 과목명
-  double? credit = 0; // 학점
+
+  final _controller1 = TextEditingController();
+  final _controller2 = TextEditingController();
+  final _controller3 = TextEditingController();
+  final _controller4 = TextEditingController();
+  final _controller5 = TextEditingController();
+  final _controller6 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     // 각각 칸에 해당하는 컨트롤러
     // input field 로 부터 텍스트를 읽고, 텍스트를 전송한 뒤에 clear 하는데 사용함
     // 값이 입력되는 즉시 해당 값을 가져올 수 있음
-    final _controller1 = TextEditingController();
-    final _controller2 = TextEditingController();
-    final _controller3 = TextEditingController();
-    final _controller4 = TextEditingController();
-    final _controller5 = TextEditingController();
-    final _controller6 = TextEditingController();
+
 
     return Center(
       child: Column(
@@ -70,7 +98,7 @@ class _AddSubjectsState extends State<AddSubjects> {
               onChanged: (value) {
                 // TextFormField 에 입력한 정보를 변수에 저장
                 // 입력받은 value 를 double 형으로 변환하여 저장
-                credit = double.parse(value);
+                credit = int.parse(value);
               },
             ),
           ),
@@ -186,6 +214,7 @@ class _AddSubjectsState extends State<AddSubjects> {
                 "attandence" : attendance,
                 "English" : _ischecked,
                 "SubjectName" : Subject,
+                "uid" : _authentication.currentUser!.uid, // 이 값이 현재 로그인 되어 있는 uid와 같은지 확인
               });
               // 입력 받은 정보들을 추가하고 나면 TextFormField 를 빈칸으로 clear 하겠다.
               _controller1.clear();

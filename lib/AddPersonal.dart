@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AddPersonal extends StatefulWidget {
   const AddPersonal({Key? key}) : super(key: key);
@@ -8,6 +9,29 @@ class AddPersonal extends StatefulWidget {
 }
 
 class _AddPersonalState extends State<AddPersonal> {
+  final _authentication = FirebaseAuth.instance;
+  User? loggedUser;
+  // 이 페이지가 생성될 그 때만 인스턴스 전달만 해주면 됨
+
+  @override
+  // State가 처음 만들어졌을때만 하는 것
+  void initState() {
+    // TODO: implement initState
+    super.initState(); // 이걸 먼저 해줘야함(부모 클래스로부터 받아옴, Stateful 위젯 안에 initState가 있기때문에)
+    getCurrentUser();
+  }
+
+  void getCurrentUser() {
+    try {
+      final user = _authentication.currentUser; // _authentication 의 currentUser을 대입
+      if (user != null) {
+        loggedUser = user;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   final _alramList = ['no alarm','before 30 minutes','before 1 hour', 'before 12 hours',
     'before one day', 'before 3 days'];
   var _alarmSelected = 'no alarm';
@@ -161,6 +185,7 @@ class _AddPersonalState extends State<AddPersonal> {
                 "time" : ymdtPersonalController.text,
                 "alarm" : _alarmSelected,
                 "memo" : memo,
+                "uid" : _authentication.currentUser!.uid, // 이 값이 현재 로그인 되어 있는 uid와 같은지 확인
               });
               Navigator.pop(context);
             },
