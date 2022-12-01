@@ -1,5 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class ScheduleDetailPage extends StatefulWidget {
+  const ScheduleDetailPage({Key? key}) : super(key: key);
+
+  @override
+  State<ScheduleDetailPage> createState() => _ScheduleDetailPageState();
+}
+
+class _ScheduleDetailPageState extends State<ScheduleDetailPage> {
+  final _authentication = FirebaseAuth.instance;
+  User? loggedUser;
+  // 이 페이지가 생성될 그 때만 인스턴스 전달만 해주면 됨
+
+  @override
+  // State가 처음 만들어졌을때만 하는 것
+  void initState() {
+    // TODO: implement initState
+    super.initState(); // 이걸 먼저 해줘야함(부모 클래스로부터 받아옴, Stateful 위젯 안에 initState가 있기때문에)
+    getCurrentUser();
+  }
+
+  void getCurrentUser() {
+    try {
+      final user = _authentication.currentUser; // _authentication 의 currentUser을 대입
+      if (user != null) {
+        loggedUser = user;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
 
 class ScheduleDetail extends StatelessWidget {
   ScheduleDetail({Key? key}) : super(key: key);
@@ -9,11 +48,6 @@ class ScheduleDetail extends StatelessWidget {
     Subject('Graphics', '15:00-18:00', 'Texture, Lighting, 할거 짱 많네 아오'),
     Subject('Algorithm', '21:00-23:00', 'BFS'),
     Subject('DB','13:00-14:30','DB레포트 작성'),
-    Subject('Graphics', '15:00-18:00', 'Texture, Lighting'),
-    Subject('Algorithm', '21:00-23:00', 'BFS'),
-    Subject('DB','13:00-14:30','DB레포트 작성'),
-    Subject('Graphics', '15:00-18:00', 'Texture, Lighting'),
-    Subject('Algorithm', '21:00-23:00', 'BFS'),
   ];
 
   @override
@@ -79,9 +113,9 @@ class SubjectTile extends StatelessWidget {
           const SizedBox(width: 30,),
           Text(_subject.time),
           const SizedBox(width: 30,),
-          Text(_subject.todo,
-            maxLines:2,
-            overflow: TextOverflow.ellipsis,),
+          Expanded(
+            child: Text(_subject.todo,),
+          ),
         ],
       ),
       onTap: (){        // 리스트 타일이 클릭되면
@@ -99,7 +133,7 @@ class SubjectTile extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 3),
                       const SizedBox(width: 20),
-                      Text(_subject.todo, style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),),
+                      Expanded(child: Text(_subject.todo, style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),)),
                     ],
                   ),
                 ),
