@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.purple,
+        primarySwatch: Colors.indigo,
       ),
 
       // 로그인 되었을 때는, Success Page 가 Home 화면이 되도록 해보겠다
