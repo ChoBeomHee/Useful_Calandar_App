@@ -35,7 +35,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-
       // 로그인 되었을 때는, Success Page 가 Home 화면이 되도록 해보겠다
       // StreamBuilder 사용, 파이어베이스에서 어떤 변화가 생겼을 때 변화를 감지할 수 있도록 도와주는 stream을 받아옴
       // 변화가 생겼다는게 감지가 되는 순간 반응을 할 수 있는 클래스
