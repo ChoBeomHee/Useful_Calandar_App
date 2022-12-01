@@ -148,6 +148,17 @@ class _SubjectInfoState extends State<SubjectInfo> {
                                         ),
                                       ],
                                     ),
+                                    const SizedBox(height: 20,),
+                                    Row(
+                                      children: [
+                                        const SizedBox(
+                                            width: 100,
+                                            child: Text('영어 강의')),
+                                        Container(
+                                          child: Text(docs[index]['English'].toString()),
+                                        ),
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ),
