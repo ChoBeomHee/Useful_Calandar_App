@@ -40,6 +40,7 @@ dependencies:
   firebase_auth: ^4.1.3
   modal_progress_hud_nsn: ^0.3.0
   firebase_messaging: ^14.1.2 # 파이어베이스 메시징 패키지
+  provider: ^6.0.4
 
 dev_dependencies:
   flutter_test:
