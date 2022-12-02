@@ -16,6 +16,7 @@ import 'RegisterPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/src/material/colors.dart';
 
 
 void main() async { // 1. await이 있기 떄문에 main 옆에 async 선언
@@ -36,9 +37,7 @@ class MyApp extends StatelessWidget {
       create: (BuildContext context) => Subs(),
       builder: (context, child) => MaterialApp(
         title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.indigo,
-        ),
+        theme: ThemeData(),
 
         // 로그인 되었을 때는, Success Page 가 Home 화면이 되도록 해보겠다
         // StreamBuilder 사용, 파이어베이스에서 어떤 변화가 생겼을 때 변화를 감지할 수 있도록 도와주는 stream을 받아옴

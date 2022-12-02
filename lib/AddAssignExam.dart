@@ -286,9 +286,6 @@ class _AddAssignExamState extends State<AddAssignExam> {
                         border: OutlineInputBorder(),
                         filled: true,
                       ),
-                      onSaved: (val) {
-                        ymdtEnd = ymdtEndController.text;
-                      },
                       validator: (val) {
                         if (val == null || val.isEmpty) {
                           return '입력해주세요';
@@ -332,8 +329,8 @@ class _AddAssignExamState extends State<AddAssignExam> {
               assignexamAdd.set({
                 "subject" : subjectSelected,
                 "rate" : rate,
-                "startYMDT" : ymdtStart,
-                "endYMDT" : ymdtEnd,
+                "startYMDT" : ymdtStartController.text,
+                "endYMDT" : ymdtEndController.text,
                 "memo" : memo,
                 "UID" : _authentication.currentUser!.uid,
               });
