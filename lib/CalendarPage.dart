@@ -29,24 +29,26 @@ class _CalendarPageState extends State<CalendarPage> {         // 메인 페이�
     return Padding(
       padding: const EdgeInsets.only(top: 16.0),
       child: Scaffold(
-        body: SfCalendar(
-          //showDatePickerButton: true,
-          showNavigationArrow: true,
-          view: CalendarView.month ,
-          initialSelectedDate: DateTime.now(),
-          initialDisplayDate: DateTime.now(),
-          headerStyle: const CalendarHeaderStyle(
-            textAlign: TextAlign.center,
-            textStyle: TextStyle(fontSize: 21)
+        body: SafeArea(
+          child: SfCalendar(
+            //showDatePickerButton: true,
+            showNavigationArrow: true,
+            view: CalendarView.month ,
+            initialSelectedDate: DateTime.now(),
+            initialDisplayDate: DateTime.now(),
+            headerStyle: const CalendarHeaderStyle(
+              textAlign: TextAlign.center,
+              textStyle: TextStyle(fontSize: 21)
+            ),
+            dataSource: MeetingDataSource(_getDataSource()),
+            monthViewSettings: const MonthViewSettings(
+                appointmentDisplayCount: 3,
+                appointmentDisplayMode: MonthAppointmentDisplayMode.appointment,
+                navigationDirection: MonthNavigationDirection.horizontal,
+                agendaViewHeight: 120,
+                agendaItemHeight: 50,
+                showAgenda: true),
           ),
-          dataSource: MeetingDataSource(_getDataSource()),
-          monthViewSettings: const MonthViewSettings(
-              appointmentDisplayCount: 3,
-              appointmentDisplayMode: MonthAppointmentDisplayMode.appointment,
-              navigationDirection: MonthNavigationDirection.horizontal,
-              agendaViewHeight: 120,
-              agendaItemHeight: 50,
-              showAgenda: true),
         ),
       ),
     );

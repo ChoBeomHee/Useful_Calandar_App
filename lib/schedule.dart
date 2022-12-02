@@ -240,7 +240,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                     ],
                   ),
                 ),
-              ),
+              ), // 개인
                 SafeArea(
                   child: Container(
                     decoration: BoxDecoration(
@@ -301,7 +301,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                       ],
                     ),
                   ),
-                ),
+                ), // 공부
               ],
             )
         ),
