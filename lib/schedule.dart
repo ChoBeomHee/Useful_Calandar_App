@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:team/SubjectsProvider.dart';
 
 import 'package:team/personalView.dart';
+User? loggedUser;
 class Subject {
   String title;
   String time;
@@ -35,11 +36,12 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
     Subject('DB','13:00-14:30','DB레포트 작성'),
     Subject('Grahics', '15:00-18:00', 'Texture, Lighting'),
   ];*/
+
   final _authentication = FirebaseAuth.instance;
-  User? loggedUser;
 
   // 이 페이지가 생성될 그 때만 인스턴스 전달만 해주면 됨
   Future<void> setSchedure_Assingment() async {
+
     var sub = FirebaseFirestore.instance.collection('Subject').
     where('uid', isEqualTo: _authentication.currentUser!.uid).get();
     var check = await sub;
@@ -49,12 +51,27 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
       doc(check.docs[i]['SubjectName']).collection('Assignment').get();
 
       var list = await todayAssingn;
-      for(int i = 0; i < list.docs.length; i++){
-        context.read<Subs>().prov_subjectname.add(list.docs[i]['subject']);
-        context.read<Subs>().prov_memo.add(list.docs[i]['memo']);
-        context.read<Subs>().start.add(list.docs[i]['startYMDT']);
-        context.read<Subs>().end.add(list.docs[i]['endYMDT']);
-        context.read<Subs>().type.add('과제');
+      for (int i = 0; i < list.docs.length; i++) {
+        context
+            .read<Subs>()
+            .prov_subjectname
+            .add(list.docs[i]['subject']);
+        context
+            .read<Subs>()
+            .prov_memo
+            .add(list.docs[i]['memo']);
+        context
+            .read<Subs>()
+            .start
+            .add(list.docs[i]['startYMDT']);
+        context
+            .read<Subs>()
+            .end
+            .add(list.docs[i]['endYMDT']);
+        context
+            .read<Subs>()
+            .type
+            .add('과제');
       }
     }
     for (int i = 0; i < check.docs.length; i++) {
@@ -62,32 +79,58 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
       doc(check.docs[i]['SubjectName']).collection('Exam').get();
 
       var list = await todayExam;
-      for(int i = 0; i < list.docs.length; i++){
-        context.read<Subs>().prov_subjectname.add(list.docs[i]['subject']);
-        context.read<Subs>().prov_memo.add(list.docs[i]['memo']);
-        context.read<Subs>().start.add(list.docs[i]['startYMDT']);
-        context.read<Subs>().end.add(list.docs[i]['endYMDT']);
-        context.read<Subs>().type.add('시험');
+      for (int i = 0; i < list.docs.length; i++) {
+        context
+            .read<Subs>()
+            .prov_subjectname
+            .add(list.docs[i]['subject']);
+        context
+            .read<Subs>()
+            .prov_memo
+            .add(list.docs[i]['memo']);
+        context
+            .read<Subs>()
+            .start
+            .add(list.docs[i]['startYMDT']);
+        context
+            .read<Subs>()
+            .end
+            .add(list.docs[i]['endYMDT']);
+        context
+            .read<Subs>()
+            .type
+            .add('시험');
       }
-
     }
     for (int i = 0; i < check.docs.length; i++) {
       var todayQuiz = FirebaseFirestore.instance.collection('Subject').
       doc(check.docs[i]['SubjectName']).collection('Quiz').get();
 
       var list = await todayQuiz;
-      for(int i = 0; i < list.docs.length; i++){
-        context.read<Subs>().prov_subjectname.add(list.docs[i]['subject']);
-        context.read<Subs>().prov_memo.add(list.docs[i]['memo']);
-        context.read<Subs>().start.add(list.docs[i]['startYMDT']);
-        context.read<Subs>().end.add(list.docs[i]['endYMDT']);
-        context.read<Subs>().type.add('퀴즈');
+      for (int i = 0; i < list.docs.length; i++) {
+        context
+            .read<Subs>()
+            .prov_subjectname
+            .add(list.docs[i]['subject']);
+        context
+            .read<Subs>()
+            .prov_memo
+            .add(list.docs[i]['memo']);
+        context
+            .read<Subs>()
+            .start
+            .add(list.docs[i]['startYMDT']);
+        context
+            .read<Subs>()
+            .end
+            .add(list.docs[i]['endYMDT']);
+        context
+            .read<Subs>()
+            .type
+            .add('퀴즈');
       }
     }
-
-
   }
-
 
 
   @override
@@ -113,48 +156,76 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
 
   @override
   Widget build(BuildContext context) {
-    context.read<Subs>().prov_subjectname.clear();
-    context.read<Subs>().prov_memo.clear();
-    context.read<Subs>().start.clear();
-    context.read<Subs>().end.clear();
-    context.read<Subs>().type.clear();
+    context
+        .read<Subs>()
+        .prov_subjectname
+        .clear();
+    context
+        .read<Subs>()
+        .prov_memo
+        .clear();
+    context
+        .read<Subs>()
+        .start
+        .clear();
+    context
+        .read<Subs>()
+        .end
+        .clear();
+    context
+        .read<Subs>()
+        .type
+        .clear();
 
     return
-      Scaffold(
-        body: SafeArea(
-          child: Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(60), // 모서리를 둥글게
-                border: Border.all(color: Colors.indigo, width: 13)),
-            child: Column(
-              children: <Widget>[
-                Text('\n\n오늘 일정(${getToday()})',
-                    style: const TextStyle(fontSize: 17,
-                        fontWeight: FontWeight.bold)),
-                Text('공부 일정', style: const TextStyle(fontSize: 16,
-                    fontWeight : FontWeight.bold)),
-                FutureBuilder(
-                    future: setSchedure_Assingment(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return Text('');
-                      }
-                      else {
-                        return Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: ListView.separated(
-                              itemCount: context
-                                  .read<Subs>()
-                                  .prov_subjectname
-                                  .length,
+      DefaultTabController(
+        length: 2,
+        child: Scaffold(
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(50),
+              child: AppBar(
+                bottom: TabBar(tabs: [
+                  Tab(icon: Icon(Icons.schedule),),
+                  Tab(icon: Icon(Icons.book),)
+                ]),
+              ),
+            ),
+            body: TabBarView(
+              children: [
+                SafeArea(
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(60), // 모서리를 둥글게
+                      border: Border.all(color: Colors.indigo, width: 10)),
+                  child: Column(
+                    children: <Widget>[
+                      Text('\n\n오늘 일정(${getToday()})',
+                          style: const TextStyle(fontSize: 17,
+                              fontWeight: FontWeight.bold)),
+                      Text('개인 일정', style: const TextStyle(fontSize: 16,
+                          fontWeight: FontWeight.bold)),
+                      Expanded(
+                        child: StreamBuilder<QuerySnapshot>(
+                          stream: FirebaseFirestore.instance.collection('Personal').where('uid',isEqualTo: _authentication.currentUser!.uid)
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                              return const Center(child: CircularProgressIndicator());
+                            }
+                            final docs = snapshot.data!.docs;
+                            return ListView.separated(
+                              itemCount: docs.length,
                               itemBuilder: (context, index) {
-                                return SubjectTile(Subject(context.read<Subs>().prov_subjectname[index],
-                                    context.read<Subs>().start[index],
-                                    context.read<Subs>().end[index],
-                                    context.read<Subs>().prov_memo[index],
-                                    context.read<Subs>().type[index]
-                                )
+                                return Container(
+                                  child: ListTile(title: Text(
+                                      '     ${docs[index]['time']} :    ${docs[index]['memo']
+                                          .toString()}',
+                                      style: const TextStyle(height: 3,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500),
+                                      textAlign: TextAlign.start
+                                  ),
+                                  ),
                                 );
                               },
                               separatorBuilder: (context, index) {
@@ -162,29 +233,81 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                   thickness: 3.0,
                                 );
                               },
-                            ),
-                          ),
-                        );
-                      }
-                    }
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                Align(
-                  alignment: Alignment.topRight,
-                  child: FloatingActionButton(
-                    onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const personalView()));
-                    },
-                    child: Icon(Icons.move_down_rounded,),
+              ),
+                SafeArea(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(60), // 모서리를 둥글게
+                        border: Border.all(color: Colors.indigo, width: 10)),
+                    child: Column(
+                      children: <Widget>[
+                        Text('\n\n오늘 일정(${getToday()})',
+                            style: const TextStyle(fontSize: 17,
+                                fontWeight: FontWeight.bold)),
+                        Text('공부 일정', style: const TextStyle(fontSize: 16,
+                            fontWeight: FontWeight.bold)),
+                        FutureBuilder(
+                            future: setSchedure_Assingment(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return Text('');
+                              }
+                              else {
+                                return Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: ListView.separated(
+                                      itemCount: context
+                                          .read<Subs>()
+                                          .prov_subjectname
+                                          .length,
+                                      itemBuilder: (context, index) {
+                                        return SubjectTile(Subject(context
+                                            .read<Subs>()
+                                            .prov_subjectname[index],
+                                            context
+                                                .read<Subs>()
+                                                .start[index],
+                                            context
+                                                .read<Subs>()
+                                                .end[index],
+                                            context
+                                                .read<Subs>()
+                                                .prov_memo[index],
+                                            context
+                                                .read<Subs>()
+                                                .type[index]
+                                        )
+                                        );
+                                      },
+                                      separatorBuilder: (context, index) {
+                                        return const Divider(
+                                          thickness: 3.0,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                );
+                              }
+                            }
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
-            ),
-          ),
-        )
-    );
+            )
+        ),
+      );
   }
 }
-
 class SubjectTile extends StatefulWidget {
   SubjectTile(this._subject);
   final Subject _subject;
