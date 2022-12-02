@@ -56,8 +56,8 @@ class _AddAssignExamState extends State<AddAssignExam> {
   int? rate;
   String? memo;
 
-  String? ymdtStart;
-  String? ymdtEnd;
+  DateTime? ymdtStart;
+  DateTime? ymdtEnd;
   TextEditingController ymdtStartController = TextEditingController();
   TextEditingController ymdtEndController = TextEditingController();
 
@@ -89,6 +89,7 @@ class _AddAssignExamState extends State<AddAssignExam> {
           min = pickedTime.minute.toString();
         }
         ymdtStartController.text = '${dateTime.toString().split(' ')[0]} $hour:$min';
+        ymdtStart = dateTime;
       }
     }
   }
@@ -121,6 +122,7 @@ class _AddAssignExamState extends State<AddAssignExam> {
           min = pickedTime.minute.toString();
         }
         ymdtEndController.text = '${dateTime.toString().split(' ')[0]} $hour:$min';
+        ymdtEnd = dateTime;
       }
     }
   }
@@ -250,9 +252,6 @@ class _AddAssignExamState extends State<AddAssignExam> {
                         border: OutlineInputBorder(),
                         filled: true,
                       ),
-                      onSaved: (val) {
-                        ymdtStart = ymdtStartController.text;
-                      },
                       validator: (val) {
                         if (val == null || val.isEmpty) {
                           return '입력해주세요';
