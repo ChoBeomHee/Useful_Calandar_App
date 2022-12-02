@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:provider/provider.dart';
+import 'package:team/SubjectsProvider.dart';
 
 class SubjectInfo extends StatefulWidget {
   SubjectInfo({Key? key}) : super(key: key);
@@ -35,6 +36,7 @@ class _SubjectInfoState extends State<SubjectInfo> {
   }
   @override
   Widget build(BuildContext context) {
+    context.read<Subs>().prov_subjectname.clear();
     return Scaffold(
       appBar: AppBar(
         title: const Text('과목 상세 정보'),
@@ -143,17 +145,6 @@ class _SubjectInfoState extends State<SubjectInfo> {
                                             child: Text('출결')),
                                         Container(
                                           child: Text(docs[index]['attandence'].toString()+'%'),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 20,),
-                                    Row(
-                                      children: [
-                                        const SizedBox(
-                                            width: 100,
-                                            child: Text('영어 강의')),
-                                        Container(
-                                          child: Text(docs[index]['English'].toString()),
                                         ),
                                       ],
                                     ),

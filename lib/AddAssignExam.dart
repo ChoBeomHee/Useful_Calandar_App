@@ -6,6 +6,8 @@ import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'schedule.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:team/SubjectsProvider.dart';
+import 'package:provider/provider.dart';
 
 // 과제/시험 일정 추가 버튼 클릭 시 AddAssignExam 나옴
 class AddAssignExam extends StatefulWidget {
@@ -60,7 +62,9 @@ class _AddAssignExamState extends State<AddAssignExam> {
   TextEditingController ymdtEndController = TextEditingController();
 
   startYearMonthDayTimePicker() async {
-    final year = DateTime.now().year;
+    final year = DateTime
+        .now()
+        .year;
     String hour, min;
 
     final DateTime? dateTime = await showDatePicker(
@@ -282,9 +286,6 @@ class _AddAssignExamState extends State<AddAssignExam> {
                         border: OutlineInputBorder(),
                         filled: true,
                       ),
-                      onSaved: (val) {
-                        ymdtEnd = ymdtEndController.text;
-                      },
                       validator: (val) {
                         if (val == null || val.isEmpty) {
                           return '입력해주세요';
@@ -328,12 +329,14 @@ class _AddAssignExamState extends State<AddAssignExam> {
               assignexamAdd.set({
                 "subject" : subjectSelected,
                 "rate" : rate,
-                "startYMDT" : ymdtStart,
-                "endYMDT" : ymdtEnd,
-                "memo" : memo
+                "startYMDT" : ymdtStartController.text,
+                "endYMDT" : ymdtEndController.text,
+                "memo" : memo,
+                "UID" : _authentication.currentUser!.uid,
               });
               ymdtStartController.clear();
               ymdtEndController.clear();
+              context.read<Subs>().prov_subjectname.add(Subject.toString());
               Navigator.pop(context);
             },
             child: const Text('확인'),
