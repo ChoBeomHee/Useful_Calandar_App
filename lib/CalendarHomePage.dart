@@ -75,9 +75,7 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
                         title: Container(
                           child: Column(
                             children: const [
-                              Text('과목 추가'),
-                              SizedBox(height: 30,),
-                              AddSubjects()
+                              AddSubjects(),
                             ],
                           ),
                         ),
@@ -101,8 +99,6 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
                         title: Container(
                           child: Column(
                             children: const [
-                              Text('과제/시험 추가'),
-                              SizedBox(height: 30,),
                               AddAssignExam(),
                             ],
                           ),
@@ -127,8 +123,6 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
                         title: Container(
                           child: Column(
                             children: const [
-                              Text('개인 일정 추가'),
-                              SizedBox(height: 30,),
                               AddPersonal(),
                             ],
                           ),

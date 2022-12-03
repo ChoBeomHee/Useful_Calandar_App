@@ -81,6 +81,10 @@ class _AddPersonalState extends State<AddPersonal> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          const Text('개인 일정 추가'),
+          const SizedBox(
+            height: 15,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
