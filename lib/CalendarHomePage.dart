@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:team/LoginPage.dart';
 import 'schedule.dart';
 import 'package:team/CalendarPage.dart';
 import 'AddAssignExam.dart';
@@ -133,9 +134,15 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
                 shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(22.0))),
                 title: Container(
                   child: Column(
-                    children: const [
-                      Text('로그아웃'),
+                    children:  [
+                      const Text('로그아웃'),
                       SizedBox(height: 30,),
+                      OutlinedButton(
+                        onPressed: () {
+                          FirebaseAuth.instance.signOut(); // 로그아웃
+                        },
+                        child: const Text('확인'),
+                      ),
                       // 이 부분에 함수 넣으면 됨
                     ],
                   ),
