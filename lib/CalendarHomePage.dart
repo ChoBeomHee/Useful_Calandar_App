@@ -38,6 +38,7 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
   @override
   Widget build(BuildContext context) {    // 메인
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       floatingActionButton: SpeedDial(
         animatedIcon: AnimatedIcons.menu_close,
         animatedIconTheme: IconThemeData(size: 22.0),
@@ -75,6 +76,7 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
                       ],
                     ),
                   ),
+                  //scrollable: true,
                 ),
               ),
           ),
