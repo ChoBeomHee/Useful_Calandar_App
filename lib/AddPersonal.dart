@@ -90,47 +90,53 @@ class _AddPersonalState extends State<AddPersonal> {
               ),
               const SizedBox(width: 15,),
               Expanded(
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                child: SizedBox(
+                  height: 35,
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                    onChanged: (value) {
+                      personalTitle = value;
+                    },
                   ),
-                  onChanged: (value) {
-                    personalTitle = value;
-                  },
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(height: 15,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               const Text('약속시간'),
               const SizedBox(width: 25,),
               Expanded(
-                child: GestureDetector(
-                  onTap: personalYearMonthDayTimePicker,
-                  child: AbsorbPointer(
-                    child: TextFormField(
-                      controller: ymdtPersonalController,
-                      decoration: InputDecoration(
-                        labelText: '약속 연월일 시간',
-                        border: OutlineInputBorder(),
-                        filled: true,
+                child: SizedBox(
+                  height: 35,
+                  child: GestureDetector(
+                    onTap: personalYearMonthDayTimePicker,
+                    child: AbsorbPointer(
+                      child: TextFormField(
+                        controller: ymdtPersonalController,
+                        decoration: InputDecoration(
+                          labelText: '약속 연월일 시간',
+                          border: OutlineInputBorder(),
+                          filled: true,
+                        ),
+                        validator: (val) {
+                          if (val == null || val.isEmpty) {
+                            return '입력해주세요';
+                          }
+                          return null;
+                        },
                       ),
-                      validator: (val) {
-                        if (val == null || val.isEmpty) {
-                          return '입력해주세요';
-                        }
-                        return null;
-                      },
                     ),
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(height: 15,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -138,7 +144,7 @@ class _AddPersonalState extends State<AddPersonal> {
                 padding: const EdgeInsets.only(left : 8.0),
                 child: const Text('알림'),
               ),
-              const SizedBox(width: 40,),
+              const SizedBox(width: 30,),
               DropdownButton(
                   value: _alarmSelected,
                   items: _alramList.map(
@@ -155,7 +161,7 @@ class _AddPersonalState extends State<AddPersonal> {
               )
             ],
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(height: 15,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

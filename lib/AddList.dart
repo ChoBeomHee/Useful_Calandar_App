@@ -3,7 +3,8 @@ import 'AddSubject.dart';
 import 'AddAssignExam.dart';
 import 'AddPersonal.dart';
 
-// main 페이지에서 add 버튼을 눌렀을 때 addList 나옴
+// 과목을 추가하는 페이지
+
 class addList extends StatelessWidget {         // 추가
   const addList({Key? key}) : super(key: key);
 
