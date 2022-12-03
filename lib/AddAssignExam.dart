@@ -56,8 +56,8 @@ class _AddAssignExamState extends State<AddAssignExam> {
   int? rate;
   String? memo;
 
-  String? ymdtStart;
-  String? ymdtEnd;
+  DateTime? ymdtStart;
+  DateTime? ymdtEnd;
   TextEditingController ymdtStartController = TextEditingController();
   TextEditingController ymdtEndController = TextEditingController();
 
@@ -87,6 +87,7 @@ class _AddAssignExamState extends State<AddAssignExam> {
           min = pickedTime.minute.toString();
         }
         ymdtStartController.text = '${dateTime.toString().split(' ')[0]} $hour:$min';
+        ymdtStart = dateTime;
       }
     }
   }
@@ -119,6 +120,7 @@ class _AddAssignExamState extends State<AddAssignExam> {
           min = pickedTime.minute.toString();
         }
         ymdtEndController.text = '${dateTime.toString().split(' ')[0]} $hour:$min';
+        ymdtEnd = dateTime;
       }
     }
   }
@@ -133,10 +135,10 @@ class _AddAssignExamState extends State<AddAssignExam> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left : 8.0),
+                padding: const EdgeInsets.only(left : 4.0),
                 child: const Text('과목명'),
               ),
-              const SizedBox(width: 75,),
+              const SizedBox(width: 10,),
               Row(
                 children: <Widget>[
                   StreamBuilder<QuerySnapshot>(
@@ -159,7 +161,7 @@ class _AddAssignExamState extends State<AddAssignExam> {
               ),
             ],
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(height: 15,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -184,7 +186,7 @@ class _AddAssignExamState extends State<AddAssignExam> {
               )
             ],
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(height: 15,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -194,19 +196,22 @@ class _AddAssignExamState extends State<AddAssignExam> {
               ),
               const SizedBox(width: 15,),
               Expanded(
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: '과제/시험 이름',
+                child: SizedBox(
+                  height: 35,
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: '과제/시험 이름',
+                    ),
+                    onChanged: (value) {
+                      AssignExamName = value;
+                    },
                   ),
-                  onChanged: (value) {
-                    AssignExamName = value;
-                  },
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(height: 15,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -216,19 +221,22 @@ class _AddAssignExamState extends State<AddAssignExam> {
               ),
               const SizedBox(width: 15,),
               Expanded(
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: '숫자만 입력',
+                child: SizedBox(
+                  height: 35,
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: '숫자만 입력',
+                    ),
+                    onChanged: (value) {
+                      rate = int.parse(value);
+                    },
                   ),
-                  onChanged: (value) {
-                    rate = int.parse(value);
-                  },
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(height: 15,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -238,25 +246,25 @@ class _AddAssignExamState extends State<AddAssignExam> {
               ),
               const SizedBox(width: 15,),
               Expanded(
-                child: GestureDetector(
-                  onTap: startYearMonthDayTimePicker,
-                  child: AbsorbPointer(
-                    child: TextFormField(
-                      controller: ymdtStartController,
-                      decoration: InputDecoration(
-                        labelText: '시작 연월일 시간',
-                        border: OutlineInputBorder(),
-                        filled: true,
+                child: SizedBox(
+                  height: 35,
+                  child: GestureDetector(
+                    onTap: startYearMonthDayTimePicker,
+                    child: AbsorbPointer(
+                      child: TextFormField(
+                        controller: ymdtStartController,
+                        decoration: InputDecoration(
+                          labelText: '시작 연월일 시간',
+                          border: OutlineInputBorder(),
+                          filled: true,
+                        ),
+                        validator: (val) {
+                          if (val == null || val.isEmpty) {
+                            return '입력해주세요';
+                          }
+                          return null;
+                        },
                       ),
-                      onSaved: (val) {
-                        ymdtStart = ymdtStartController.text;
-                      },
-                      validator: (val) {
-                        if (val == null || val.isEmpty) {
-                          return '입력해주세요';
-                        }
-                        return null;
-                      },
                     ),
                   ),
                 ),
@@ -264,7 +272,7 @@ class _AddAssignExamState extends State<AddAssignExam> {
 
             ],
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(height: 15,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -274,29 +282,32 @@ class _AddAssignExamState extends State<AddAssignExam> {
               ),
               const SizedBox(width: 15,),
               Expanded(
-                child: GestureDetector(
-                  onTap: endYearMonthDayTimePicker,
-                  child: AbsorbPointer(
-                    child: TextFormField(
-                      controller: ymdtEndController,
-                      decoration: InputDecoration(
-                        labelText: '종료 연월일 시간',
-                        border: OutlineInputBorder(),
-                        filled: true,
+                child: SizedBox(
+                  height: 35,
+                  child: GestureDetector(
+                    onTap: endYearMonthDayTimePicker,
+                    child: AbsorbPointer(
+                      child: TextFormField(
+                        controller: ymdtEndController,
+                        decoration: InputDecoration(
+                          labelText: '종료 연월일 시간',
+                          border: OutlineInputBorder(),
+                          filled: true,
+                        ),
+                        validator: (val) {
+                          if (val == null || val.isEmpty) {
+                            return '입력해주세요';
+                          }
+                          return null;
+                        },
                       ),
-                      validator: (val) {
-                        if (val == null || val.isEmpty) {
-                          return '입력해주세요';
-                        }
-                        return null;
-                      },
                     ),
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(height: 15,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

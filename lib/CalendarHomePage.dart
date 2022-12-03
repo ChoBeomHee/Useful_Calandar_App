@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:team/LoginPage.dart';
 import 'schedule.dart';
 import 'package:team/CalendarPage.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -37,6 +39,120 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
   @override
   Widget build(BuildContext context) {    // 메인
     return Scaffold(
+      floatingActionButton: SpeedDial(
+        animatedIcon: AnimatedIcons.menu_close,
+        animatedIconTheme: IconThemeData(size: 22.0),
+        // this is ignored if animatedIcon is non null
+        // child: Icon(Icons.add),
+        visible: true,
+        curve: Curves.bounceIn,
+        overlayColor: Colors.black,
+        overlayOpacity: 0.5,
+        onOpen: () => print('OPENING DIAL'),
+        onClose: () => print('DIAL CLOSED'),
+        tooltip: 'Speed Dial',
+        heroTag: 'speed-dial-hero-tag',
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 8.0,
+        shape: CircleBorder(),
+        children: [
+          SpeedDialChild(
+              child: Icon(Icons.accessibility),
+              backgroundColor: Colors.lightBlueAccent,
+              label: '과목',
+              labelStyle: TextStyle(fontSize: 18.0),
+              onTap: () => showDialog(
+                context: context,
+                barrierDismissible: true,
+                builder: (BuildContext context) => AlertDialog(
+                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(22.0))),
+                  title: Container(
+                    child: Column(
+                      children: const [
+                        Text('과목 추가'),
+                        SizedBox(height: 30,),
+                        AddSubjects()
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.brush),
+            backgroundColor: Colors.lightBlueAccent,
+            label: '과제/시험',
+            labelStyle: TextStyle(fontSize: 18.0),
+            onTap: () =>showDialog(
+              context: context,
+              barrierDismissible: true,
+              builder: (BuildContext context) => AlertDialog(
+                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(22.0))),
+                title: Container(
+                  child: Column(
+                    children: const [
+                      Text('과제/시험 추가'),
+                      SizedBox(height: 30,),
+                      AddAssignExam(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.score),
+            backgroundColor: Colors.lightBlueAccent,
+            label: '개인 일정',
+            labelStyle: TextStyle(fontSize: 18.0),
+            onTap: () => showDialog(
+              context: context,
+              barrierDismissible: true,
+              builder: (BuildContext context) => AlertDialog(
+                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(22.0))),
+                title: Container(
+                  child: Column(
+                    children: const [
+                      Text('개인 일정 추가'),
+                      SizedBox(height: 30,),
+                      AddPersonal(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.score),
+            backgroundColor: Colors.lightBlueAccent,
+            label: '로그아웃',
+            labelStyle: TextStyle(fontSize: 18.0),
+            onTap: () => showDialog(
+              context: context,
+              barrierDismissible: true,
+              builder: (BuildContext context) => AlertDialog(
+                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(22.0))),
+                title: Container(
+                  child: Column(
+                    children:  [
+                      const Text('로그아웃'),
+                      SizedBox(height: 30,),
+                      OutlinedButton(
+                        onPressed: () {
+                          FirebaseAuth.instance.signOut(); // 로그아웃
+                        },
+                        child: const Text('확인'),
+                      ),
+                      // 이 부분에 함수 넣으면 됨
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),

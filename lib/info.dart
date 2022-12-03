@@ -36,7 +36,6 @@ class _SubjectInfoState extends State<SubjectInfo> {
   }
   @override
   Widget build(BuildContext context) {
-    context.read<Subs>().prov_subjectname.clear();
     return Scaffold(
       appBar: AppBar(
         title: const Text('과목 상세 정보'),
