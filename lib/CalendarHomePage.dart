@@ -5,6 +5,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:team/LoginPage.dart';
 import 'schedule.dart';
 import 'package:team/CalendarPage.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'AddAssignExam.dart';
 import 'AddPersonal.dart';
 import 'AddSubject.dart';
@@ -36,9 +37,9 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
   }
 
   @override
-  Widget build(BuildContext context) {    // 메인
+  Widget build(BuildContext context) {
+    // 메인
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       floatingActionButton: SpeedDial(
         animatedIcon: AnimatedIcons.menu_close,
         animatedIconTheme: IconThemeData(size: 22.0),
@@ -58,99 +59,113 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
         shape: CircleBorder(),
         children: [
           SpeedDialChild(
-              child: Icon(Icons.accessibility),
-              backgroundColor: Colors.lightBlueAccent,
-              label: '과목',
-              labelStyle: TextStyle(fontSize: 18.0),
-              onTap: () => showDialog(
-                context: context,
-                barrierDismissible: true,
-                builder: (BuildContext context) => AlertDialog(
-                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(22.0))),
-                  title: Container(
-                    child: Column(
-                      children: const [
-                        Text('과목 추가'),
-                        SizedBox(height: 30,),
-                        AddSubjects()
-                      ],
-                    ),
-                  ),
-                  //scrollable: true,
+            child: Icon(Icons.accessibility),
+            backgroundColor: Colors.lightBlueAccent,
+            label: '과목',
+            labelStyle: TextStyle(fontSize: 18.0),
+            onTap: () =>
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) =>
+                      AlertDialog(
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(22.0))),
+                        title: Container(
+                          child: Column(
+                            children: const [
+                              Text('과목 추가'),
+                              SizedBox(height: 30,),
+                              AddSubjects()
+                            ],
+                          ),
+                        ),
+                      ),
                 ),
-              ),
           ),
           SpeedDialChild(
             child: Icon(Icons.brush),
             backgroundColor: Colors.lightBlueAccent,
             label: '과제/시험',
             labelStyle: TextStyle(fontSize: 18.0),
-            onTap: () =>showDialog(
-              context: context,
-              barrierDismissible: true,
-              builder: (BuildContext context) => AlertDialog(
-                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(22.0))),
-                title: Container(
-                  child: Column(
-                    children: const [
-                      Text('과제/시험 추가'),
-                      SizedBox(height: 30,),
-                      AddAssignExam(),
-                    ],
-                  ),
+            onTap: () =>
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) =>
+                      AlertDialog(
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(22.0))),
+                        title: Container(
+                          child: Column(
+                            children: const [
+                              Text('과제/시험 추가'),
+                              SizedBox(height: 30,),
+                              AddAssignExam(),
+                            ],
+                          ),
+                        ),
+                      ),
                 ),
-              ),
-            ),
           ),
           SpeedDialChild(
             child: Icon(Icons.score),
             backgroundColor: Colors.lightBlueAccent,
             label: '개인 일정',
             labelStyle: TextStyle(fontSize: 18.0),
-            onTap: () => showDialog(
-              context: context,
-              barrierDismissible: true,
-              builder: (BuildContext context) => AlertDialog(
-                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(22.0))),
-                title: Container(
-                  child: Column(
-                    children: const [
-                      Text('개인 일정 추가'),
-                      SizedBox(height: 30,),
-                      AddPersonal(),
-                    ],
-                  ),
+            onTap: () =>
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) =>
+                      AlertDialog(
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(22.0))),
+                        title: Container(
+                          child: Column(
+                            children: const [
+                              Text('개인 일정 추가'),
+                              SizedBox(height: 30,),
+                              AddPersonal(),
+                            ],
+                          ),
+                        ),
+                      ),
                 ),
-              ),
-            ),
           ),
           SpeedDialChild(
             child: Icon(Icons.score),
             backgroundColor: Colors.lightBlueAccent,
             label: '로그아웃',
             labelStyle: TextStyle(fontSize: 18.0),
-            onTap: () => showDialog(
-              context: context,
-              barrierDismissible: true,
-              builder: (BuildContext context) => AlertDialog(
-                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(22.0))),
-                title: Container(
-                  child: Column(
-                    children:  [
-                      const Text('로그아웃'),
-                      SizedBox(height: 30,),
-                      OutlinedButton(
-                        onPressed: () {
-                          FirebaseAuth.instance.signOut(); // 로그아웃
-                        },
-                        child: const Text('확인'),
+            onTap: () =>
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) =>
+                      AlertDialog(
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(22.0))),
+                        title: Container(
+                          child: Column(
+                            children: [
+                              const Text('로그아웃'),
+                              SizedBox(height: 30,),
+                              OutlinedButton(
+                                onPressed: () {
+                                  FirebaseAuth.instance.signOut(); // 로그아웃
+                                },
+                                child: const Text('확인')),
+                              // 이 부분에 함수 넣으면 됨
+                            ],
+                          ),
+                        ),
                       ),
-                      // 이 부분에 함수 넣으면 됨
-                    ],
-                  ),
                 ),
-              ),
-            ),
           ),
         ],
       ),
@@ -158,6 +173,7 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
           BottomNavigationBarItem(icon: Icon(Icons.subject), label: '상세 일정'),
