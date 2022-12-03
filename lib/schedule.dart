@@ -218,7 +218,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                               itemBuilder: (context, index) {
                                 return Container(
                                   child: ListTile(title: Text(
-                                      '     ${docs[index]['time']} :    ${docs[index]['memo']
+                                      '     ${docs[index]['time']} :    ${docs[index]['title']
                                           .toString()}',
                                       style: const TextStyle(height: 3,
                                           fontSize: 18,
