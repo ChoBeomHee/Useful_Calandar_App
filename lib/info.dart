@@ -86,8 +86,10 @@ class _SubjectInfoState extends State<SubjectInfo> {
                                               const SizedBox(
                                                   width: 80,
                                                   child: Text('과목명')),
-                                              Container(
-                                                child: Text(docs[index]['SubjectName']),
+                                              Expanded(
+                                                child: Container(
+                                                  child: Text(docs[index]['SubjectName']),
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -196,7 +198,7 @@ class _SubjectInfoState extends State<SubjectInfo> {
 
                 docs.forEach((element) { totalCredit += element['credit']; });
 
-                return Text('총 학점: ' + totalCredit.toString(),style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),);
+                return Text('총 학점: $totalCredit',style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),);
               })
               ),
           ],
