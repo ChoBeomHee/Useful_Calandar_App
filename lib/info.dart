@@ -17,8 +17,6 @@ class _SubjectInfoState extends State<SubjectInfo> {
   User? loggedUser;
   // 이 페이지가 생성될 그 때만 인스턴스 전달만 해주면 됨
 
-  num totalCredit = 0;
-
   @override
   // State가 처음 만들어졌을때만 하는 것
   void initState() {
@@ -159,17 +157,6 @@ class _SubjectInfoState extends State<SubjectInfo> {
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(height: 20,),
-                                    Row(
-                                      children: [
-                                        const SizedBox(
-                                            width: 100,
-                                            child: Text('영어 강의')),
-                                        Container(
-                                          child: Text(docs[index]['English'].toString()),
-                                        ),
-                                      ],
-                                    ),
                                   ],
                                 ),
                               ),
@@ -180,28 +167,12 @@ class _SubjectInfoState extends State<SubjectInfo> {
                     );
                   },
                   separatorBuilder: (context, index) {
-                    return const Divider(thickness: 3.0,);
+                    return const Divider();
                   },
-
                 );
               },
             ),
           ),
-          Container(
-          height: 30,
-          child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('Subject')
-        .where('uid',isEqualTo: _authentication.currentUser!.uid).snapshots(),
-            builder: (context, snapshot) {
-               if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-               }
-                final docs = snapshot.data!.docs;
-
-               docs.forEach((element) { totalCredit += element['credit'];});
-
-                return Text('총 학점: ' + totalCredit.toString(),style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),);
-              }))
         ],
       ),
     );

@@ -56,13 +56,15 @@ class _AddAssignExamState extends State<AddAssignExam> {
   int? rate;
   String? memo;
 
-  DateTime? ymdtStart;
-  DateTime? ymdtEnd;
+  String? ymdtStart;
+  String? ymdtEnd;
   TextEditingController ymdtStartController = TextEditingController();
   TextEditingController ymdtEndController = TextEditingController();
 
   startYearMonthDayTimePicker() async {
-    final year = DateTime.now().year;
+    final year = DateTime
+        .now()
+        .year;
     String hour, min;
 
     final DateTime? dateTime = await showDatePicker(
@@ -87,7 +89,6 @@ class _AddAssignExamState extends State<AddAssignExam> {
           min = pickedTime.minute.toString();
         }
         ymdtStartController.text = '${dateTime.toString().split(' ')[0]} $hour:$min';
-        ymdtStart = dateTime;
       }
     }
   }
@@ -120,7 +121,6 @@ class _AddAssignExamState extends State<AddAssignExam> {
           min = pickedTime.minute.toString();
         }
         ymdtEndController.text = '${dateTime.toString().split(' ')[0]} $hour:$min';
-        ymdtEnd = dateTime;
       }
     }
   }
@@ -131,18 +131,14 @@ class _AddAssignExamState extends State<AddAssignExam> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          const Text('과제/시험 추가'),
-          const SizedBox(
-            height: 15,
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left : 4.0),
+                padding: const EdgeInsets.only(left : 8.0),
                 child: const Text('과목명'),
               ),
-              const SizedBox(width: 10,),
+              const SizedBox(width: 75,),
               Row(
                 children: <Widget>[
                   StreamBuilder<QuerySnapshot>(
@@ -165,7 +161,7 @@ class _AddAssignExamState extends State<AddAssignExam> {
               ),
             ],
           ),
-          const SizedBox(height: 15,),
+          const SizedBox(height: 10,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -190,7 +186,7 @@ class _AddAssignExamState extends State<AddAssignExam> {
               )
             ],
           ),
-          const SizedBox(height: 15,),
+          const SizedBox(height: 10,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -200,22 +196,19 @@ class _AddAssignExamState extends State<AddAssignExam> {
               ),
               const SizedBox(width: 15,),
               Expanded(
-                child: SizedBox(
-                  height: 35,
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: '과제/시험 이름',
-                    ),
-                    onChanged: (value) {
-                      AssignExamName = value;
-                    },
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: '과제/시험 이름',
                   ),
+                  onChanged: (value) {
+                    AssignExamName = value;
+                  },
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 15,),
+          const SizedBox(height: 10,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -225,22 +218,19 @@ class _AddAssignExamState extends State<AddAssignExam> {
               ),
               const SizedBox(width: 15,),
               Expanded(
-                child: SizedBox(
-                  height: 35,
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: '숫자만 입력',
-                    ),
-                    onChanged: (value) {
-                      rate = int.parse(value);
-                    },
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: '숫자만 입력',
                   ),
+                  onChanged: (value) {
+                    rate = int.parse(value);
+                  },
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 15,),
+          const SizedBox(height: 10,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -250,25 +240,25 @@ class _AddAssignExamState extends State<AddAssignExam> {
               ),
               const SizedBox(width: 15,),
               Expanded(
-                child: SizedBox(
-                  height: 35,
-                  child: GestureDetector(
-                    onTap: startYearMonthDayTimePicker,
-                    child: AbsorbPointer(
-                      child: TextFormField(
-                        controller: ymdtStartController,
-                        decoration: InputDecoration(
-                          labelText: '시작 연월일 시간',
-                          border: OutlineInputBorder(),
-                          filled: true,
-                        ),
-                        validator: (val) {
-                          if (val == null || val.isEmpty) {
-                            return '입력해주세요';
-                          }
-                          return null;
-                        },
+                child: GestureDetector(
+                  onTap: startYearMonthDayTimePicker,
+                  child: AbsorbPointer(
+                    child: TextFormField(
+                      controller: ymdtStartController,
+                      decoration: InputDecoration(
+                        labelText: '시작 연월일 시간',
+                        border: OutlineInputBorder(),
+                        filled: true,
                       ),
+                      onSaved: (val) {
+                        ymdtStart = ymdtStartController.text;
+                      },
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return '입력해주세요';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                 ),
@@ -276,7 +266,7 @@ class _AddAssignExamState extends State<AddAssignExam> {
 
             ],
           ),
-          const SizedBox(height: 15,),
+          const SizedBox(height: 10,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -286,32 +276,32 @@ class _AddAssignExamState extends State<AddAssignExam> {
               ),
               const SizedBox(width: 15,),
               Expanded(
-                child: SizedBox(
-                  height: 35,
-                  child: GestureDetector(
-                    onTap: endYearMonthDayTimePicker,
-                    child: AbsorbPointer(
-                      child: TextFormField(
-                        controller: ymdtEndController,
-                        decoration: InputDecoration(
-                          labelText: '종료 연월일 시간',
-                          border: OutlineInputBorder(),
-                          filled: true,
-                        ),
-                        validator: (val) {
-                          if (val == null || val.isEmpty) {
-                            return '입력해주세요';
-                          }
-                          return null;
-                        },
+                child: GestureDetector(
+                  onTap: endYearMonthDayTimePicker,
+                  child: AbsorbPointer(
+                    child: TextFormField(
+                      controller: ymdtEndController,
+                      decoration: InputDecoration(
+                        labelText: '종료 연월일 시간',
+                        border: OutlineInputBorder(),
+                        filled: true,
                       ),
+                      onSaved: (val) {
+                        ymdtEnd = ymdtEndController.text;
+                      },
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return '입력해주세요';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 15,),
+          const SizedBox(height: 10,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -342,8 +332,8 @@ class _AddAssignExamState extends State<AddAssignExam> {
               assignexamAdd.set({
                 "subject" : subjectSelected,
                 "rate" : rate,
-                "startYMDT" : ymdtStartController.text,
-                "endYMDT" : ymdtEndController.text,
+                "startYMDT" : ymdtStart,
+                "endYMDT" : ymdtEnd,
                 "memo" : memo,
                 "UID" : _authentication.currentUser!.uid,
               });

@@ -63,200 +63,128 @@ class _AddSubjectsState extends State<AddSubjects> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // 해당 과목 정보 입력
-          const Text('과목 추가'),
+          // 과목 정보 입력
+          const Text('과목'),
           const SizedBox(
-            height: 15,
+            height: 10,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: const Text('과목'),
+          // 과목명 입력
+          SizedBox(
+            height: 40,
+            child: TextFormField(
+              controller: _controller1,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: '과목명',
               ),
-              const SizedBox(width: 15,),
-              Expanded(
-                child: SizedBox(
-                  height: 35,
-                  child: TextFormField(
-                    controller: _controller1,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: '과목명',
-                    ),
-                    onChanged: (value) {
-                      // TextFormField 에 입력한 정보를 변수에 저장
-                      Subject = value;
-                    },
-                  ),
-                ),
-              ),
-            ],
+              onChanged: (value) {
+                // TextFormField 에 입력한 정보를 변수에 저장
+                Subject = value;
+              },
+            ),
           ),
           const SizedBox(
-            height: 15,
+            height: 10,
           ),
           // 해당 과목의 학점 입력
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: const Text('학점'),
+          SizedBox(
+            height: 40,
+            child: TextFormField(
+              controller: _controller2,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: '학점',
               ),
-              const SizedBox(width: 15,),
-              Expanded(
-                child: SizedBox(
-                  height: 35,
-                  child: TextFormField(
-                    controller: _controller2,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: '학점',
-                    ),
-                    onChanged: (value) {
-                      // TextFormField 에 입력한 정보를 변수에 저장
-                      // 입력받은 value 를 double 형으로 변환하여 저장
-                      credit = int.parse(value);
-                    },
-                  ),
-                ),
-              ),
-            ],
+              onChanged: (value) {
+                // TextFormField 에 입력한 정보를 변수에 저장
+                // 입력받은 value 를 double 형으로 변환하여 저장
+                credit = int.parse(value);
+              },
+            ),
           ),
           const SizedBox(
-            height: 15,
+            height: 10,
           ),
-          // 평가 비율
+          // 평가 비율 입력
           const Text('평가 비율'),
           const SizedBox(
-            height: 15,
+            height: 10,
           ),
           // 중간고사 평가 비율 입력
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: const Text('중간 고사'),
+          SizedBox(
+            height: 40,
+            child: TextFormField(
+              controller: _controller3,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: '중간고사',
               ),
-              const SizedBox(width: 15,),
-              Expanded(
-                child: SizedBox(
-                  height: 35,
-                  child: TextFormField(
-                    controller: _controller3,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: '중간고사',
-                    ),
-                    onChanged: (value) {
-                      // TextFormField 에 입력한 정보를 변수에 저장
-                      // 입력받은 value 를 int 형으로 변환하여 저장
-                      MidTest = int.parse(value);
-                    },
-                  ),
-                ),
-              ),
-            ],
+              onChanged: (value) {
+                // TextFormField 에 입력한 정보를 변수에 저장
+                // 입력받은 value 를 int 형으로 변환하여 저장
+                MidTest = int.parse(value);
+              },
+            ),
           ),
-          
           const SizedBox(
-            height: 15,
+            height: 10,
           ),
           // 기말고사 평가 비율 입력
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: const Text('기말 고사'),
+          SizedBox(
+            height: 40,
+            child: TextFormField(
+              controller: _controller4,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: '기말고사',
               ),
-              const SizedBox(width: 15,),
-              Expanded(
-                child: SizedBox(
-                  height: 35,
-                  child: TextFormField(
-                    controller: _controller4,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: '기말고사',
-                    ),
-                    onChanged: (value) {
-                      // TextFormField 에 입력한 정보를 변수에 저장
-                      // 입력받은 value 를 int 형으로 변환하여 저장
-                      FinalTest = int.parse(value);
-                    },
-                  ),
-                ),
-              ),
-            ],
+              onChanged: (value) {
+                // TextFormField 에 입력한 정보를 변수에 저장
+                // 입력받은 value 를 int 형으로 변환하여 저장
+                FinalTest = int.parse(value);
+              },
+            ),
           ),
           const SizedBox(
-            height: 15,
+            height: 10,
           ),
           // 과제 평가 비율 입력
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: const Text('과제'),
+          SizedBox(
+            height: 40,
+            child: TextFormField(
+              controller: _controller5,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: '과제',
               ),
-              const SizedBox(width: 15,),
-              Expanded(
-                child: SizedBox(
-                  height: 35,
-                  child: TextFormField(
-                    controller: _controller5,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: '과제',
-                    ),
-                    onChanged: (value) {
-                      // TextFormField 에 입력한 정보를 변수에 저장
-                      // 입력받은 value 를 int 형으로 변환하여 저장
-                      task = int.parse(value);
-                    },
-                  ),
-                ),
-              ),
-            ],
+              onChanged: (value) {
+                // TextFormField 에 입력한 정보를 변수에 저장
+                // 입력받은 value 를 int 형으로 변환하여 저장
+                task = int.parse(value);
+              },
+            ),
           ),
           const SizedBox(
-            height: 15,
+            height: 10,
           ),
           // 출결 평가 비율 입력
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: const Text('출결'),
+          SizedBox(
+            height: 40,
+            child: TextFormField(
+              controller: _controller6,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: '출결',
               ),
-              const SizedBox(width: 15,),
-              Expanded(
-                child: SizedBox(
-                  height: 35,
-                  child: TextFormField(
-                    controller: _controller6,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: '출결',
-                    ),
-                    onChanged: (value) {
-                      // TextFormField 에 입력한 정보를 변수에 저장
-                      // 입력받은 value 를 int 형으로 변환하여 저장
-                      attendance = int.parse(value);
-                    },
-                  ),
-                ),
-              ),
-            ],
+              onChanged: (value) {
+                // TextFormField 에 입력한 정보를 변수에 저장
+                // 입력받은 value 를 int 형으로 변환하여 저장
+                attendance = int.parse(value);
+              },
+            ),
           ),
           const SizedBox(
-            height: 15,
+            height: 10,
           ),
           // 영어 강의 여부 체크 박스
           CheckboxListTile(
@@ -270,7 +198,7 @@ class _AddSubjectsState extends State<AddSubjects> {
             },
           ),
           const SizedBox(
-            height: 15,
+            height: 10,
           ),
           // 확인 버튼 시 FirebaseFirestore 에 저장
           OutlinedButton(
@@ -288,7 +216,6 @@ class _AddSubjectsState extends State<AddSubjects> {
                 "SubjectName" : Subject,
                 "uid" : _authentication.currentUser!.uid, // 이 값이 현재 로그인 되어 있는 uid와 같은지 확인
               });
-
               // 입력 받은 정보들을 추가하고 나면 TextFormField 를 빈칸으로 clear 하겠다.
               _controller1.clear();
               _controller2.clear();
