@@ -10,12 +10,12 @@ import 'package:team/personalView.dart';
 User? loggedUser;
 class Subject {
   String title;
-  String time;
-  String todo;
+  String start;
+  String end;
   String memo;
   String type;
 
-  Subject(this.title, this.time, this.todo, this.memo, this.type);
+  Subject(this.title, this.start, this.end, this.memo, this.type);
 }
 class ScheduleDetail extends StatefulWidget {
   ScheduleDetail({Key? key}) : super(key: key);
@@ -41,7 +41,6 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
 
   // 이 페이지가 생성될 그 때만 인스턴스 전달만 해주면 됨
   Future<void> setSchedure_Assingment() async {
-
     var sub = FirebaseFirestore.instance.collection('Subject').
     where('uid', isEqualTo: _authentication.currentUser!.uid).get();
     var check = await sub;
@@ -130,7 +129,15 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
             .add('퀴즈');
       }
     }
+
+    var perso = await FirebaseFirestore.instance.collection('Personal').
+    where('uid', isEqualTo: _authentication.currentUser!.uid).get();
+
+    for(int i = 0; i < perso.docs.length; i++){
+      context.read<Subs>().day.add(perso.docs[i]['date']);
+    }
   }
+
 
 
   @override
@@ -224,7 +231,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                           fontSize: 18,
                                           fontWeight: FontWeight.w500),
                                       textAlign: TextAlign.start
-                                  ),
+                                    ),
                                   ),
                                 );
                               },
@@ -321,6 +328,10 @@ class _SubjectTileState extends State<SubjectTile> {
   bool _check = false;
   @override
   Widget build(BuildContext context) {
+      String _endTime = '';
+    for(int i = 5; i < 16; i++){
+      _endTime += widget._subject.end[i];
+    }
     return ListTile(
       trailing:Icon( Icons.check, color: _check ?  Colors.green : Colors.grey),
       title: Row(
@@ -332,9 +343,9 @@ class _SubjectTileState extends State<SubjectTile> {
                   style: const TextStyle(height: 1, fontSize: 18, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center)
           ),
-          Text('마감일: '),
+          Text('마감일 : '),
           const SizedBox(width: 30,),
-          Expanded(child: Text(widget._subject.todo,)),            // '할 일' 잘리는 것 방지
+          Expanded(child: Text(_endTime)),            // '할 일' 잘리는 것 방지
           Text(widget._subject.type),
           const SizedBox(width: 15,),
         ],
@@ -399,17 +410,17 @@ class _SubjectTileState extends State<SubjectTile> {
                           const Text('시작'),
                           SizedBox(width: 30,),
                           Container(
-                            child: Text(widget._subject.time),       // 시작 시간만 잘라서 넣기
+                            child: Text(widget._subject.start),       // 시작 시간만 잘라서 넣기
                           ),
                         ],
                       ),
                       const SizedBox(height: 30,),
                       Row(
                         children: [
-                          const Text('종료'),
+                          const Text('종료 '),
                           SizedBox(width: 30,),
                           Container(
-                            child: Text(widget._subject.time),       // 끝나는 시간만 잘라서 넣기
+                            child: Text(widget._subject.end),       // 끝나는 시간만 잘라서 넣기
                           ),
                         ],
                       ),

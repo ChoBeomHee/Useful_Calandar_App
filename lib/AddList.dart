@@ -25,7 +25,7 @@ class addList extends StatelessWidget {         // 추가
                     barrierDismissible: true,
                     builder: (BuildContext context) {
                       return const AlertDialog(
-                        title: Text('과목추가'),
+                        title: Text('과목 추가'),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(
                                 Radius.circular(12.0))), //모서리를 둥글게
