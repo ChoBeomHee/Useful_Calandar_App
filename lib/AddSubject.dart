@@ -85,32 +85,20 @@ class _AddSubjectsState extends State<AddSubjects> {
             height: 10,
           ),
           // 해당 과목의 학점 입력
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: const Text('학점'),
+          SizedBox(
+            height: 40,
+            child: TextFormField(
+              controller: _controller2,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: '학점',
               ),
-              const SizedBox(width: 15,),
-              Expanded(
-                child: SizedBox(
-                  height: 35,
-                  child: TextFormField(
-                    controller: _controller2,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: '학점',
-                    ),
-                    onChanged: (value) {
-                      // TextFormField 에 입력한 정보를 변수에 저장
-                      // 입력받은 value 를 double 형으로 변환하여 저장
-                      credit = int.parse(value);
-                    },
-                  ),
-                ),
-              ),
-            ],
+              onChanged: (value) {
+                // TextFormField 에 입력한 정보를 변수에 저장
+                // 입력받은 value 를 double 형으로 변환하여 저장
+                credit = int.parse(value);
+              },
+            ),
           ),
           const SizedBox(
             height: 10,

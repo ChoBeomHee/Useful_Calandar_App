@@ -10,6 +10,9 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Login'),
+      ),
       body: LoginForm(),
     );
   }
@@ -41,24 +44,8 @@ class _LoginFormState extends State<LoginForm> {
           key: _formkey,
           child: ListView(
             children: [
-              SizedBox(height: 50,),
-              Container(
-                child: Text('아.. 맞다!', style: TextStyle(fontSize: 40,
-                  fontWeight : FontWeight.bold , color: Colors.lightBlue, ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              SizedBox(height: 40,),
               TextFormField(
                 decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.people),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      borderSide: BorderSide(
-                          color : Colors.black,
-                          width: 3
-                      )
-                  ),
                   labelText: 'Email',
                 ),
                 onChanged: (value) { // value를 input 으로 넣음
@@ -71,28 +58,13 @@ class _LoginFormState extends State<LoginForm> {
               TextFormField(
                 obscureText: true, // 입력시 ****** 처리
                 decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.password),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      borderSide: BorderSide(
-                          color : Colors.black,
-                          width: 3
-                      )
-                  ),
                   labelText: 'Password',
                 ),
                 onChanged: (value) {
                   password = value;
                 },
               ),
-              SizedBox(height: 20,),
               ElevatedButton(
-                  style: ElevatedButton.styleFrom(elevation: 10,
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0),
-                      side: BorderSide(color: Colors.lightBlueAccent),
-                    ),
-                  ),
                   onPressed: () async {
                     try {
                       // onPressed 누르고 직후부터 로그인 되기전까지 돌리고 싶음
@@ -111,40 +83,22 @@ class _LoginFormState extends State<LoginForm> {
                     } catch (e) {
                       print(e);
                     }
-                  }, child: const Text('로그인')),
-              SizedBox(height: 20,),
-              Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container( height:1.0,
-                        width:150.0,
-                        color:Colors.black,),
-                      Text('  또는  ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Colors.grey),),
-                      Container( height:1.0,
-                        width:150.0,
-                        color:Colors.black,),
-                    ],
-                  )
-              ),
-              SizedBox(height: 20,),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    const Text('아직 계정이 없으신가요?, '),
-                    TextButton(
-                      child: const Text('가입하기'),
-                      onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage()));
-                        // 페이지 넘어가면 다시 없어지게 해야지
-                        setState(() {
-                          showSpinner = false;
-                        });
-                      },
-                    ),
-                  ],
-                ),
+                  }, child: const Text('Enter')),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const Text('If you did not register, '),
+                  TextButton(
+                    child: const Text('Register your email'),
+                    onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage()));
+                      // 페이지 넘어가면 다시 없어지게 해야지
+                      setState(() {
+                        showSpinner = false;
+                      });
+                    },
+                  ),
+                ],
               )
             ],
           ),

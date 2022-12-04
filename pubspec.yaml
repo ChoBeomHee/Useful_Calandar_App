@@ -44,7 +44,6 @@ dependencies:
   syncfusion_flutter_calendar: ^20.3.59
   flutter_speed_dial: ^6.2.0
 
-
   
 dev_dependencies:
   flutter_test:
