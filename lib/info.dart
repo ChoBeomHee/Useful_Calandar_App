@@ -25,6 +25,13 @@ class _SubjectInfoState extends State<SubjectInfo> {
     getCurrentUser();
   }
 
+  String yesno(bool eng){
+    if(eng == true)
+      return "Yes";
+    else
+      return "No";
+  }
+
   void getCurrentUser() {
     try {
       final user = _authentication.currentUser; // _authentication 의 currentUser을 대입
@@ -47,7 +54,7 @@ class _SubjectInfoState extends State<SubjectInfo> {
               border: Border.all(color: Colors.indigo, width: 10)),
           child: Column(
             children: [
-              Text('\n과목 상세 정보\n',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
+              Text('\n과목 상세 정보\n',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23, fontFamily: 'title'),),
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance.collection('Subject').where('uid',isEqualTo: _authentication.currentUser!.uid)
@@ -74,13 +81,18 @@ class _SubjectInfoState extends State<SubjectInfo> {
                                   child: AlertDialog(
                                     shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(Radius.circular(22.0))),
-                                    title: Text('   과목 상세 정보', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
                                     content: Container(
                                       padding: const EdgeInsets.all(16.0),
                                       width: 300,
                                       height: 400,
                                       child: Column(
                                         children: [
+                                          Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text('과목 상세 정보', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'title'))),
+                                          SizedBox(
+                                            height: 30,
+                                          ),
                                           Row(
                                             children: [
                                               const SizedBox(
@@ -109,7 +121,7 @@ class _SubjectInfoState extends State<SubjectInfo> {
                                             padding: EdgeInsets.fromLTRB(0,8.0,0,8.0),
                                             child: Align(
                                                 alignment: Alignment.centerLeft,
-                                                child: Text('평가 비율', style: TextStyle(fontWeight: FontWeight.bold))),
+                                                child: Text('평가 비율', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'title'))),
                                           ),
                                           const SizedBox(height: 20,),
                                           Row(
@@ -160,9 +172,9 @@ class _SubjectInfoState extends State<SubjectInfo> {
                                             children: [
                                               const SizedBox(
                                                   width: 100,
-                                                  child: Text('영어 강의1')),
+                                                  child: Text('영어 강의')),
                                               Container(
-                                                child: Text(docs[index]['English'].toString()),
+                                                child: Text(yesno(docs[index]['English'])),
                                               ),
                                             ],
                                           ),
