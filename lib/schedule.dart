@@ -206,7 +206,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                       border: Border.all(color: Colors.indigo, width: 10)),
                   child: Column(
                     children: <Widget>[
-                      Text('\n\n오늘 일정(${getToday()})',
+                      Text('\n\n오늘 일정 (${getToday()})',
                           style: const TextStyle(fontSize: 17,
                               fontWeight: FontWeight.bold)),
                       Text('개인 일정', style: const TextStyle(fontSize: 16,
