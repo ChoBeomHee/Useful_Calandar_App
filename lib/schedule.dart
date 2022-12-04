@@ -340,9 +340,10 @@ class _SubjectTileState extends State<SubjectTile> {
             width: 50,
               child:
                 Text(widget._subject.title,
-                  style: const TextStyle(height: 1, fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(height: 1, fontSize: 13, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center)
           ),
+          const SizedBox(width: 20,),
           Text('마감일 : '),
           const SizedBox(width: 30,),
           Expanded(child: Text(_endTime)),            // '할 일' 잘리는 것 방지

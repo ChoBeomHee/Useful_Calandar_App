@@ -20,8 +20,8 @@ class AddAssignExam extends StatefulWidget {
 
 class _AddAssignExamState extends State<AddAssignExam> {
 
-  final _type = ['- Choose -','Exam', 'Assignment', 'Quiz'];
-  var _typeSelected = '- Choose -';
+  final type = ['- Choose -','Exam', 'Assignment', 'Quiz'];
+  var typeSelected = '- Choose -';
   dynamic subjectSelected;
   Stream<QuerySnapshot>? _subjectSelect;
   @override
@@ -175,8 +175,8 @@ class _AddAssignExamState extends State<AddAssignExam> {
               ),
               const SizedBox(width: 80,),
               DropdownButton(
-                  value: _typeSelected,
-                  items: _type.map(
+                  value: typeSelected,
+                  items: type.map(
                           (value){
                         return DropdownMenuItem(
                             value: value,
@@ -184,7 +184,7 @@ class _AddAssignExamState extends State<AddAssignExam> {
                       }).toList(),
                   onChanged: (value){
                     setState(() {
-                      _typeSelected = value as String;
+                      typeSelected = value as String;
                     });
                   }
               )
@@ -338,7 +338,7 @@ class _AddAssignExamState extends State<AddAssignExam> {
           OutlinedButton(
             onPressed: () async {
               final assignexamAdd = FirebaseFirestore.instance
-                  .collection('Subject').doc(subjectSelected).collection(_typeSelected).doc(AssignExamName);
+                  .collection('Subject').doc(subjectSelected).collection(typeSelected).doc(AssignExamName);
               assignexamAdd.set({
                 "subject" : subjectSelected,
                 "rate" : rate,
@@ -346,6 +346,7 @@ class _AddAssignExamState extends State<AddAssignExam> {
                 "endYMDT" : ymdtEndController.text,
                 "memo" : memo,
                 "UID" : _authentication.currentUser!.uid,
+                "type" : typeSelected,
               });
               ymdtStartController.clear();
               ymdtEndController.clear();
