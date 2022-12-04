@@ -9,7 +9,6 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'AddAssignExam.dart';
 import 'AddPersonal.dart';
 import 'AddSubject.dart';
-import 'AddList.dart';
 import 'info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
@@ -150,13 +149,23 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
                         title: Container(
                           child: Column(
                             children: [
-                              const Text('로그아웃'),
+                              const Text('로그아웃 하시겠습니까?'),
                               SizedBox(height: 30,),
-                              OutlinedButton(
-                                onPressed: () {
-                                  FirebaseAuth.instance.signOut(); // 로그아웃
-                                },
-                                child: const Text('확인')),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  OutlinedButton(
+                                    onPressed: () {
+                                      FirebaseAuth.instance.signOut(); // 로그아웃
+                                    },
+                                    child: const Text('확인')),
+                                  OutlinedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text('취소')),
+                                ],
+                              ),
                               // 이 부분에 함수 넣으면 됨
                             ],
                           ),
