@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
       create: (BuildContext context) => Subs(),
       builder: (context, child) => MaterialApp(
         title: 'Flutter Demo',
-        theme: ThemeData(),
+        theme: ThemeData(fontFamily: 'text'),   // 기본 폰트 설정
 
         // 로그인 되었을 때는, Success Page 가 Home 화면이 되도록 해보겠다
         // StreamBuilder 사용, 파이어베이스에서 어떤 변화가 생겼을 때 변화를 감지할 수 있도록 도와주는 stream을 받아옴
