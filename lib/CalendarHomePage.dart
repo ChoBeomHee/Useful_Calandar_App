@@ -59,7 +59,7 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
         shape: CircleBorder(),
         children: [
           SpeedDialChild(
-            child: Icon(Icons.accessibility),
+            child: Icon(Icons.subject),
             backgroundColor: Colors.lightBlueAccent,
             label: '과목',
             labelStyle: TextStyle(fontSize: 18.0),
@@ -75,17 +75,16 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
                         title: Container(
                           child: Column(
                             children: const [
-                              Text('과목 추가'),
-                              SizedBox(height: 30,),
-                              AddSubjects()
+                              AddSubjects(),
                             ],
                           ),
                         ),
+                        scrollable: true,
                       ),
                 ),
           ),
           SpeedDialChild(
-            child: Icon(Icons.brush),
+            child: Icon(Icons.task),
             backgroundColor: Colors.lightBlueAccent,
             label: '과제/시험',
             labelStyle: TextStyle(fontSize: 18.0),
@@ -101,17 +100,16 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
                         title: Container(
                           child: Column(
                             children: const [
-                              Text('과제/시험 추가'),
-                              SizedBox(height: 30,),
                               AddAssignExam(),
                             ],
                           ),
                         ),
+                        scrollable: true,
                       ),
                 ),
           ),
           SpeedDialChild(
-            child: Icon(Icons.score),
+            child: Icon(Icons.access_time),
             backgroundColor: Colors.lightBlueAccent,
             label: '개인 일정',
             labelStyle: TextStyle(fontSize: 18.0),
@@ -127,17 +125,16 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
                         title: Container(
                           child: Column(
                             children: const [
-                              Text('개인 일정 추가'),
-                              SizedBox(height: 30,),
                               AddPersonal(),
                             ],
                           ),
                         ),
+                        scrollable: true,
                       ),
                 ),
           ),
           SpeedDialChild(
-            child: Icon(Icons.score),
+            child: Icon(Icons.logout_outlined),
             backgroundColor: Colors.lightBlueAccent,
             label: '로그아웃',
             labelStyle: TextStyle(fontSize: 18.0),

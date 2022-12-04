@@ -64,6 +64,10 @@ class _AddSubjectsState extends State<AddSubjects> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // 해당 과목 정보 입력
+          const Text('과목 추가'),
+          const SizedBox(
+            height: 15,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

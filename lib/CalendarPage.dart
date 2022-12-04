@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:team/AddList.dart';
@@ -15,16 +16,40 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {         // 메인 페이지
+  final _authentication = FirebaseAuth.instance;
+  User? loggedUser;
+  void getCurrentUser() {
+    try {
+      final user = _authentication.currentUser; // _authentication 의 currentUser을 대입
+      if (user != null) {
+        loggedUser = user;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+
 
   List<Meeting> _getDataSource() {
-    final List<Meeting> meetings = <Meeting>[];       // 여기서 가져오면 되겠다!
+    final List<Meeting> meetings = <Meeting>[];
     final DateTime today = DateTime.now();
-    final DateTime startTime = DateTime(today.year, today.month, today.day, 0, 0, 0);
+    final DateTime startTime =
+    DateTime(today.year, today.month, today.day, 0, 0, 0);
+    final DateTime endTime = startTime.add(const Duration(hours: 2));
+
+    meetings.add(Meeting('Conference', startTime, endTime, const Color(0xFF7D9DE2)));
+
+    if(context.read<Subs>().day.length != 0){
+      meetings.add(Meeting('TTEXT', startTime, endTime, const Color(0xFF7D9DE2)));
+    }
+    print(context.read<Subs>().day.length);
     return meetings;
   }
 
   @override
   Widget build(BuildContext context) {
+    print('캘린더페이지 빌드');
     return Padding(
       padding: const EdgeInsets.only(top: 16.0),
       child: Scaffold(

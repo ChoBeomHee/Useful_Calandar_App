@@ -131,6 +131,10 @@ class _AddAssignExamState extends State<AddAssignExam> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          const Text('과제/시험 추가'),
+          const SizedBox(
+            height: 15,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
