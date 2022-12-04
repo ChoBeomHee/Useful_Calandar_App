@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -50,27 +51,29 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
       doc(check.docs[i]['SubjectName']).collection('Assignment').get();
 
       var list = await todayAssingn;
-      for (int i = 0; i < list.docs.length; i++) {
-        context
-            .read<Subs>()
-            .prov_subjectname
-            .add(list.docs[i]['subject']);
-        context
-            .read<Subs>()
-            .prov_memo
-            .add(list.docs[i]['memo']);
-        context
-            .read<Subs>()
-            .start
-            .add(list.docs[i]['startYMDT']);
-        context
-            .read<Subs>()
-            .end
-            .add(list.docs[i]['endYMDT']);
-        context
-            .read<Subs>()
-            .type
-            .add('과제');
+        for (int i = 0; i < list.docs.length; i++) {
+          if (intoDay(list.docs[i]['startYMDT'], list.docs[i]['endYMDT']) == true) {
+          context
+              .read<Subs>()
+              .prov_subjectname
+              .add(list.docs[i]['subject']);
+          context
+              .read<Subs>()
+              .prov_memo
+              .add(list.docs[i]['memo']);
+          context
+              .read<Subs>()
+              .start
+              .add(list.docs[i]['startYMDT']);
+          context
+              .read<Subs>()
+              .end
+              .add(list.docs[i]['endYMDT']);
+          context
+              .read<Subs>()
+              .type
+              .add('과제');
+        }
       }
     }
     for (int i = 0; i < check.docs.length; i++) {
@@ -79,26 +82,28 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
 
       var list = await todayExam;
       for (int i = 0; i < list.docs.length; i++) {
-        context
-            .read<Subs>()
-            .prov_subjectname
-            .add(list.docs[i]['subject']);
-        context
-            .read<Subs>()
-            .prov_memo
-            .add(list.docs[i]['memo']);
-        context
-            .read<Subs>()
-            .start
-            .add(list.docs[i]['startYMDT']);
-        context
-            .read<Subs>()
-            .end
-            .add(list.docs[i]['endYMDT']);
-        context
-            .read<Subs>()
-            .type
-            .add('시험');
+        if(intoDay(list.docs[i]['startYMDT'], list.docs[i]['endYMDT']) == true){
+          context
+              .read<Subs>()
+              .prov_subjectname
+              .add(list.docs[i]['subject']);
+          context
+              .read<Subs>()
+              .prov_memo
+              .add(list.docs[i]['memo']);
+          context
+              .read<Subs>()
+              .start
+              .add(list.docs[i]['startYMDT']);
+          context
+              .read<Subs>()
+              .end
+              .add(list.docs[i]['endYMDT']);
+          context
+              .read<Subs>()
+              .type
+              .add('시험');
+       }
       }
     }
     for (int i = 0; i < check.docs.length; i++) {
@@ -106,39 +111,32 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
       doc(check.docs[i]['SubjectName']).collection('Quiz').get();
 
       var list = await todayQuiz;
-      for (int i = 0; i < list.docs.length; i++) {
-        context
-            .read<Subs>()
-            .prov_subjectname
-            .add(list.docs[i]['subject']);
-        context
-            .read<Subs>()
-            .prov_memo
-            .add(list.docs[i]['memo']);
-        context
-            .read<Subs>()
-            .start
-            .add(list.docs[i]['startYMDT']);
-        context
-            .read<Subs>()
-            .end
-            .add(list.docs[i]['endYMDT']);
-        context
-            .read<Subs>()
-            .type
-            .add('퀴즈');
+        for (int i = 0; i < list.docs.length; i++) {
+          if(intoDay(list.docs[i]['startYMDT'], list.docs[i]['endYMDT']) == true) {
+          context
+              .read<Subs>()
+              .prov_subjectname
+              .add(list.docs[i]['subject']);
+          context
+              .read<Subs>()
+              .prov_memo
+              .add(list.docs[i]['memo']);
+          context
+              .read<Subs>()
+              .start
+              .add(list.docs[i]['startYMDT']);
+          context
+              .read<Subs>()
+              .end
+              .add(list.docs[i]['endYMDT']);
+          context
+              .read<Subs>()
+              .type
+              .add('퀴즈');
+        }
       }
     }
-
-    var perso = await FirebaseFirestore.instance.collection('Personal').
-    where('uid', isEqualTo: _authentication.currentUser!.uid).get();
-
-    for(int i = 0; i < perso.docs.length; i++){
-      context.read<Subs>().day.add(perso.docs[i]['date']);
-    }
   }
-
-
 
   @override
   // State가 처음 만들어졌을때만 하는 것
@@ -151,8 +149,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
 
   void getCurrentUser() {
     try {
-      final user = _authentication
-          .currentUser; // _authentication 의 currentUser을 대입
+      final user = _authentication.currentUser; // _authentication 의 currentUser을 대입
       if (user != null) {
         loggedUser = user;
       }
@@ -160,7 +157,63 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
       print(e);
     }
   }
+  bool intoDay(String startDay, String endDay){
+      /*String year = startDay.substring(0, 4);
+      String month = startDay.substring(5,7);
+      String day = startDay.substring() // 20221202   20221204    20221208
+      */
+      String newToDay = getcompareDay().substring(0,11);
+      String newStartDay = startDay.substring(0,11);
+      String newendDay = endDay.substring(0,11);
+      int resultstart = newStartDay.compareTo(newToDay);
+      int resultend = newendDay.compareTo(newToDay);
 
+      if(resultstart <= 0 && resultend >= 0){
+        return true;
+      }
+      else
+        return false;
+      /*
+      if(result == 0){
+        print('같음');
+      }
+
+      else if (result > 0){
+        print('스타트데이가 큼');
+      }
+      else if (result < 0){
+        print('엔드데이가 큼');
+      }
+*/  }
+
+  bool intoDay_per(String startDay, String endDay){
+    /*String year = startDay.substring(0, 4);
+      String month = startDay.substring(5,7);
+      String day = startDay.substring() // 20221202   20221204    20221208
+      */
+    String newToDay = getcompareDay().substring(0,11);
+    String newStartDay = startDay.substring(0,11);
+    String newendDay = endDay.substring(0,11);
+    int resultstart = newStartDay.compareTo(newToDay);
+    int resultend = newendDay.compareTo(newToDay);
+
+    if(resultstart <= 0 && resultend >= 0){
+      return true;
+    }
+    else
+      return false;
+    /*
+      if(result == 0){
+        print('같음');
+      }
+
+      else if (result > 0){
+        print('스타트데이가 큼');
+      }
+      else if (result < 0){
+        print('엔드데이가 큼');
+      }
+*/  }
   @override
   Widget build(BuildContext context) {
     context
@@ -343,8 +396,8 @@ class _SubjectTileState extends State<SubjectTile> {
                   style: const TextStyle(height: 1, fontSize: 18, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center)
           ),
-          Text('마감일 : '),
-          const SizedBox(width: 30,),
+          Text('  마감일 : '),
+          const SizedBox(width: 15,),
           Expanded(child: Text(_endTime)),            // '할 일' 잘리는 것 방지
           Text(widget._subject.type),
           const SizedBox(width: 15,),
@@ -438,4 +491,9 @@ String getToday(){      // 오늘 날짜 가져오는 함수
   var now = DateTime.now();
   String formatDate = DateFormat('MM/dd').format(now);
   return formatDate;
+}
+
+String getcompareDay(){
+  var now = DateTime.now();
+  return now.toString();
 }

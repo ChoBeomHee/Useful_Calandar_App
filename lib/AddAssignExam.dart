@@ -340,6 +340,7 @@ class _AddAssignExamState extends State<AddAssignExam> {
               final assignexamAdd = FirebaseFirestore.instance
                   .collection('Subject').doc(subjectSelected).collection(_typeSelected).doc(AssignExamName);
               assignexamAdd.set({
+                "assignexamname" : AssignExamName,
                 "subject" : subjectSelected,
                 "rate" : rate,
                 "startYMDT" : ymdtStartController.text,
@@ -347,10 +348,24 @@ class _AddAssignExamState extends State<AddAssignExam> {
                 "memo" : memo,
                 "UID" : _authentication.currentUser!.uid,
               });
+
+              final subjectadd = FirebaseFirestore.instance.collection(_typeSelected).doc();
+              subjectadd.set({
+                "subject" : subjectSelected,
+                "rate" : rate,
+                "startYMDT" : ymdtStartController.text,
+                "endYMDT" : ymdtEndController.text,
+                "memo" : memo,
+                "UID" : _authentication.currentUser!.uid,
+                "startDate" : ymdtStart,
+                "endDate" : ymdtEnd,
+              });
               ymdtStartController.clear();
               ymdtEndController.clear();
               context.read<Subs>().prov_subjectname.add(Subject.toString());
               Navigator.pop(context);
+
+
             },
             child: const Text('확인'),
           ),

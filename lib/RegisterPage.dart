@@ -114,7 +114,6 @@ class _RegisterFormState extends State<RegisterForm> {
                 // 우리는 로그인 하고 무언가 되길 원하는데(동기적인걸), 이게 등록이 된 다음에 뭔가가 되길 원하고 있음
                 // 따라서 await 를 붙여줌 -> 붙여주려면 async 함수에서만 쓸 수 있음
                 onPressed: () async {
-
                   try {
                     final newUser = await _authentication.createUserWithEmailAndPassword(email: email, password: password);
                     // set은 futuer type 이므로 비동기적 방식으로 불러와지는데, 우린 동기적 방식으로 사용할거야
