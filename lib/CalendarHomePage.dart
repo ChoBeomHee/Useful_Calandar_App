@@ -157,6 +157,7 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
                                   OutlinedButton(
                                     onPressed: () {
                                       FirebaseAuth.instance.signOut(); // 로그아웃
+                                      Navigator.pop(context);
                                     },
                                     child: const Text('확인')),
                                   OutlinedButton(

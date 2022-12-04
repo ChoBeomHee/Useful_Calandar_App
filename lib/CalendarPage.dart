@@ -190,45 +190,6 @@ class _CalendarPageState extends State<CalendarPage> {         // 메인 페이�
                     agendaViewHeight: 170, // 일정 보기(아래)에 뜨는 컨테이너 틀의 높이 조절
                     agendaItemHeight: 50, // 일정 보기(아래)에 뜨는 약속(사각형) 높이 조절
                     showAgenda: true, // MonthViewSettings 에서 showAgenda 속성을 true로 설정하여 안건 보기를 표시할 수 있습니다
-                    // 캘린더 스타일 설정
-                    monthCellStyle: MonthCellStyle(
-                        backgroundColor: Color(0xFFF5875e),
-                        trailingDatesBackgroundColor: Color(0xffF9b658),
-                        leadingDatesBackgroundColor: Color(0xffF9b658),
-                        todayBackgroundColor: Color(0xFFF99e94),
-                        textStyle: TextStyle(
-                            fontSize: 12,
-                            fontFamily: 'Arial'),
-                        todayTextStyle: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Arial'),
-                        trailingDatesTextStyle: TextStyle(
-                            fontStyle: FontStyle.italic,
-                            fontSize: 12,
-                            fontFamily: 'Arial'),
-                        leadingDatesTextStyle: TextStyle(
-                            fontStyle: FontStyle.italic,
-                            fontSize: 12,
-                            fontFamily: 'Arial')),
-                    // 일정 보기(아래) 스타일 설정
-                    agendaStyle: AgendaStyle(
-                      backgroundColor: Color(0xFF066cccc),
-                      appointmentTextStyle: TextStyle(
-                          fontSize: 14,
-                          fontStyle: FontStyle.italic,
-                          color: Color(0xFF0ffcc00)),
-                      dateTextStyle: TextStyle(
-                          fontStyle: FontStyle.italic,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.black),
-                      dayTextStyle: TextStyle(
-                          fontStyle: FontStyle.normal,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black),
-                    ),
                   ),
                 );
               }
