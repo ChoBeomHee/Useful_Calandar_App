@@ -17,10 +17,9 @@ class CalendarPage extends StatefulWidget {
 class _CalendarPageState extends State<CalendarPage> {         // 메인 페이지
 
   List<Meeting> _getDataSource() {
-    final List<Meeting> meetings = <Meeting>[];
+    final List<Meeting> meetings = <Meeting>[];       // 여기서 가져오면 되겠다!
     final DateTime today = DateTime.now();
-    final DateTime startTime =
-    DateTime(today.year, today.month, today.day, 0, 0, 0);
+    final DateTime startTime = DateTime(today.year, today.month, today.day, 0, 0, 0);
     return meetings;
   }
 

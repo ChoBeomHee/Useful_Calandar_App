@@ -194,7 +194,7 @@ class _SubjectInfoState extends State<SubjectInfo> {
                 }
                 final docs = snapshot.data!.docs;
 
-                docs.forEach((element) { totalCredit += element['credit'];});
+                docs.forEach((element) { totalCredit += element['credit']; });
 
                 return Text('총 학점: ' + totalCredit.toString(),style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),);
               })
