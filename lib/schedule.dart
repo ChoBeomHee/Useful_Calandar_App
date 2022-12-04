@@ -27,17 +27,6 @@ class ScheduleDetail extends StatefulWidget {
 
 class _ScheduleDetailState extends State<ScheduleDetail> {
 
-  /*List<Subject> todoList = [                          // 그냥 예시입니다!!
-    Subject('DB','13:00-14:30','DB레포트 작성'),
-    Subject('Graphics', '15:00-18:00', 'Texture, Lighting, 할거 짱 많네 아오'),
-    Subject('Algorithm', '21:00-23:00', 'BFS'),
-    Subject('DB','13:00-14:30','DB레포트 작성'),
-    Subject('Graphics', '15:00-18:00', 'Texture, Lighting'),
-    Subject('Algorithm', '21:00-23:00', 'BFS'),
-    Subject('DB','13:00-14:30','DB레포트 작성'),
-    Subject('Grahics', '15:00-18:00', 'Texture, Lighting'),
-  ];*/
-
   final _authentication = FirebaseAuth.instance;
 
   // 이 페이지가 생성될 그 때만 인스턴스 전달만 해주면 됨
@@ -53,27 +42,31 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
       var list = await todayAssingn;
         for (int i = 0; i < list.docs.length; i++) {
           if (intoDay(list.docs[i]['startYMDT'], list.docs[i]['endYMDT']) == true) {
-          context
-              .read<Subs>()
-              .prov_subjectname
-              .add(list.docs[i]['subject']);
-          context
-              .read<Subs>()
-              .prov_memo
-              .add(list.docs[i]['memo']);
-          context
-              .read<Subs>()
-              .start
-              .add(list.docs[i]['startYMDT']);
-          context
-              .read<Subs>()
-              .end
-              .add(list.docs[i]['endYMDT']);
-          context
-              .read<Subs>()
-              .type
-              .add('과제');
-        }
+            /*context
+                .read<Subs>()
+                .taskname
+                .add(list.docs[i]['assignexamname']);*/
+            context
+                .read<Subs>()
+                .prov_subjectname
+                .add(list.docs[i]['subject']);
+            context
+                .read<Subs>()
+                .prov_memo
+                .add(list.docs[i]['memo']);
+            context
+                .read<Subs>()
+                .start
+                .add(list.docs[i]['startYMDT']);
+            context
+                .read<Subs>()
+                .end
+                .add(list.docs[i]['endYMDT']);
+            context
+                .read<Subs>()
+                .type
+                .add('과제');
+          }
       }
     }
     for (int i = 0; i < check.docs.length; i++) {
@@ -83,6 +76,10 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
       var list = await todayExam;
       for (int i = 0; i < list.docs.length; i++) {
         if(intoDay(list.docs[i]['startYMDT'], list.docs[i]['endYMDT']) == true){
+          /*context
+              .read<Subs>()
+              .taskname
+              .add(list.docs[i]['assignexamname']);*/
           context
               .read<Subs>()
               .prov_subjectname
@@ -113,7 +110,11 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
       var list = await todayQuiz;
         for (int i = 0; i < list.docs.length; i++) {
           if(intoDay(list.docs[i]['startYMDT'], list.docs[i]['endYMDT']) == true) {
-          context
+            /*context
+                .read<Subs>()
+                .taskname
+                .add(list.docs[i]['assignexamname']);*/
+            context
               .read<Subs>()
               .prov_subjectname
               .add(list.docs[i]['subject']);
@@ -325,35 +326,87 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                 return Expanded(
                                   child: Padding(
                                     padding: const EdgeInsets.all(20.0),
-                                    child: ListView.separated(
+                                    child: ListView.builder(
                                       itemCount: context
                                           .read<Subs>()
                                           .prov_subjectname
                                           .length,
                                       itemBuilder: (context, index) {
-                                        return SubjectTile(Subject(context
-                                            .read<Subs>()
-                                            .prov_subjectname[index],
-                                            context
+                                        return Dismissible(
+                                          key: ValueKey(context
+                                              .read<Subs>()
+                                              .prov_subjectname[index]),
+                                          background: Container(
+                                            color: Colors.lightBlue,),
+                                          child: Container(
+                                            height: 80,
+                                            child: SubjectTile(Subject(context
                                                 .read<Subs>()
-                                                .start[index],
-                                            context
-                                                .read<Subs>()
-                                                .end[index],
-                                            context
-                                                .read<Subs>()
-                                                .prov_memo[index],
-                                            context
-                                                .read<Subs>()
-                                                .type[index]
-                                        )
+                                                .prov_subjectname[index],
+                                                context
+                                                    .read<Subs>()
+                                                    .start[index],
+                                                context
+                                                    .read<Subs>()
+                                                    .end[index],
+                                                context
+                                                    .read<Subs>()
+                                                    .prov_memo[index],
+                                                context
+                                                    .read<Subs>()
+                                                    .type[index]
+                                            )
+                                            ),
+                                          ),
+                                          onDismissed: (direction) {
+                                            setState(() {
+                                              String TYPE = '';
+                                              if (context
+                                                  .read<Subs>()
+                                                  .type[index] == '시험')
+                                                TYPE = 'Exam';
+                                              else if (context
+                                                  .read<Subs>()
+                                                  .type[index] == '과제')
+                                                TYPE = 'Assignment';
+                                              else if (context
+                                                  .read<Subs>()
+                                                  .type[index] == '퀴즈')
+                                                TYPE = 'Quiz';
+
+
+                                                FirebaseFirestore.instance.collection('Subject').
+                                              doc(context.read<Subs>().prov_subjectname[index]).collection(TYPE).doc('oopprojec').delete();
+
+                                              context
+                                                  .read<Subs>()
+                                                  .prov_subjectname
+                                                  .removeAt(index);
+                                              context
+                                                  .read<Subs>()
+                                                  .prov_memo
+                                                  .removeAt(index);
+                                              context
+                                                  .read<Subs>()
+                                                  .start
+                                                  .removeAt(index);
+                                              context
+                                                  .read<Subs>()
+                                                  .end
+                                                  .removeAt(index);
+                                              context
+                                                  .read<Subs>()
+                                                  .type
+                                                  .removeAt(index);
+                                           });
+                                          },
                                         );
                                       },
-                                      separatorBuilder: (context, index) {
+                                      /*separatorBuilder: (context, index) {
                                         return const Divider(
                                           thickness: 3.0,
                                         );
-                                      },
+                                      },*/
                                     ),
                                   ),
                                 );
@@ -482,8 +535,7 @@ class _SubjectTileState extends State<SubjectTile> {
                     ],
                   ),
                 ),
-
-              )
+            )
         );
       },
     );

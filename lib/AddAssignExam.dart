@@ -347,10 +347,13 @@ class _AddAssignExamState extends State<AddAssignExam> {
                 "endYMDT" : ymdtEndController.text,
                 "memo" : memo,
                 "UID" : _authentication.currentUser!.uid,
+                "startDate" : ymdtStart,
+                "endDate" : ymdtEnd,
               });
 
               final subjectadd = FirebaseFirestore.instance.collection(_typeSelected).doc();
               subjectadd.set({
+                "assignexamname" : AssignExamName,
                 "subject" : subjectSelected,
                 "rate" : rate,
                 "startYMDT" : ymdtStartController.text,
