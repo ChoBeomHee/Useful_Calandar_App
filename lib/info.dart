@@ -158,7 +158,7 @@ class _SubjectInfoState extends State<SubjectInfo> {
                                             children: [
                                               const SizedBox(
                                                   width: 100,
-                                                  child: Text('영어 강의')),
+                                                  child: Text('영어 강의1')),
                                               Container(
                                                 child: Text(docs[index]['English'].toString()),
                                               ),
