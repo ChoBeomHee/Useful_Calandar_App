@@ -266,8 +266,10 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                           fontWeight: FontWeight.bold)),
                       Expanded(
                         child: StreamBuilder<QuerySnapshot>(
-                          stream: FirebaseFirestore.instance.collection('Personal').where('uid',isEqualTo: _authentication.currentUser!.uid)
-                              .snapshots(),
+                          stream: FirebaseFirestore.instance.collection('Personal').
+                          where('uid',isEqualTo: _authentication.currentUser!.uid).
+                          where('comparedate', isEqualTo: getcompareDay().substring(0,10)).
+                          snapshots(),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState == ConnectionState.waiting) {
                               return const Center(child: CircularProgressIndicator());

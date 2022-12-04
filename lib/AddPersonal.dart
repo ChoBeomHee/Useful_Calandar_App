@@ -200,6 +200,7 @@ class _AddPersonalState extends State<AddPersonal> {
                 "alarm" : _alarmSelected,
                 "memo" : memo,
                 "uid" : _authentication.currentUser!.uid, // 이 값이 현재 로그인 되어 있는 uid와 같은지 확인
+                "comparedate" : ymdtPersonalController.text.substring(0,10)
               });
               Navigator.pop(context);
             },
