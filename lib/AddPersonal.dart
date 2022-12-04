@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:team/SubjectsProvider.dart';
 
 class AddPersonal extends StatefulWidget {
   const AddPersonal({Key? key}) : super(key: key);
@@ -41,7 +43,7 @@ class _AddPersonalState extends State<AddPersonal> {
   String? memo;
   String? Time;
   TextEditingController ymdtPersonalController = TextEditingController();
-
+  DateTime? personalDay;
   personalYearMonthDayTimePicker() async {
     final year = DateTime
         .now()
@@ -71,6 +73,7 @@ class _AddPersonalState extends State<AddPersonal> {
         }
         Time = '${dateTime.toString().split(' ')[0]} $hour:$min';
         ymdtPersonalController.text = '${dateTime.toString().split(' ')[0]} $hour:$min';
+        personalDay = dateTime;
       }
     }
   }
@@ -193,6 +196,7 @@ class _AddPersonalState extends State<AddPersonal> {
               personalAdd.set({
                 "title" : personalTitle,
                 "time" : ymdtPersonalController.text,
+                "date" : personalDay,
                 "alarm" : _alarmSelected,
                 "memo" : memo,
                 "uid" : _authentication.currentUser!.uid, // 이 값이 현재 로그인 되어 있는 uid와 같은지 확인

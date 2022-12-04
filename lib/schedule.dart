@@ -41,7 +41,6 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
 
   // 이 페이지가 생성될 그 때만 인스턴스 전달만 해주면 됨
   Future<void> setSchedure_Assingment() async {
-
     var sub = FirebaseFirestore.instance.collection('Subject').
     where('uid', isEqualTo: _authentication.currentUser!.uid).get();
     var check = await sub;
@@ -130,7 +129,15 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
             .add('퀴즈');
       }
     }
+
+    var perso = await FirebaseFirestore.instance.collection('Personal').
+    where('uid', isEqualTo: _authentication.currentUser!.uid).get();
+
+    for(int i = 0; i < perso.docs.length; i++){
+      context.read<Subs>().day.add(perso.docs[i]['date']);
+    }
   }
+
 
 
   @override
@@ -224,7 +231,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                           fontSize: 18,
                                           fontWeight: FontWeight.w500),
                                       textAlign: TextAlign.start
-                                  ),
+                                    ),
                                   ),
                                 );
                               },
@@ -322,7 +329,6 @@ class _SubjectTileState extends State<SubjectTile> {
   @override
   Widget build(BuildContext context) {
       String _endTime = '';
-
     for(int i = 5; i < 16; i++){
       _endTime += widget._subject.end[i];
     }

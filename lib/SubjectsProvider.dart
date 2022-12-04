@@ -6,6 +6,7 @@ class Subs with ChangeNotifier {
   List<String> start = [];
   List<String> end = [];
   List<String> type = [];
+  List<DateTime> day = [];
   /*increaseMember(){
     MemeberCnt += 1;
     notifyListeners();
