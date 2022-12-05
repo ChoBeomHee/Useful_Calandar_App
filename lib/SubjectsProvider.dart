@@ -7,6 +7,9 @@ class Subs with ChangeNotifier {
   List<String> end = [];
   List<String> type = [];
 
+
+  List<DateTime> startDay = [];
+  List<DateTime> endDay = [];
   /*increaseMember(){
     MemeberCnt += 1;
     notifyListeners();
@@ -23,6 +26,5 @@ class Subs with ChangeNotifier {
 }
 
 class dates with ChangeNotifier {
-  List<DateTime> startDay = [];
-  List<DateTime> endDay = [];
+
 }

@@ -186,35 +186,6 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
         print('엔드데이가 큼');
       }
 */  }
-
-  bool intoDay_per(String startDay, String endDay){
-    /*String year = startDay.substring(0, 4);
-      String month = startDay.substring(5,7);
-      String day = startDay.substring() // 20221202   20221204    20221208
-      */
-    String newToDay = getcompareDay().substring(0,11);
-    String newStartDay = startDay.substring(0,11);
-    String newendDay = endDay.substring(0,11);
-    int resultstart = newStartDay.compareTo(newToDay);
-    int resultend = newendDay.compareTo(newToDay);
-
-    if(resultstart <= 0 && resultend >= 0){
-      return true;
-    }
-    else
-      return false;
-    /*
-      if(result == 0){
-        print('같음');
-      }
-
-      else if (result > 0){
-        print('스타트데이가 큼');
-      }
-      else if (result < 0){
-        print('엔드데이가 큼');
-      }
-*/  }
   @override
   Widget build(BuildContext context) {
     context
@@ -237,7 +208,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
         .read<Subs>()
         .type
         .clear();
-
+    print('스캐줄 빌드');
     return
       DefaultTabController(
         length: 2,
