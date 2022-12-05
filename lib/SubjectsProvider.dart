@@ -7,6 +7,8 @@ class Subs with ChangeNotifier {
   List<String> end = [];
   List<String> type = [];
   List<String> quizname = [];
+  List<bool> progress = [];
+
 
   List<DateTime> startDay = [];
   List<DateTime> endDay = [];

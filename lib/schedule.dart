@@ -27,6 +27,17 @@ class ScheduleDetail extends StatefulWidget {
 
 class _ScheduleDetailState extends State<ScheduleDetail> {
 
+  /*List<Subject> todoList = [                          // 그냥 예시입니다!!
+    Subject('DB','13:00-14:30','DB레포트 작성'),
+    Subject('Graphics', '15:00-18:00', 'Texture, Lighting, 할거 짱 많네 아오'),
+    Subject('Algorithm', '21:00-23:00', 'BFS'),
+    Subject('DB','13:00-14:30','DB레포트 작성'),
+    Subject('Graphics', '15:00-18:00', 'Texture, Lighting'),
+    Subject('Algorithm', '21:00-23:00', 'BFS'),
+    Subject('DB','13:00-14:30','DB레포트 작성'),
+    Subject('Grahics', '15:00-18:00', 'Texture, Lighting'),
+  ];*/
+
   final _authentication = FirebaseAuth.instance;
 
   // 이 페이지가 생성될 그 때만 인스턴스 전달만 해주면 됨
@@ -163,6 +174,10 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
     }
   }
   bool intoDay(String startDay, String endDay){
+    /*String year = startDay.substring(0, 4);
+      String month = startDay.substring(5,7);
+      String day = startDay.substring() // 20221202   20221204    20221208
+      */
     String newToDay = getcompareDay().substring(0,11);
     String newStartDay = startDay.substring(0,11);
     String newendDay = endDay.substring(0,11);
@@ -537,7 +552,7 @@ class _SubjectTileState extends State<SubjectTile> {
               width: 80,
               child:
               Text(widget._subject.title,
-                  style: const TextStyle(height: 1, fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'title'),
+                  style: const TextStyle(height: 1, fontSize: 16, fontFamily: 'title'),
                   textAlign: TextAlign.center)
           ),
           Text('  마감일 '),

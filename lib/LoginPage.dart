@@ -41,10 +41,10 @@ class _LoginFormState extends State<LoginForm> {
           key: _formkey,
           child: ListView(
             children: [
-              SizedBox(height: 50,),
+              SizedBox(height: 100,),
               Container(
                 child: Text('아.. 맞다!', style: TextStyle(fontSize: 40,
-                  fontWeight : FontWeight.bold , color: Colors.lightBlue, ),
+                  fontWeight : FontWeight.bold , color: Colors.lightBlue, fontFamily: 'title' ),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -132,7 +132,7 @@ class _LoginFormState extends State<LoginForm> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    const Text('아직 계정이 없으신가요?, '),
+                    const Text('아직 계정이 없으신가요?'),
                     TextButton(
                       child: const Text('가입하기'),
                       onPressed: (){

@@ -43,6 +43,10 @@ class _CalendarPageState extends State<CalendarPage> {
             .read<Subs>()
             .prov_subjectname
             .add(list.docs[i]['subject']);
+        context
+            .read<Subs>()
+            .type
+            .add('과제');
       }
     }
     for (int i = 0; i < check.docs.length; i++) {
@@ -51,6 +55,7 @@ class _CalendarPageState extends State<CalendarPage> {
 
       var list = await todayExam;
       print('시험 수 ${list.docs.length}');
+      print('${context.read<Subs>().startDay}');
       for (int i = 0; i < list.docs.length; i++) {
         context
             .read<Subs>()
@@ -64,6 +69,10 @@ class _CalendarPageState extends State<CalendarPage> {
             .read<Subs>()
             .prov_subjectname
             .add(list.docs[i]['subject']);
+        context
+            .read<Subs>()
+            .type
+            .add('시험');
       }
     }
     
@@ -87,6 +96,10 @@ class _CalendarPageState extends State<CalendarPage> {
             .read<Subs>()
             .prov_subjectname
             .add(list.docs[i]['subject']);
+        context
+            .read<Subs>()
+            .type
+            .add('퀴즈');
       }
     }
   }
@@ -99,17 +112,27 @@ class _CalendarPageState extends State<CalendarPage> {
         today.year, today.month, today.day, 0, 0, 0);
     final DateTime endTime = startTime.add(const Duration(hours: 5));
 
-    for (int i = 0; i < context
-        .read<Subs>()
-        .startDay
-        .length; i++) {
+
+    for (int i = 0; i < context.read<Subs>().startDay.length; i++) {
+      int typeColor = 0;
+
+      if (context.read<Subs>().type[i] == '시험'){
+        typeColor = 0xFF745c54;
+      }
+      else if (context.read<Subs>().type[i] == '과제'){
+        typeColor = 0xFFA89b92;
+      }
+      else if (context.read<Subs>().type[i] == '퀴즈'){
+        typeColor = 0xFF867464;
+      }
+
       meetings.add(Meeting(context
           .read<Subs>()
           .prov_subjectname[i], context
           .read<Subs>()
           .startDay[i], context
           .read<Subs>()
-          .endDay[i], const Color(0xFF7D9DE2)));
+          .endDay[i], Color(typeColor)));
     }
     print(context.read<Subs>().prov_subjectname.length);
     return meetings;
@@ -128,6 +151,10 @@ class _CalendarPageState extends State<CalendarPage> {
     context
         .read<Subs>()
         .endDay
+        .clear();
+    context
+        .read<Subs>()
+        .type
         .clear();
     return Scaffold(
       body: FutureBuilder(
@@ -153,7 +180,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 // 처음에 달력에서 지정된 날짜로 이동해서 표시
                 cellEndPadding: 1,
                 // 캘린더의 약속 패딩 사이즈 설정
-                todayHighlightColor: Color(0xFFcc0066),
+                todayHighlightColor: Color(0xFF343434),
                 headerStyle: const CalendarHeaderStyle( // December 2022 위치
                     textAlign: TextAlign.center,
                     textStyle: TextStyle(fontSize: 21)
