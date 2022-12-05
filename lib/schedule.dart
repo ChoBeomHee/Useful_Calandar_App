@@ -109,6 +109,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
     super
         .initState(); // 이걸 먼저 해줘야함(부모 클래스로부터 받아옴, Stateful 위젯 안에 initState가 있기때문에)
     getCurrentUser();
+
   }
 
   void getCurrentUser() {
@@ -412,7 +413,7 @@ class _SubjectTileState extends State<SubjectTile> {
     return ListTile(
       trailing: SizedBox(
         width: 20,
-        child: Icon(Icons.check, color: _check ? Colors.green : Colors.grey),
+        child: Icon(Icons.check, color: _check ? Colors.green : Colors.grey),     // 진행도 100% 되면 체크!!!!
       ),
       title: Row(
         children: [
@@ -435,7 +436,7 @@ class _SubjectTileState extends State<SubjectTile> {
             builder: (BuildContext context) => AlertDialog(
                   shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(22.0))),
-                  title: Padding(
+                  title: Padding(   // 제목 + 메모
                     padding: const EdgeInsets.all(16.0),
                     child: Row(
                       children: [
@@ -456,78 +457,83 @@ class _SubjectTileState extends State<SubjectTile> {
                       ],
                     ),
                   ),
-                  content: Container(
-                    padding: const EdgeInsets.all(16.0),
-                    width: 300,
-                    height: 300,
-                    child: Column(
-                      children: [
-                        const Text('진행도'),
-                        StatefulBuilder(
-                            builder: (context, state) {
-                                return Slider(
-                                  value: _currentSliderValue.toDouble(),
-                                  max: 100,
-                                  min: 0,
-                                  divisions: 5,
-                                  label: _currentSliderValue.round().toString(),
-                                  onChanged: (double value) {
-                                    _currentSliderValue = value;
-                                    state(() {
-                                      if (_currentSliderValue == 100){
-                                        _check = true;
-                                        print("yesyesyes it's 100%");
-                                      }
-                                      else
-                                        _check = false;
-                                    });
-                                  },
-                                );
-                        }),
-                        Row(
+                  content: StatefulBuilder(
+                    builder: (__, StateSetter setDialogState){
+                      return Container(
+                        padding: const EdgeInsets.all(16.0),
+                        width: 300,
+                        height: 300,
+                        child: Column(
                           children: [
-                            const Text('날짜'),
-                            SizedBox(
-                              width: 30,
+                            const Text('진행도'),                      ////////////////// 슬라이더
+                            Slider(
+                                    value: _currentSliderValue.toDouble(),
+                                    max: 100,
+                                    min: 0,
+                                    divisions: 5,
+                                    label: _currentSliderValue.round().toString(),
+                                    onChanged: (double value) {
+                                      _currentSliderValue = value;
+                                      setDialogState(()=>_currentSliderValue = value);
+                                      setState(() {     // Widget build(BuildContext context) 시 빌드
+                                        if (_currentSliderValue == 100){
+                                          _check = true;
+                                          print("yesyesyes it's 100%");
+                                        }
+                                        else
+                                          _check = false;
+                                      });
+                                    },
+                                  ),
+                            const SizedBox(
+                              height: 30,
                             ),
-                            Container(
-                              child: Text(getToday()),
+                            Row(
+                              children: [
+                                const Text('날짜'),
+                                SizedBox(
+                                  width: 30,
+                                ),
+                                Container(
+                                  child: Text(getToday()),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            Row(
+                              children: [
+                                const Text('시작'),
+                                SizedBox(
+                                  width: 30,
+                                ),
+                                Container(
+                                  child:
+                                  Text(widget._subject.start.substring(11,16)), // 시작 시간만 잘라서 넣기
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            Row(
+                              children: [
+                                const Text('종료'),
+                                SizedBox(
+                                  width: 30,
+                                ),
+                                Container(
+                                  child:
+                                  Text(widget._subject.end.substring(11,16)), // 끝나는 시간만 잘라서 넣기
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Row(
-                          children: [
-                            const Text('시작'),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            Container(
-                              child:
-                                  Text(widget._subject.start), // 시작 시간만 잘라서 넣기
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Row(
-                          children: [
-                            const Text('종료 '),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            Container(
-                              child:
-                                  Text(widget._subject.end), // 끝나는 시간만 잘라서 넣기
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                      );
+                    },
+                  )
                 ));
       },
     );
