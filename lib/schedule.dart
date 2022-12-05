@@ -137,6 +137,10 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
       }
     }
   }
+  String slicedDate(String d) {
+    // 연도를 제거한 문자열(월,일,시간) 리턴
+    return d.substring(5);
+  }
 
   @override
   // State가 처음 만들어졌을때만 하는 것
@@ -252,6 +256,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
             ),
             body: TabBarView(
               children: [
+                //////////////////////////////////////////////////////////// 개인 일정
                 SafeArea(
                   child: Container(
                     decoration: BoxDecoration(
@@ -259,34 +264,129 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                         border: Border.all(color: Colors.indigo, width: 10)),
                     child: Column(
                       children: <Widget>[
-                        Text('\n\n오늘 일정 (${getToday()})',
-                            style: const TextStyle(fontSize: 17,
-                                fontWeight: FontWeight.bold)),
-                        Text('개인 일정', style: const TextStyle(fontSize: 16,
-                            fontWeight: FontWeight.bold)),
+                        Text('\n\n오늘 일정 (${getToday()})', // 제목
+                            style: const TextStyle(
+                                fontSize: 23,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'title')),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Text('개인 일정',
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold)),
                         Expanded(
                           child: StreamBuilder<QuerySnapshot>(
-                            stream: FirebaseFirestore.instance.collection('Personal').
-                            where('uid',isEqualTo: _authentication.currentUser!.uid).
-                            where('comparedate', isEqualTo: getcompareDay().substring(0,10)).
-                            snapshots(),
+                            stream: FirebaseFirestore.instance
+                                .collection('Personal')
+                                .where('uid',
+                                isEqualTo: _authentication.currentUser!.uid)
+                                .where('comparedate',
+                                isEqualTo: getcompareDay().substring(0, 10))
+                                .snapshots(),
                             builder: (context, snapshot) {
-                              if (snapshot.connectionState == ConnectionState.waiting) {
-                                return const Center(child: CircularProgressIndicator());
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
                               }
                               final docs = snapshot.data!.docs;
                               return ListView.separated(
                                 itemCount: docs.length,
                                 itemBuilder: (context, index) {
                                   return Container(
-                                    child: ListTile(title: Text(
-                                        '     ${docs[index]['time']} :    ${docs[index]['title']
-                                            .toString()}',
-                                        style: const TextStyle(height: 3,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500),
-                                        textAlign: TextAlign.start
-                                    ),
+                                    child: ListTile(
+                                      title: Row(
+                                        children: [
+                                          Text('     ${slicedDate(docs[index]['time'])} :',style: const TextStyle(
+                                    height: 3, fontSize: 18, fontFamily: 'title',
+                                    ),),
+                                          Text(
+                                              '    ${docs[index]['title'].toString()}',
+                                              style: const TextStyle(
+                                                height: 3, fontSize: 21,
+                                              ),
+                                              textAlign: TextAlign.start),
+                                        ],
+                                      ),
+                                      onTap: () {
+                                        // 개인 일정이 클릭되면 메모 띄우기
+                                        showDialog(
+                                            context: context,
+                                            barrierDismissible: true,
+                                            builder: (BuildContext context) =>
+                                                AlertDialog(
+                                                  shape:
+                                                  const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              22.0))),
+                                                  content: Container(
+                                                    padding:
+                                                    const EdgeInsets.all(8.0),
+                                                    width: 300,
+                                                    height: 300,
+                                                    child: Column(
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                          const EdgeInsets
+                                                              .all(8.0),
+                                                          child: Center(
+                                                              child: Text(
+                                                                  '${docs[index]['title']}',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                      22,
+                                                                      fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                      fontFamily:
+                                                                      'title'))),
+                                                        ),
+                                                        Container(
+                                                          height: 3.0,
+                                                          width: 200.0,
+                                                          color: Colors.indigo,
+                                                        ), // 실선
+                                                        const Text('\n메모',
+                                                            style: TextStyle(
+                                                                fontSize: 18,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .bold)),
+                                                        const SizedBox(
+                                                          height: 20,
+                                                        ),
+                                                        Container(
+                                                          width: 250,
+                                                          height: 150,
+                                                          padding: EdgeInsets.all(
+                                                              16.0),
+                                                          decoration:
+                                                          BoxDecoration(
+                                                              borderRadius: BorderRadius
+                                                                  .all(Radius
+                                                                  .circular(
+                                                                  22.0)),
+                                                              border:
+                                                              Border.all(
+                                                                width: 1,
+                                                                color: Colors
+                                                                    .indigo,
+                                                              )),
+                                                          child: Text(
+                                                            '${docs[index]['memo']}',
+                                                            style: TextStyle(
+                                                                fontSize: 17),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ));
+                                      },
                                     ),
                                   );
                                 },
@@ -302,7 +402,9 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                       ],
                     ),
                   ),
-                ), // 개인
+                ),
+                // 개인
+                //////////////////////////////////////////////////////////// 공부 일정
                 SafeArea(
                   child: Container(
                     decoration: BoxDecoration(
@@ -311,17 +413,22 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                     child: Column(
                       children: <Widget>[
                         Text('\n\n오늘 일정(${getToday()})',
-                            style: const TextStyle(fontSize: 17,
-                                fontWeight: FontWeight.bold)),
-                        Text('공부 일정', style: const TextStyle(fontSize: 16,
-                            fontWeight: FontWeight.bold)),
+                            style: const TextStyle(
+                                fontSize: 23,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'title')),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Text('공부 일정',
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold)),
                         FutureBuilder(
                             future: setSchedure_Assingment(),
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
                                 return Text('');
-                              }
-                              else {
+                              } else {
                                 return Expanded(
                                   child: Padding(
                                     padding: const EdgeInsets.all(20.0),
@@ -331,23 +438,14 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                           .prov_subjectname
                                           .length,
                                       itemBuilder: (context, index) {
-                                        return SubjectTile(Subject(context
-                                            .read<Subs>()
-                                            .prov_subjectname[index],
+                                        return SubjectTile(Subject(
                                             context
                                                 .read<Subs>()
-                                                .start[index],
-                                            context
-                                                .read<Subs>()
-                                                .end[index],
-                                            context
-                                                .read<Subs>()
-                                                .prov_memo[index],
-                                            context
-                                                .read<Subs>()
-                                                .type[index]
-                                        )
-                                        );
+                                                .prov_subjectname[index],
+                                            context.read<Subs>().start[index],
+                                            context.read<Subs>().end[index],
+                                            context.read<Subs>().prov_memo[index],
+                                            context.read<Subs>().type[index]));
                                       },
                                       separatorBuilder: (context, index) {
                                         return const Divider(
@@ -358,12 +456,12 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                   ),
                                 );
                               }
-                            }
-                        ),
+                            }),
                       ],
                     ),
                   ),
-                ), // 공부
+                ),
+                // 공부
               ],
             )
         ),
@@ -392,17 +490,15 @@ class _SubjectTileState extends State<SubjectTile> {
       title: Row(
         children: [
           SizedBox(
-              width: 50,
+              width: 80,
               child:
               Text(widget._subject.title,
-                  style: const TextStyle(height: 1, fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(height: 1, fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'title'),
                   textAlign: TextAlign.center)
           ),
-          Text('  마감일 : '),
-          const SizedBox(width: 15,),
+          Text('  마감일 :'),
           Expanded(child: Text(_endTime)),            // '할 일' 잘리는 것 방지
           Text(widget._subject.type),
-          const SizedBox(width: 15,),
         ],
       ),
       onTap: (){        // 리스트 타일이 클릭되면
@@ -416,7 +512,7 @@ class _SubjectTileState extends State<SubjectTile> {
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
                   children: [
-                    Text(widget._subject.title, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    Text(widget._subject.title, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, fontFamily: 'title'),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 3),
                     const SizedBox(width: 15),
@@ -435,6 +531,7 @@ class _SubjectTileState extends State<SubjectTile> {
                 child: Column(
                   children: [
                     const Text('진행도'),
+                    const SizedBox(height: 20,),
                     Slider(
                       value: _currentSliderValue,
                       max: 100,
@@ -450,6 +547,7 @@ class _SubjectTileState extends State<SubjectTile> {
                         });
                       },
                     ),
+                    const SizedBox(height: 40,),
                     Row(
                       children: [
                         const Text('날짜'),
@@ -465,17 +563,17 @@ class _SubjectTileState extends State<SubjectTile> {
                         const Text('시작'),
                         SizedBox(width: 30,),
                         Container(
-                          child: Text(widget._subject.start),       // 시작 시간만 잘라서 넣기
+                          child: Text(widget._subject.start.substring(11)),       // 시작 시간만 잘라서 넣기
                         ),
                       ],
                     ),
                     const SizedBox(height: 30,),
                     Row(
                       children: [
-                        const Text('종료 '),
+                        const Text('종료'),
                         SizedBox(width: 30,),
                         Container(
-                          child: Text(widget._subject.end),       // 끝나는 시간만 잘라서 넣기
+                          child: Text(widget._subject.end.substring(11)),       // 끝나는 시간만 잘라서 넣기
                         ),
                       ],
                     ),
