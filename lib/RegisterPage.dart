@@ -65,6 +65,7 @@ class _RegisterFormState extends State<RegisterForm> {
             ),
             TextFormField(
               obscureText: true, // 입력시 ****** 처리
+              obscuringCharacter: '*',
               decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.password),
                 border: OutlineInputBorder(
