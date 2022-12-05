@@ -181,6 +181,7 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
+        selectedItemColor: Color(0xFF1D5DA2),
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
           BottomNavigationBarItem(icon: Icon(Icons.subject), label: '상세 일정'),

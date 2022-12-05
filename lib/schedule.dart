@@ -301,8 +301,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                           Text('     ${slicedDate(docs[index]['time'])} :',style: const TextStyle(
                                     height: 3, fontSize: 18, fontFamily: 'title',
                                     ),),
-                                          Text(
-                                              '    ${docs[index]['title'].toString()}',
+                                          Text(' ${docs[index]['title'].toString()}',
                                               style: const TextStyle(
                                                 height: 3, fontSize: 21,
                                               ),
@@ -337,8 +336,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                                               child: Text(
                                                                   '${docs[index]['title']}',
                                                                   style: TextStyle(
-                                                                      fontSize:
-                                                                      22,
+                                                                      fontSize: 22,
                                                                       fontWeight:
                                                                       FontWeight
                                                                           .bold,
@@ -493,7 +491,7 @@ class _SubjectTileState extends State<SubjectTile> {
               width: 80,
               child:
               Text(widget._subject.title,
-                  style: const TextStyle(height: 1, fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'title'),
+                  style: const TextStyle(height: 1, fontSize: 16, fontFamily: 'title'),
                   textAlign: TextAlign.center)
           ),
           Text('  마감일 :'),

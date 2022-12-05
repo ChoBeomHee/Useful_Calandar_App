@@ -67,11 +67,17 @@ class _SubjectInfoState extends State<SubjectInfo> {
                     return ListView.separated(
                       itemCount: docs.length,
                       itemBuilder: (context, index) {
-                        return ListTile(title: Text(
-                          '      ${docs[index]['SubjectName']}(${docs[index]['credit'].toString()})',
-                            style: const TextStyle(height: 1, fontSize: 15, fontWeight: FontWeight.bold),
-                            textAlign: TextAlign.left
-                          ),
+                        return ListTile(title: Row(
+                          children: [
+                            Text(
+                              '      ${docs[index]['SubjectName']}',
+                                style: const TextStyle(height: 1, fontSize: 15,fontFamily: 'title'),
+                                textAlign: TextAlign.left
+                              ),
+                            Text('(${docs[index]['credit'].toString()})',style: const TextStyle(height: 1, fontSize: 15, fontWeight: FontWeight.bold,),
+                                textAlign: TextAlign.left)
+                          ],
+                        ),
                           onTap: (){        // 리스트 타일이 클릭되면
                             showDialog(
                                 context: context,
