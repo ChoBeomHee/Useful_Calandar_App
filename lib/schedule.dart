@@ -387,7 +387,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                       ],
                     ),
                   ),
-                ), // 공부
+                ),
               ],
             )
         ),

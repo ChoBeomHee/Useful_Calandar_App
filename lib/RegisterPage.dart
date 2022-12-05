@@ -41,7 +41,7 @@ class _RegisterFormState extends State<RegisterForm> {
         key: _formkey,
         child: ListView(
           children: [
-            Text(' 회원가입', style: TextStyle(fontSize: 25 , fontWeight: FontWeight.bold), ),
+            Text(' 회원가입 ', style: TextStyle(fontSize: 25 , fontWeight: FontWeight.bold), ),
             Text('\n가입을 하고 일정을 효율적으로 관리해보세요!'),
             SizedBox(height: 30,),
             TextFormField(
