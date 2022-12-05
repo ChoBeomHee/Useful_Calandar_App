@@ -27,17 +27,6 @@ class ScheduleDetail extends StatefulWidget {
 
 class _ScheduleDetailState extends State<ScheduleDetail> {
 
-  /*List<Subject> todoList = [                          // 그냥 예시입니다!!
-    Subject('DB','13:00-14:30','DB레포트 작성'),
-    Subject('Graphics', '15:00-18:00', 'Texture, Lighting, 할거 짱 많네 아오'),
-    Subject('Algorithm', '21:00-23:00', 'BFS'),
-    Subject('DB','13:00-14:30','DB레포트 작성'),
-    Subject('Graphics', '15:00-18:00', 'Texture, Lighting'),
-    Subject('Algorithm', '21:00-23:00', 'BFS'),
-    Subject('DB','13:00-14:30','DB레포트 작성'),
-    Subject('Grahics', '15:00-18:00', 'Texture, Lighting'),
-  ];*/
-
   final _authentication = FirebaseAuth.instance;
 
   // 이 페이지가 생성될 그 때만 인스턴스 전달만 해주면 됨
@@ -53,6 +42,10 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
       var list = await todayAssingn;
       for (int i = 0; i < list.docs.length; i++) {
         if (intoDay(list.docs[i]['startYMDT'], list.docs[i]['endYMDT']) == true) {
+          context
+              .read<Subs>()
+              .quizname
+              .add(list.docs[i]['assignexamname']);
           context
               .read<Subs>()
               .prov_subjectname
@@ -85,6 +78,10 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
         if(intoDay(list.docs[i]['startYMDT'], list.docs[i]['endYMDT']) == true){
           context
               .read<Subs>()
+              .quizname
+              .add(list.docs[i]['assignexamname']);
+          context
+              .read<Subs>()
               .prov_subjectname
               .add(list.docs[i]['subject']);
           context
@@ -113,6 +110,10 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
       var list = await todayQuiz;
       for (int i = 0; i < list.docs.length; i++) {
         if(intoDay(list.docs[i]['startYMDT'], list.docs[i]['endYMDT']) == true) {
+          context
+              .read<Subs>()
+              .quizname
+              .add(list.docs[i]['assignexamname']);
           context
               .read<Subs>()
               .prov_subjectname
@@ -162,10 +163,6 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
     }
   }
   bool intoDay(String startDay, String endDay){
-    /*String year = startDay.substring(0, 4);
-      String month = startDay.substring(5,7);
-      String day = startDay.substring() // 20221202   20221204    20221208
-      */
     String newToDay = getcompareDay().substring(0,11);
     String newStartDay = startDay.substring(0,11);
     String newendDay = endDay.substring(0,11);
@@ -177,24 +174,9 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
     }
     else
       return false;
-    /*
-      if(result == 0){
-        print('같음');
-      }
-
-      else if (result > 0){
-        print('스타트데이가 큼');
-      }
-      else if (result < 0){
-        print('엔드데이가 큼');
-      }
-*/  }
+    }
 
   bool intoDay_per(String startDay, String endDay){
-    /*String year = startDay.substring(0, 4);
-      String month = startDay.substring(5,7);
-      String day = startDay.substring() // 20221202   20221204    20221208
-      */
     String newToDay = getcompareDay().substring(0,11);
     String newStartDay = startDay.substring(0,11);
     String newendDay = endDay.substring(0,11);
@@ -240,10 +222,14 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
         .read<Subs>()
         .type
         .clear();
+    context
+        .read<Subs>()
+        .quizname
+        .clear();
 
     return
       DefaultTabController(
-        length: 2,
+        length: 3,
         child: Scaffold(
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(50),
@@ -291,108 +277,110 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                     child: CircularProgressIndicator());
                               }
                               final docs = snapshot.data!.docs;
-                              return ListView.separated(
+                              return ListView.builder(
                                 itemCount: docs.length,
                                 itemBuilder: (context, index) {
                                   return Container(
-                                    child: ListTile(
-                                      title: Row(
-                                        children: [
-                                          Text('     ${slicedDate(docs[index]['time'])} :',style: const TextStyle(
-                                    height: 3, fontSize: 18, fontFamily: 'title',
-                                    ),),
-                                          Text(
-                                              '    ${docs[index]['title'].toString()}',
-                                              style: const TextStyle(
-                                                height: 3, fontSize: 21,
-                                              ),
-                                              textAlign: TextAlign.start),
-                                        ],
+                                    child: Dismissible(
+                                      key: ValueKey(
+                                        docs[index]['title'],
                                       ),
-                                      onTap: () {
-                                        // 개인 일정이 클릭되면 메모 띄우기
-                                        showDialog(
-                                            context: context,
-                                            barrierDismissible: true,
-                                            builder: (BuildContext context) =>
-                                                AlertDialog(
-                                                  shape:
-                                                  const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(
-                                                              22.0))),
-                                                  content: Container(
-                                                    padding:
-                                                    const EdgeInsets.all(8.0),
-                                                    width: 300,
-                                                    height: 300,
-                                                    child: Column(
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                          const EdgeInsets
-                                                              .all(8.0),
-                                                          child: Center(
-                                                              child: Text(
-                                                                  '${docs[index]['title']}',
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                      22,
-                                                                      fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                      fontFamily:
-                                                                      'title'))),
-                                                        ),
-                                                        Container(
-                                                          height: 3.0,
-                                                          width: 200.0,
-                                                          color: Colors.indigo,
-                                                        ), // 실선
-                                                        const Text('\n메모',
-                                                            style: TextStyle(
-                                                                fontSize: 18,
-                                                                fontWeight:
-                                                                FontWeight
-                                                                    .bold)),
-                                                        const SizedBox(
-                                                          height: 20,
-                                                        ),
-                                                        Container(
-                                                          width: 250,
-                                                          height: 150,
-                                                          padding: EdgeInsets.all(
-                                                              16.0),
-                                                          decoration:
-                                                          BoxDecoration(
-                                                              borderRadius: BorderRadius
-                                                                  .all(Radius
-                                                                  .circular(
-                                                                  22.0)),
-                                                              border:
-                                                              Border.all(
-                                                                width: 1,
-                                                                color: Colors
-                                                                    .indigo,
-                                                              )),
-                                                          child: Text(
-                                                            '${docs[index]['memo']}',
-                                                            style: TextStyle(
-                                                                fontSize: 17),
+                                      child: ListTile(
+                                        title: Row(
+                                          children: [
+                                            Text('     ${slicedDate(docs[index]['time'])} :',style: const TextStyle(
+                                      height: 3, fontSize: 18, fontFamily: 'title',
+                                      ),),
+                                            Text(
+                                                '    ${docs[index]['title'].toString()}',
+                                                style: const TextStyle(
+                                                  height: 3, fontSize: 21,
+                                                ),
+                                                textAlign: TextAlign.start),
+                                          ],
+                                        ),
+                                        onTap: () {
+                                          // 개인 일정이 클릭되면 메모 띄우기
+                                          showDialog(
+                                              context: context,
+                                              barrierDismissible: true,
+                                              builder: (BuildContext context) =>
+                                                  AlertDialog(
+                                                    shape:
+                                                    const RoundedRectangleBorder(
+                                                        borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                22.0))),
+                                                    content: Container(
+                                                      padding:
+                                                      const EdgeInsets.all(8.0),
+                                                      width: 300,
+                                                      height: 300,
+                                                      child: Column(
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                            child: Center(
+                                                                child: Text(
+                                                                    '${docs[index]['title']}',
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                        22,
+                                                                        fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                        fontFamily:
+                                                                        'title'))),
                                                           ),
-                                                        ),
-                                                      ],
+                                                          Container(
+                                                            height: 3.0,
+                                                            width: 200.0,
+                                                            color: Colors.indigo,
+                                                          ), // 실선
+                                                          const Text('\n메모',
+                                                              style: TextStyle(
+                                                                  fontSize: 18,
+                                                                  fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                          const SizedBox(
+                                                            height: 20,
+                                                          ),
+                                                          Container(
+                                                            width: 250,
+                                                            height: 150,
+                                                            padding: EdgeInsets.all(
+                                                                16.0),
+                                                            decoration:
+                                                            BoxDecoration(
+                                                                borderRadius: BorderRadius
+                                                                    .all(Radius
+                                                                    .circular(
+                                                                    22.0)),
+                                                                border:
+                                                                Border.all(
+                                                                  width: 1,
+                                                                  color: Colors
+                                                                      .indigo,
+                                                                )),
+                                                            child: Text(
+                                                              '${docs[index]['memo']}',
+                                                              style: TextStyle(
+                                                                  fontSize: 17),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                ));
-                                      },
+                                                  ));
+                                        },
+                                      ),
+                                      onDismissed: (direction){
+                                        FirebaseFirestore.instance.collection('Personal').doc(docs[index]['title']).delete();},
                                     ),
-                                  );
-                                },
-                                separatorBuilder: (context, index) {
-                                  return const Divider(
-                                    thickness: 3.0,
                                   );
                                 },
                               );
@@ -432,24 +420,80 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                 return Expanded(
                                   child: Padding(
                                     padding: const EdgeInsets.all(20.0),
-                                    child: ListView.separated(
+                                    child: ListView.builder(
                                       itemCount: context
                                           .read<Subs>()
                                           .prov_subjectname
                                           .length,
                                       itemBuilder: (context, index) {
-                                        return SubjectTile(Subject(
-                                            context
-                                                .read<Subs>()
-                                                .prov_subjectname[index],
-                                            context.read<Subs>().start[index],
-                                            context.read<Subs>().end[index],
-                                            context.read<Subs>().prov_memo[index],
-                                            context.read<Subs>().type[index]));
-                                      },
-                                      separatorBuilder: (context, index) {
-                                        return const Divider(
-                                          thickness: 3.0,
+                                        return Dismissible(
+                                          key: ValueKey(context
+                                              .read<Subs>()
+                                              .prov_subjectname[index]),
+                                          child: SubjectTile(Subject(
+                                              context
+                                                  .read<Subs>()
+                                                  .prov_subjectname[index],
+                                              context
+                                                  .read<Subs>()
+                                                  .start[index],
+                                              context
+                                                  .read<Subs>()
+                                                  .end[index],
+                                              context
+                                                  .read<Subs>()
+                                                  .prov_memo[index],
+                                              context
+                                                  .read<Subs>()
+                                                  .type[index])),
+                                          onDismissed: (direction) {
+                                            if(context.read<Subs>().type[index] == '시험') {
+                                              FirebaseFirestore.instance
+                                                  .collection('Subject')
+                                                  .doc(context
+                                                  .read<Subs>()
+                                                  .prov_subjectname[index])
+                                                  .collection('Exam')
+                                                  .doc(context
+                                                  .read<Subs>()
+                                                  .quizname[index])
+                                                  .delete();
+                                            }else if(context.read<Subs>().type[index] == '과제') {
+                                              FirebaseFirestore.instance
+                                                  .collection('Subject')
+                                                  .doc(context
+                                                  .read<Subs>()
+                                                  .prov_subjectname[index])
+                                                  .collection('Assignment')
+                                                  .doc(context
+                                                  .read<Subs>()
+                                                  .quizname[index])
+                                                  .delete();
+                                            }
+                                            else if(context.read<Subs>().type[index].toString() == '퀴즈') {
+                                              FirebaseFirestore.instance
+                                                  .collection('Subject')
+                                                  .doc(context
+                                                  .read<Subs>()
+                                                  .prov_subjectname[index])
+                                                  .collection('Quiz')
+                                                  .doc(context
+                                                  .read<Subs>()
+                                                  .quizname[index])
+                                                  .delete();
+                                            }
+                                            print(context.read<Subs>().type[index]);
+                                            print(context.read<Subs>().quizname[index]);
+                                              context.read<Subs>().prov_subjectname.removeAt(index);
+                                              context.read<Subs>().prov_memo.removeAt(index);
+                                              context.read<Subs>().start.removeAt(index);
+                                              context.read<Subs>().end.removeAt(index);
+                                              context.read<Subs>().type.removeAt(index);
+                                              context.read<Subs>().quizname.removeAt(index);
+
+                                              context.read<Subs>().startDay.removeAt(index);
+                                              context.read<Subs>().endDay.removeAt(index);
+                                          },
                                         );
                                       },
                                     ),
@@ -496,7 +540,7 @@ class _SubjectTileState extends State<SubjectTile> {
                   style: const TextStyle(height: 1, fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'title'),
                   textAlign: TextAlign.center)
           ),
-          Text('  마감일 :'),
+          Text('  마감일 '),
           Expanded(child: Text(_endTime)),            // '할 일' 잘리는 것 방지
           Text(widget._subject.type),
         ],
