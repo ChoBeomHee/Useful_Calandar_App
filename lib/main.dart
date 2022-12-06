@@ -35,9 +35,24 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (BuildContext context) => Subs(),
       builder: (context, child) => MaterialApp(
+        color: Color(0xFF343434),
         title: 'Flutter Demo',
-        theme: ThemeData(fontFamily: 'text'),   // 기본 폰트 설정
+        theme: ThemeData(fontFamily: 'text',// 기본 폰트 설정
+            primaryColorLight: Color(0xFFA89b92),
+            primaryColor: Color(0xFF343434),
+            primarySwatch: MaterialColor(0xFF343434, {
+              50 : Color(0xFF343434),
+              100 : Color(0xFF343434),
+              200 : Color(0xFF343434),
+              300 : Color(0xFF343434),
+              400 : Color(0xFF343434),
+              500 : Color(0xFF343434),
+              600 : Color(0xFF343434),
+              700 : Color(0xFF343434),
+              800 : Color(0xFF343434),
+              900 : Color(0xFF343434),
 
+            })),
         // 로그인 되었을 때는, Success Page 가 Home 화면이 되도록 해보겠다
         // StreamBuilder 사용, 파이어베이스에서 어떤 변화가 생겼을 때 변화를 감지할 수 있도록 도와주는 stream을 받아옴
         // 변화가 생겼다는게 감지가 되는 순간 반응을 할 수 있는 클래스

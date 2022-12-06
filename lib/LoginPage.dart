@@ -46,7 +46,7 @@ class _LoginFormState extends State<LoginForm> {
               SizedBox(height: 100,),
               Container(
                 child: Text('아.. 맞다!', style: TextStyle(fontSize: 40,
-                  fontWeight : FontWeight.bold , color: Colors.lightBlue, fontFamily: 'title' ),
+                  fontWeight : FontWeight.bold , color: Color(0xFFA89b92), fontFamily: 'title' ),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -57,7 +57,7 @@ class _LoginFormState extends State<LoginForm> {
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                       borderSide: BorderSide(
-                          color : Colors.black,
+                          color : Color(0xFFA89b92),
                           width: 3
                       )
                   ),
@@ -100,7 +100,7 @@ class _LoginFormState extends State<LoginForm> {
                   style: ElevatedButton.styleFrom(elevation: 10,
                     shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(30.0),
-                      side: BorderSide(color: Colors.lightBlueAccent),
+                      side: BorderSide(color: Color(0xFF343434)),
                     ),
                   ),
                   onPressed: () async {

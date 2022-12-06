@@ -183,7 +183,8 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                 Tab(
                   icon: Icon(Icons.book),
                 )
-              ]),
+              ],
+              ),
             ),
           ),
           body: TabBarView(
@@ -193,7 +194,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                 child: Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(60), // 모서리를 둥글게
-                      border: Border.all(color: Colors.indigo, width: 10)),
+                      border: Border.all(color: Color(0xFF343434), width: 10)),
                   child: Column(
                     children: <Widget>[
                       Text('\n\n오늘 일정 (${getToday()})', // 제목
@@ -273,7 +274,6 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                                       Container(
                                                         height: 3.0,
                                                         width: 200.0,
-                                                        color: Colors.indigo,
                                                       ), // 실선
                                                       const Text('\n메모',
                                                           style: TextStyle(
@@ -298,8 +298,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                                                 border:
                                                                     Border.all(
                                                                   width: 1,
-                                                                  color: Colors
-                                                                      .indigo,
+                                                                  color: Color(0xFF343434),
                                                                 )),
                                                         child: Text(
                                                           '${docs[index]['memo']}',
@@ -334,7 +333,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                 child: Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(60), // 모서리를 둥글게
-                      border: Border.all(color: Colors.indigo, width: 10)),
+                      border: Border.all(color: Color(0xFF343434), width: 10)),
                   child: Column(
                     children: <Widget>[
                       Text('\n\n오늘 일정(${getToday()})',
