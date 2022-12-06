@@ -117,7 +117,6 @@ class _CalendarPageState extends State<CalendarPage> {
     final DateTime today = DateTime.now();
     final DateTime startTime = DateTime(
         today.year, today.month, today.day, 9, 0, 0);
-    final DateTime endTime = startTime.add(const Duration(hours: 2));
 
 
     for (int i = 0; i < context.read<Subs>().startDay.length; i++) {
@@ -142,13 +141,18 @@ class _CalendarPageState extends State<CalendarPage> {
           .endDay[i], Color(typeColor)));
     }
     for(int i = 0; i < context.read<Subs>().personalname.length; i++){
+      DateTime endTime = DateTime(
+        context.read<Subs>().personalday[i].year,
+        context.read<Subs>().personalday[i].month,
+        context.read<Subs>().personalday[i].day,
+        23, 59,0,0,0
+      );
       meetings.add(Meeting(context
           .read<Subs>()
           .personalname[i], context
           .read<Subs>()
-          .personalday[i], context
-          .read<Subs>()
-          .personalday[i], Color(0xFFB19f91)));
+          .personalday[i],
+          endTime, Color(0xFFB19f91)));
     }
     return meetings;
   }

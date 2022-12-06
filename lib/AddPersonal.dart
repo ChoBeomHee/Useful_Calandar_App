@@ -73,7 +73,7 @@ class _AddPersonalState extends State<AddPersonal> {
         }
         Time = '${dateTime.toString().split(' ')[0]} $hour:$min';
         ymdtPersonalController.text = '${dateTime.toString().split(' ')[0]} $hour:$min';
-        personalDay = dateTime;
+        personalDay = dateTime.add(new Duration(days: 0, hours: pickedTime.hour, minutes: pickedTime.minute, milliseconds: 0, microseconds: 0));
       }
     }
   }
