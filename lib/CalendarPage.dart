@@ -55,7 +55,6 @@ class _CalendarPageState extends State<CalendarPage> {
 
       var list = await todayExam;
       print('시험 수 ${list.docs.length}');
-      print('${context.read<Subs>().startDay}');
       for (int i = 0; i < list.docs.length; i++) {
         context
             .read<Subs>()
@@ -102,6 +101,16 @@ class _CalendarPageState extends State<CalendarPage> {
             .add('퀴즈');
       }
     }
+
+
+    var personal = FirebaseFirestore.instance.collection('Personal').
+    where('uid', isEqualTo: _authentication.currentUser!.uid).get();
+    final iterator = await personal;
+
+    for(int i = 0; i < iterator.docs.length; i++){
+      context.read<Subs>().personalname.add(iterator.docs[i]['title']);
+      context.read<Subs>().personalday.add(iterator.docs[i]['date'].toDate());
+    }
   }
 
 
@@ -115,7 +124,6 @@ class _CalendarPageState extends State<CalendarPage> {
 
     for (int i = 0; i < context.read<Subs>().startDay.length; i++) {
       int typeColor = 0;
-
       if (context.read<Subs>().type[i] == '시험'){
         typeColor = 0xFF745c54;
       }
@@ -134,12 +142,22 @@ class _CalendarPageState extends State<CalendarPage> {
           .read<Subs>()
           .endDay[i], Color(typeColor)));
     }
-    print(context.read<Subs>().prov_subjectname.length);
+    for(int i = 0; i < context.read<Subs>().personalname.length; i++){
+      meetings.add(Meeting(context
+          .read<Subs>()
+          .personalname[i], context
+          .read<Subs>()
+          .personalday[i], context
+          .read<Subs>()
+          .personalday[i], Color(0xA925E0FF)));
+    }
     return meetings;
   }
 
   @override
   Widget build(BuildContext context) {
+    context.read<Subs>().personalname.clear();
+    context.read<Subs>().personalday.clear();
     context
         .read<Subs>()
         .prov_subjectname

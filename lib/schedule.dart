@@ -26,18 +26,6 @@ class ScheduleDetail extends StatefulWidget {
 }
 
 class _ScheduleDetailState extends State<ScheduleDetail> {
-
-  /*List<Subject> todoList = [                          // 그냥 예시입니다!!
-    Subject('DB','13:00-14:30','DB레포트 작성'),
-    Subject('Graphics', '15:00-18:00', 'Texture, Lighting, 할거 짱 많네 아오'),
-    Subject('Algorithm', '21:00-23:00', 'BFS'),
-    Subject('DB','13:00-14:30','DB레포트 작성'),
-    Subject('Graphics', '15:00-18:00', 'Texture, Lighting'),
-    Subject('Algorithm', '21:00-23:00', 'BFS'),
-    Subject('DB','13:00-14:30','DB레포트 작성'),
-    Subject('Grahics', '15:00-18:00', 'Texture, Lighting'),
-  ];*/
-
   final _authentication = FirebaseAuth.instance;
 
   // 이 페이지가 생성될 그 때만 인스턴스 전달만 해주면 됨
@@ -77,16 +65,44 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
               .read<Subs>()
               .type
               .add('과제');
+          context
+              .read<Subs>()
+              .anoder_quizname
+              .add(list.docs[i]['assignexamname']);
+          context
+              .read<Subs>()
+              .anoder_prov_subjectname
+              .add(list.docs[i]['subject']);
+          context
+              .read<Subs>()
+              .anoder_prov_memo
+              .add(list.docs[i]['memo']);
+          context
+              .read<Subs>()
+              .anoder_start
+              .add(list.docs[i]['startYMDT']);
+          context
+              .read<Subs>()
+              .anoder_end
+              .add(list.docs[i]['endYMDT']);
+          context
+              .read<Subs>()
+              .anoder_type
+              .add('과제');
+
         }
       }
     }
+
+
+
     for (int i = 0; i < check.docs.length; i++) {
       var todayExam = FirebaseFirestore.instance.collection('Subject').
       doc(check.docs[i]['SubjectName']).collection('Exam').get();
 
       var list = await todayExam;
       for (int i = 0; i < list.docs.length; i++) {
-        if(intoDay(list.docs[i]['startYMDT'], list.docs[i]['endYMDT']) == true){
+        if (intoDay(list.docs[i]['startYMDT'], list.docs[i]['endYMDT']) == true) {
           context
               .read<Subs>()
               .quizname
@@ -111,6 +127,31 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
               .read<Subs>()
               .type
               .add('시험');
+          context
+              .read<Subs>()
+              .anoder_quizname
+              .add(list.docs[i]['assignexamname']);
+          context
+              .read<Subs>()
+              .anoder_prov_subjectname
+              .add(list.docs[i]['subject']);
+          context
+              .read<Subs>()
+              .anoder_prov_memo
+              .add(list.docs[i]['memo']);
+          context
+              .read<Subs>()
+              .anoder_start
+              .add(list.docs[i]['startYMDT']);
+          context
+              .read<Subs>()
+              .anoder_end
+              .add(list.docs[i]['endYMDT']);
+          context
+              .read<Subs>()
+              .anoder_type
+              .add('시험');
+
         }
       }
     }
@@ -145,9 +186,150 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
               .read<Subs>()
               .type
               .add('퀴즈');
+          context
+              .read<Subs>()
+              .anoder_quizname
+              .add(list.docs[i]['assignexamname']);
+          context
+              .read<Subs>()
+              .anoder_prov_subjectname
+              .add(list.docs[i]['subject']);
+          context
+              .read<Subs>()
+              .anoder_prov_memo
+              .add(list.docs[i]['memo']);
+          context
+              .read<Subs>()
+              .anoder_start
+              .add(list.docs[i]['startYMDT']);
+          context
+              .read<Subs>()
+              .anoder_end
+              .add(list.docs[i]['endYMDT']);
+          context
+              .read<Subs>()
+              .anoder_type
+              .add('퀴즈');
         }
       }
     }
+  }
+  Future<void> setanother_() async{
+    var sub = FirebaseFirestore.instance.collection('Subject').
+    where('uid', isEqualTo: _authentication.currentUser!.uid).get();
+    var check = await sub;
+
+    for (int i = 0; i < check.docs.length; i++) {
+      var todayAssingn = FirebaseFirestore.instance.collection('Subject').
+      doc(check.docs[i]['SubjectName']).collection('Assignment').get();
+
+      var list = await todayAssingn;
+      for (int i = 0; i < list.docs.length; i++) {
+        if (intoDay(list.docs[i]['startYMDT'], list.docs[i]['endYMDT']) == false) {
+          context
+              .read<Subs>()
+              .anoder_quizname
+              .add(list.docs[i]['assignexamname']);
+          context
+              .read<Subs>()
+              .anoder_prov_subjectname
+              .add(list.docs[i]['subject']);
+          context
+              .read<Subs>()
+              .anoder_prov_memo
+              .add(list.docs[i]['memo']);
+          context
+              .read<Subs>()
+              .anoder_start
+              .add(list.docs[i]['startYMDT']);
+          context
+              .read<Subs>()
+              .anoder_end
+              .add(list.docs[i]['endYMDT']);
+          context
+              .read<Subs>()
+              .anoder_type
+              .add('과제');
+        }
+      }
+    }
+
+
+
+    for (int i = 0; i < check.docs.length; i++) {
+      var todayExam = FirebaseFirestore.instance.collection('Subject').
+      doc(check.docs[i]['SubjectName']).collection('Exam').get();
+
+      var list = await todayExam;
+      for (int i = 0; i < list.docs.length; i++) {
+        if (intoDay(list.docs[i]['startYMDT'], list.docs[i]['endYMDT']) ==
+            false) {
+          context
+              .read<Subs>()
+              .anoder_quizname
+              .add(list.docs[i]['assignexamname']);
+          context
+              .read<Subs>()
+              .anoder_prov_subjectname
+              .add(list.docs[i]['subject']);
+          context
+              .read<Subs>()
+              .anoder_prov_memo
+              .add(list.docs[i]['memo']);
+          context
+              .read<Subs>()
+              .anoder_start
+              .add(list.docs[i]['startYMDT']);
+          context
+              .read<Subs>()
+              .anoder_end
+              .add(list.docs[i]['endYMDT']);
+          context
+              .read<Subs>()
+              .anoder_type
+              .add('시험');
+        }
+      }
+    }
+    for (int i = 0; i < check.docs.length; i++) {
+      var todayQuiz = FirebaseFirestore.instance.collection('Subject').
+      doc(check.docs[i]['SubjectName']).collection('Quiz').get();
+
+      var list = await todayQuiz;
+      for (int i = 0; i < list.docs.length; i++) {
+        if(intoDay(list.docs[i]['startYMDT'], list.docs[i]['endYMDT']) == false) {
+          context
+              .read<Subs>()
+              .anoder_quizname
+              .add(list.docs[i]['assignexamname']);
+          context
+              .read<Subs>()
+              .anoder_prov_subjectname
+              .add(list.docs[i]['subject']);
+          context
+              .read<Subs>()
+              .anoder_prov_memo
+              .add(list.docs[i]['memo']);
+          context
+              .read<Subs>()
+              .anoder_start
+              .add(list.docs[i]['startYMDT']);
+          context
+              .read<Subs>()
+              .anoder_end
+              .add(list.docs[i]['endYMDT']);
+          context
+              .read<Subs>()
+              .anoder_type
+              .add('퀴즈');
+
+
+
+
+        }
+      }
+    }
+
   }
   String slicedDate(String d) {
     // 연도를 제거한 문자열(월,일,시간) 리턴
@@ -203,18 +385,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
     }
     else
       return false;
-    /*
-      if(result == 0){
-        print('같음');
-      }
-
-      else if (result > 0){
-        print('스타트데이가 큼');
-      }
-      else if (result < 0){
-        print('엔드데이가 큼');
-      }
-*/  }
+    }
   @override
   Widget build(BuildContext context) {
     context
@@ -241,7 +412,30 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
         .read<Subs>()
         .quizname
         .clear();
-
+    context
+        .read<Subs>()
+        .anoder_prov_subjectname
+        .clear();
+    context
+        .read<Subs>()
+        .anoder_prov_memo
+        .clear();
+    context
+        .read<Subs>()
+        .anoder_start
+        .clear();
+    context
+        .read<Subs>()
+        .anoder_end
+        .clear();
+    context
+        .read<Subs>()
+        .anoder_type
+        .clear();
+    context
+        .read<Subs>()
+        .anoder_quizname
+        .clear();
     return
       DefaultTabController(
         length: 3,
@@ -251,13 +445,14 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
               child: AppBar(
                 bottom: TabBar(tabs: [
                   Tab(icon: Icon(Icons.schedule),),
-                  Tab(icon: Icon(Icons.book),)
+                  Tab(icon: Icon(Icons.book),),
+                  Tab(icon: Icon(Icons.book),),
                 ]),
               ),
             ),
             body: TabBarView(
               children: [
-                //////////////////////////////////////////////////////////// 개인 일정
+                // 개인
                 SafeArea(
                   child: Container(
                     decoration: BoxDecoration(
@@ -406,8 +601,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                     ),
                   ),
                 ),
-                // 개인
-                //////////////////////////////////////////////////////////// 공부 일정
+                // 공부
                 SafeArea(
                   child: Container(
                     decoration: BoxDecoration(
@@ -520,13 +714,262 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                     ),
                   ),
                 ),
-                // 공부
+                // 모든 일정
+                SafeArea(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(60), // 모서리를 둥글게
+                        border: Border.all(color: Colors.indigo, width: 10)),
+                    child: Column(
+                      children: <Widget>[
+                        Text('\n\n모든 일정(${getToday()})',
+                            style: const TextStyle(
+                                fontSize: 23,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'title')),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Text('공부 일정',
+                            style: const TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.bold)),
+                        FutureBuilder(
+                            future: setanother_(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return Text('');
+                              } else {
+                                return Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: ListView.separated(
+                                      itemCount: context
+                                          .read<Subs>()
+                                          .anoder_prov_subjectname
+                                          .length,
+                                      itemBuilder: (context, index) {
+                                        return Dismissible(
+                                          key: ValueKey(context
+                                              .read<Subs>()
+                                              .anoder_prov_subjectname[index]),
+                                          child: SubjectTile(Subject(
+                                              context
+                                                  .read<Subs>()
+                                                  .anoder_prov_subjectname[index],
+                                              context
+                                                  .read<Subs>()
+                                                  .anoder_start[index],
+                                              context
+                                                  .read<Subs>()
+                                                  .anoder_end[index],
+                                              context
+                                                  .read<Subs>()
+                                                  .anoder_prov_memo[index],
+                                              context
+                                                  .read<Subs>()
+                                                  .anoder_type[index])),
+                                          onDismissed: (direction) {
+                                            if(context.read<Subs>().anoder_type[index] == '시험') {
+                                              FirebaseFirestore.instance
+                                                  .collection('Subject')
+                                                  .doc(context
+                                                  .read<Subs>()
+                                                  .anoder_prov_subjectname[index])
+                                                  .collection('Exam')
+                                                  .doc(context
+                                                  .read<Subs>()
+                                                  .anoder_quizname[index])
+                                                  .delete();
+                                            }else if(context.read<Subs>().anoder_type[index] == '과제') {
+                                              FirebaseFirestore.instance
+                                                  .collection('Subject')
+                                                  .doc(context
+                                                  .read<Subs>()
+                                                  .anoder_prov_subjectname[index])
+                                                  .collection('Assignment')
+                                                  .doc(context
+                                                  .read<Subs>()
+                                                  .anoder_quizname[index])
+                                                  .delete();
+                                            }
+                                            else if(context.read<Subs>().anoder_type[index].toString() == '퀴즈') {
+                                              FirebaseFirestore.instance
+                                                  .collection('Subject')
+                                                  .doc(context
+                                                  .read<Subs>()
+                                                  .anoder_prov_subjectname[index])
+                                                  .collection('Quiz')
+                                                  .doc(context
+                                                  .read<Subs>()
+                                                  .anoder_quizname[index])
+                                                  .delete();
+                                            }
+                                            context.read<Subs>().anoder_prov_subjectname.removeAt(index);
+                                            context.read<Subs>().anoder_prov_memo.removeAt(index);
+                                            context.read<Subs>().anoder_start.removeAt(index);
+                                            context.read<Subs>().anoder_end.removeAt(index);
+                                            context.read<Subs>().anoder_type.removeAt(index);
+                                            context.read<Subs>().anoder_quizname.removeAt(index);
+
+                                            context.read<Subs>().anoder_startDay.removeAt(index);
+                                            context.read<Subs>().anoder_endDay.removeAt(index);
+                                          },
+                                        );
+                                      },
+                                      separatorBuilder: (context, index) {
+                                        return const Divider(
+                                          thickness: 3.0,
+                                        );
+                                      },                                    ),
+                                  ),
+                                );
+                              }
+                            }),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Text('개인 일정',
+                                  style: const TextStyle(
+                                      fontSize: 14, fontWeight: FontWeight.bold)),
+
+                              Expanded(
+                                child: StreamBuilder<QuerySnapshot>(
+                                  stream: FirebaseFirestore.instance
+                                      .collection('Personal')
+                                      .where('uid',
+                                      isEqualTo: _authentication.currentUser!.uid)
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const Center(
+                                          child: CircularProgressIndicator());
+                                    }
+                                    final docs = snapshot.data!.docs;
+                                    return ListView.builder(
+                                      itemCount: docs.length,
+                                      itemBuilder: (context, index) {
+                                        return Container(
+                                          child: Dismissible(
+                                            key: ValueKey(
+                                              docs[index]['title'],
+                                            ),
+                                            child: ListTile(
+                                              title: Row(
+                                                children: [
+                                                  Text('     ${slicedDate(docs[index]['time'])} :',style: const TextStyle(
+                                                    height: 3, fontSize: 18, fontFamily: 'title',
+                                                  ),),
+                                                  Text(
+                                                      '    ${docs[index]['title'].toString()}',
+                                                      style: const TextStyle(
+                                                        height: 3, fontSize: 18,
+                                                      ),
+                                                      textAlign: TextAlign.start),
+                                                ],
+                                              ),
+                                              onTap: () {
+                                                // 개인 일정이 클릭되면 메모 띄우기
+                                                showDialog(
+                                                    context: context,
+                                                    barrierDismissible: true,
+                                                    builder: (BuildContext context) =>
+                                                        AlertDialog(
+                                                          shape:
+                                                          const RoundedRectangleBorder(
+                                                              borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius.circular(
+                                                                      22.0))),
+                                                          content: Container(
+                                                            padding:
+                                                            const EdgeInsets.all(8.0),
+                                                            width: 300,
+                                                            height: 300,
+                                                            child: Column(
+                                                              children: [
+                                                                Padding(
+                                                                  padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                                  child: Center(
+                                                                      child: Text(
+                                                                          '${docs[index]['title']}',
+                                                                          style: TextStyle(
+                                                                              fontSize:
+                                                                              16,
+                                                                              fontWeight:
+                                                                              FontWeight
+                                                                                  .bold,
+                                                                              fontFamily:
+                                                                              'title'))),
+                                                                ),
+                                                                Container(
+                                                                  height: 3.0,
+                                                                  width: 200.0,
+                                                                  color: Colors.indigo,
+                                                                ), // 실선
+                                                                const Text('\n메모',
+                                                                    style: TextStyle(
+                                                                        fontSize: 18,
+                                                                        fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
+                                                                const SizedBox(
+                                                                  height: 20,
+                                                                ),
+                                                                Container(
+                                                                  width: 250,
+                                                                  height: 150,
+                                                                  padding: EdgeInsets.all(
+                                                                      16.0),
+                                                                  decoration:
+                                                                  BoxDecoration(
+                                                                      borderRadius: BorderRadius
+                                                                          .all(Radius
+                                                                          .circular(
+                                                                          22.0)),
+                                                                      border:
+                                                                      Border.all(
+                                                                        width: 1,
+                                                                        color: Colors
+                                                                            .indigo,
+                                                                      )),
+                                                                  child: Text(
+                                                                    '${docs[index]['memo']}',
+                                                                    style: TextStyle(
+                                                                        fontSize: 17),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ));
+                                              },
+                                            ),
+                                            onDismissed: (direction){
+                                              FirebaseFirestore.instance.collection('Personal').doc(docs[index]['title']).delete();},
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             )
         ),
       );
   }
 }
+
 class SubjectTile extends StatefulWidget {
   SubjectTile(this._subject);
   final Subject _subject;

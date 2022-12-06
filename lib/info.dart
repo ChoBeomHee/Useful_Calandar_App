@@ -3,6 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:team/SubjectsProvider.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+
+import 'AddAssignExam.dart';
+import 'AddPersonal.dart';
+import 'AddSubject.dart';
 
 class SubjectInfo extends StatefulWidget {
   SubjectInfo({Key? key}) : super(key: key);
@@ -45,7 +50,143 @@ class _SubjectInfoState extends State<SubjectInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      floatingActionButton: SpeedDial(
+        animatedIcon: AnimatedIcons.menu_close,
+        animatedIconTheme: IconThemeData(size: 22.0),
+        // this is ignored if animatedIcon is non null
+        // child: Icon(Icons.add),
+        visible: true,
+        curve: Curves.bounceIn,
+        overlayColor: Colors.black,
+        overlayOpacity: 0.5,
+        onOpen: () => print('OPENING DIAL'),
+        onClose: () => print('DIAL CLOSED'),
+        tooltip: 'Speed Dial',
+        heroTag: 'speed-dial-hero-tag',
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 8.0,
+        shape: CircleBorder(),
+        children: [
+          SpeedDialChild(
+            child: Icon(Icons.subject),
+            backgroundColor: Colors.lightBlueAccent,
+            label: '과목',
+            labelStyle: TextStyle(fontSize: 18.0),
+            onTap: () =>
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) =>
+                      AlertDialog(
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(22.0))),
+                        title: Container(
+                          child: Column(
+                            children: const [
+                              AddSubjects(),
+                            ],
+                          ),
+                        ),
+                        scrollable: true,
+                      ),
+                ),
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.task),
+            backgroundColor: Colors.lightBlueAccent,
+            label: '과제/시험',
+            labelStyle: TextStyle(fontSize: 18.0),
+            onTap: () =>
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) =>
+                      AlertDialog(
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(22.0))),
+                        title: Container(
+                          child: Column(
+                            children: const [
+                              AddAssignExam(),
+                            ],
+                          ),
+                        ),
+                        scrollable: true,
+                      ),
+                ),
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.access_time),
+            backgroundColor: Colors.lightBlueAccent,
+            label: '개인 일정',
+            labelStyle: TextStyle(fontSize: 18.0),
+            onTap: () =>
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) =>
+                      AlertDialog(
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(22.0))),
+                        title: Container(
+                          child: Column(
+                            children: const [
+                              AddPersonal(),
+                            ],
+                          ),
+                        ),
+                        scrollable: true,
+                      ),
+                ),
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.logout_outlined),
+            backgroundColor: Colors.lightBlueAccent,
+            label: '로그아웃',
+            labelStyle: TextStyle(fontSize: 18.0),
+            onTap: () =>
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) =>
+                      AlertDialog(
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(22.0))),
+                        title: Container(
+                          child: Column(
+                            children: [
+                              const Text('로그아웃 하시겠습니까?'),
+                              SizedBox(height: 30,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  OutlinedButton(
+                                      onPressed: () {
+                                        FirebaseAuth.instance.signOut(); // 로그아웃
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text('확인')),
+                                  OutlinedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text('취소')),
+                                ],
+                              ),
+                              // 이 부분에 함수 넣으면 됨
+                            ],
+                          ),
+                        ),
+                      ),
+                ),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.all(10),
@@ -67,130 +208,139 @@ class _SubjectInfoState extends State<SubjectInfo> {
                     return ListView.separated(
                       itemCount: docs.length,
                       itemBuilder: (context, index) {
-                        return ListTile(title: Row(
-                          children: [
-                            Text(
-                              '      ${docs[index]['SubjectName']}',
-                                style: const TextStyle(height: 1, fontSize: 15,fontFamily: 'title'),
-                                textAlign: TextAlign.left
-                              ),
-                            Text('(${docs[index]['credit'].toString()})',style: const TextStyle(height: 1, fontSize: 15, fontWeight: FontWeight.bold,),
-                                textAlign: TextAlign.left)
-                          ],
-                        ),
-                          onTap: (){        // 리스트 타일이 클릭되면
-                            showDialog(
-                                context: context,
-                                barrierDismissible: true,
-                                builder: (BuildContext context) => Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: AlertDialog(
-                                    shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(Radius.circular(22.0))),
-                                    content: Container(
-                                      padding: const EdgeInsets.all(16.0),
-                                      width: 300,
-                                      height: 400,
-                                      child: Column(
-                                        children: [
-                                          Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text('과목 상세 정보', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'title'))),
-                                          SizedBox(
-                                            height: 30,
-                                          ),
-                                          Row(
-                                            children: [
-                                              const SizedBox(
-                                                  width: 80,
-                                                  child: Text('과목명')),
-                                              Expanded(
-                                                child: Container(
-                                                  child: Text(docs[index]['SubjectName']),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 30,),
-                                          Row(
-                                            children: [
-                                              const SizedBox(
-                                                  width: 80,
-                                                  child: Text('학점')),
-                                              Container(
-                                                child: Text(docs[index]['credit'].toString()),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 20,),
-                                          const Padding(                                      // 평가비율이 앞으로 당겨지면 좋겠는데..흠..
-                                            padding: EdgeInsets.fromLTRB(0,8.0,0,8.0),
-                                            child: Align(
+                        return Dismissible(
+                          key: ValueKey(docs[index]['SubjectName']),
+                          child: ListTile(title: Row(
+                            children: [
+                              Text(
+                                '      ${docs[index]['SubjectName']}',
+                                  style: const TextStyle(height: 1, fontSize: 15,fontFamily: 'title'),
+                                  textAlign: TextAlign.left
+                                ),
+                              Text('(${docs[index]['credit'].toString()})',style: const TextStyle(height: 1, fontSize: 15, fontWeight: FontWeight.bold,),
+                                  textAlign: TextAlign.left)
+                            ],
+                          ),
+                            onTap: (){        // 리스트 타일이 클릭되면
+                              showDialog(
+                                  context: context,
+                                  barrierDismissible: true,
+                                  builder: (BuildContext context) => Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: AlertDialog(
+                                      shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(Radius.circular(22.0))),
+                                      content: Container(
+                                        padding: const EdgeInsets.all(16.0),
+                                        width: 300,
+                                        height: 400,
+                                        child: Column(
+                                          children: [
+                                            Align(
                                                 alignment: Alignment.centerLeft,
-                                                child: Text('평가 비율', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'title'))),
-                                          ),
-                                          const SizedBox(height: 20,),
-                                          Row(
-                                            children: [
-                                              const SizedBox(
-                                                  width: 100,
-                                                  child: Text('중간고사')),
-                                              Container(
-                                                child: Text(docs[index]['Midterm'].toString()+'%'),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 20,),
-                                          Row(
-                                            children: [
-                                              const SizedBox(
-                                                  width: 100,
-                                                  child: Text('기말고사')),
-                                              Container(
-                                                child: Text(docs[index]['Finalterm'].toString()+'%'),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 20,),
-                                          Row(
-                                            children: [
-                                              const SizedBox(
-                                                  width: 100,
-                                                  child: Text('과제')),
-                                              Container(
-                                                child: Text(docs[index]['task'].toString()+'%'),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 20,),
-                                          Row(
-                                            children: [
-                                              const SizedBox(
-                                                  width: 100,
-                                                  child: Text('출결')),
-                                              Container(
-                                                child: Text(docs[index]['attandence'].toString()+'%'),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 20,),
-                                          Row(
-                                            children: [
-                                              const SizedBox(
-                                                  width: 100,
-                                                  child: Text('영어 강의')),
-                                              Container(
-                                                child: Text(yesno(docs[index]['English'])),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
+                                                child: Text('과목 상세 정보', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'title'))),
+                                            SizedBox(
+                                              height: 30,
+                                            ),
+                                            Row(
+                                              children: [
+                                                const SizedBox(
+                                                    width: 80,
+                                                    child: Text('과목명')),
+                                                Expanded(
+                                                  child: Container(
+                                                    child: Text(docs[index]['SubjectName']),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 30,),
+                                            Row(
+                                              children: [
+                                                const SizedBox(
+                                                    width: 80,
+                                                    child: Text('학점')),
+                                                Container(
+                                                  child: Text(docs[index]['credit'].toString()),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 20,),
+                                            const Padding(                                      // 평가비율이 앞으로 당겨지면 좋겠는데..흠..
+                                              padding: EdgeInsets.fromLTRB(0,8.0,0,8.0),
+                                              child: Align(
+                                                  alignment: Alignment.centerLeft,
+                                                  child: Text('평가 비율', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'title'))),
+                                            ),
+                                            const SizedBox(height: 20,),
+                                            Row(
+                                              children: [
+                                                const SizedBox(
+                                                    width: 100,
+                                                    child: Text('중간고사')),
+                                                Container(
+                                                  child: Text(docs[index]['Midterm'].toString()+'%'),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 20,),
+                                            Row(
+                                              children: [
+                                                const SizedBox(
+                                                    width: 100,
+                                                    child: Text('기말고사')),
+                                                Container(
+                                                  child: Text(docs[index]['Finalterm'].toString()+'%'),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 20,),
+                                            Row(
+                                              children: [
+                                                const SizedBox(
+                                                    width: 100,
+                                                    child: Text('과제')),
+                                                Container(
+                                                  child: Text(docs[index]['task'].toString()+'%'),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 20,),
+                                            Row(
+                                              children: [
+                                                const SizedBox(
+                                                    width: 100,
+                                                    child: Text('출결')),
+                                                Container(
+                                                  child: Text(docs[index]['attandence'].toString()+'%'),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 20,),
+                                            Row(
+                                              children: [
+                                                const SizedBox(
+                                                    width: 100,
+                                                    child: Text('영어 강의')),
+                                                Container(
+                                                  child: Text(yesno(docs[index]['English'])),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
 
-                                  ),
-                                )
-                            );
+                                    ),
+                                  )
+                              );
+                            },
+                          ),
+                          onDismissed: (direction){
+                            setState(() {
+                              FirebaseFirestore.instance.collection('Subject')
+                                  .doc(docs[index]['SubjectName']).delete();
+                            });
                           },
                         );
                       },
@@ -213,7 +363,7 @@ class _SubjectInfoState extends State<SubjectInfo> {
                   return const Center(child: CircularProgressIndicator());
                 }
                 final docs = snapshot.data!.docs;
-
+                totalCredit = 0;
                 docs.forEach((element) { totalCredit += element['credit']; });
 
                 return Text('총 학점: $totalCredit',style: TextStyle(fontSize: 18,fontFamily: 'title'),);

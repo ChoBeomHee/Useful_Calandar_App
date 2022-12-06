@@ -39,7 +39,7 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
   Widget build(BuildContext context) {
     // 메인
     return Scaffold(
-      floatingActionButton: SpeedDial(
+     /* floatingActionButton: SpeedDial(
         animatedIcon: AnimatedIcons.menu_close,
         animatedIconTheme: IconThemeData(size: 22.0),
         // this is ignored if animatedIcon is non null
@@ -175,7 +175,7 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
                 ),
           ),
         ],
-      ),
+      ),*/
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
