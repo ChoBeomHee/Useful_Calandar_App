@@ -176,14 +176,18 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(50),
             child: AppBar(
+              backgroundColor: Color(0xFFF6F9FD),
               bottom: TabBar(tabs: [
                 Tab(
                   icon: Icon(Icons.schedule),
                 ),
                 Tab(
                   icon: Icon(Icons.book),
-                )
+                ),
               ],
+                indicatorColor: Color(0xFF343434),
+                labelColor: Color(0xFF343434),
+                unselectedLabelColor: Color(0xFFA1A3A8),
               ),
             ),
           ),
