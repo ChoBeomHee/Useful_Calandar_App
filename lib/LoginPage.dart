@@ -10,6 +10,9 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Login'),
+      ),
       body: LoginForm(),
     );
   }
@@ -43,6 +46,7 @@ class _LoginFormState extends State<LoginForm> {
           key: _formkey,
           child: ListView(
             children: [
+<<<<<<< HEAD
               SizedBox(height: 100,),
               Container(
                 child: Text('아.. 맞다!', style: TextStyle(fontSize: 40,
@@ -61,6 +65,10 @@ class _LoginFormState extends State<LoginForm> {
                           width: 3
                       )
                   ),
+=======
+              TextFormField(
+                decoration: const InputDecoration(
+>>>>>>> f9cb5c46b55d88ff47fa801fc1dd9c8b869ba996
                   labelText: 'Email',
                 ),
                 onChanged: (value) { // value를 input 으로 넣음
@@ -70,6 +78,7 @@ class _LoginFormState extends State<LoginForm> {
               const SizedBox(
                 height: 20,
               ),
+<<<<<<< HEAD
               TextFormField(        // 비밀번호 입력 창
                 decoration: InputDecoration(
                   prefixIcon: Icon(Icons.password),
@@ -87,6 +96,11 @@ class _LoginFormState extends State<LoginForm> {
                           width: 3
                       )
                   ),
+=======
+              TextFormField(
+                obscureText: true, // 입력시 ****** 처리
+                decoration: const InputDecoration(
+>>>>>>> f9cb5c46b55d88ff47fa801fc1dd9c8b869ba996
                   labelText: 'Password',
                 ),
                 obscureText: _showPw, // 입력시 ****** 처리
@@ -95,6 +109,7 @@ class _LoginFormState extends State<LoginForm> {
                   password = value;
                 },
               ),
+<<<<<<< HEAD
               SizedBox(height: 20,),
               ElevatedButton(                             // 로그인 버튼
                   style: ElevatedButton.styleFrom(elevation: 10,
@@ -103,6 +118,9 @@ class _LoginFormState extends State<LoginForm> {
                       side: BorderSide(color: Color(0xFF343434)),
                     ),
                   ),
+=======
+              ElevatedButton(
+>>>>>>> f9cb5c46b55d88ff47fa801fc1dd9c8b869ba996
                   onPressed: () async {
                     try {
                       // onPressed 누르고 직후부터 로그인 되기전까지 돌리고 싶음
@@ -162,6 +180,7 @@ class _LoginFormState extends State<LoginForm> {
                         ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
                     }
+<<<<<<< HEAD
                   }, child: const Text('로그인')),
               SizedBox(height: 20,),
               Center(
@@ -196,6 +215,24 @@ class _LoginFormState extends State<LoginForm> {
                     ),
                   ],
                 ),
+=======
+                  }, child: const Text('Enter')),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const Text('If you did not register, '),
+                  TextButton(
+                    child: const Text('Register your email'),
+                    onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage()));
+                      // 페이지 넘어가면 다시 없어지게 해야지
+                      setState(() {
+                        showSpinner = false;
+                      });
+                    },
+                  ),
+                ],
+>>>>>>> f9cb5c46b55d88ff47fa801fc1dd9c8b869ba996
               )
             ],
           ),
