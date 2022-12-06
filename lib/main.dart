@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
         // StreamBuilder 사용, 파이어베이스에서 어떤 변화가 생겼을 때 변화를 감지할 수 있도록 도와주는 stream을 받아옴
         // 변화가 생겼다는게 감지가 되는 순간 반응을 할 수 있는 클래스
         home: AnimatedSplashScreen(
-          splash: Image.asset('Assets/Images/cau4.jpg'),
+          splash: Image.asset('Assets/Images/cau3.jpg'),
           duration: 3000,
           splashIconSize: 500.0,
           splashTransition: SplashTransition.fadeTransition,
