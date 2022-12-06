@@ -14,8 +14,9 @@ class Subject {
   String end;
   String memo;
   String type;
+  String quiz_name;
 
-  Subject(this.title, this.start, this.end, this.memo, this.type);
+  Subject(this.title, this.start, this.end, this.memo, this.type, this.quiz_name);
 }
 class ScheduleDetail extends StatefulWidget {
   ScheduleDetail({Key? key}) : super(key: key);
@@ -394,6 +395,10 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
   Widget build(BuildContext context) {
     context
         .read<Subs>()
+        .quizname
+        .clear();
+    context
+        .read<Subs>()
         .prov_subjectname
         .clear();
     context
@@ -659,10 +664,16 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                                   .prov_memo[index],
                                               context
                                                   .read<Subs>()
-                                                  .type[index])),
+                                                  .type[index],
+                                          context.read<Subs>().quizname[index]
+                                          )
+                                          ),
                                           onDismissed: (direction) {
                                             if(context.read<Subs>().type[index] == '시험') {
-                                              FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid)
+                                              FirebaseFirestore.instance
+                                                  .collection('user').doc(
+                                                  _authentication.currentUser!
+                                                      .uid)
                                                   .collection('Subject')
                                                   .doc(context
                                                   .read<Subs>()
@@ -727,7 +738,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                         border: Border.all(color: Color(0xFF343434), width: 10)),
                     child: Column(
                       children: <Widget>[
-                        Text('\n\n모든 일정(${getToday()})',
+                        Text('\n\n모든 일정',
                             style: const TextStyle(
                                 fontSize: 23,
                                 fontWeight: FontWeight.bold,
@@ -747,7 +758,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                 return Expanded(
                                   child: Padding(
                                     padding: const EdgeInsets.all(20.0),
-                                    child: ListView.separated(
+                                    child: ListView.builder(
                                       itemCount: context
                                           .read<Subs>()
                                           .anoder_prov_subjectname
@@ -772,7 +783,9 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                                   .anoder_prov_memo[index],
                                               context
                                                   .read<Subs>()
-                                                  .anoder_type[index])),
+                                                  .anoder_type[index],
+                                              context.read<Subs>().anoder_quizname[index]
+                                          )),
                                           onDismissed: (direction) {
                                             if(context.read<Subs>().anoder_type[index] == '시험') {
                                               FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid)
@@ -821,11 +834,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                           },
                                         );
                                       },
-                                      separatorBuilder: (context, index) {
-                                        return const Divider(
-                                          thickness: 3.0,
-                                        );
-                                      },                                    ),
+                                    ),
                                   ),
                                 );
                               }
@@ -1006,7 +1015,7 @@ class _SubjectTileState extends State<SubjectTile> {
           Text(widget._subject.type),
         ],
       ),
-      onTap: (){        // 리스트 타일이 클릭되면
+      /*onTap: (){        // 리스트 타일이 클릭되면
         showDialog(
             context: context,
             barrierDismissible: true,
@@ -1035,30 +1044,13 @@ class _SubjectTileState extends State<SubjectTile> {
                 height: 300,
                 child: Column(
                   children: [
-                    const Text('진행도'),
-                    const SizedBox(height: 20,),
-                    Slider(
-                      value: _currentSliderValue,
-                      max: 100,
-                      divisions: 5,
-                      label: _currentSliderValue.round().toString(),
-                      onChanged: (double value) {
-                        setState(() {
-                          _currentSliderValue = value;
-                          if(_currentSliderValue == 100)
-                            _check = true;
-                          else
-                            _check = false;
-                        });
-                      },
-                    ),
                     const SizedBox(height: 40,),
                     Row(
                       children: [
-                        const Text('날짜'),
+                        const Text('마감 기한'),
                         SizedBox(width: 30,),
                         Container(
-                          child: Text(getToday()),
+                          child: Text(widget._subject.end),
                         ),
                       ],
                     ),
@@ -1088,7 +1080,99 @@ class _SubjectTileState extends State<SubjectTile> {
 
             )
         );
+      },*/
+      onTap: (){        // 리스트 타일이 클릭되면
+        showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (BuildContext context) => AlertDialog(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(22.0))),
+              title: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  children: [
+                    Text(widget._subject.title, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, fontFamily: 'title'),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 3),
+                    const SizedBox(width: 15),
+                    Expanded(                                 // '할 일' 잘리는 것 방지
+                      child: Text(widget._subject.quiz_name,
+                        style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              content: Container(
+                padding: const EdgeInsets.all(16.0),
+                width: 300,
+                height: 300,
+                child: Column(
+                  children: [
+                    // const Text('진행도'),
+                    // const SizedBox(height: 20,),
+                    // Slider(
+                    //   value: _currentSliderValue,
+                    //   max: 100,
+                    //   divisions: 5,
+                    //   label: _currentSliderValue.round().toString(),
+                    //   onChanged: (double value) {
+                    //     setState(() {
+                    //       _currentSliderValue = value;
+                    //       if(_currentSliderValue == 100)
+                    //         _check = true;
+                    //       else
+                    //         _check = false;
+                    //     });
+                    //   },
+                    // ),
+                    Row(
+                      children: [
+                        const Text('날짜'),
+                        SizedBox(width: 30,),
+                        Container(
+                          child: Text(getToday()),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 30,),
+                    Row(
+                      children: [
+                        const Text('시작'),
+                        SizedBox(width: 30,),
+                        Container(
+                          child: Text(widget._subject.start.substring(11)),       // 시작 시간만 잘라서 넣기
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 30,),
+                    Row(
+                      children: [
+                        const Text('종료'),
+                        SizedBox(width: 30,),
+                        Container(
+                          child: Text(widget._subject.end.substring(11)),       // 끝나는 시간만 잘라서 넣기
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 30,),
+                    Row(
+                      children: [
+                        const Text('메모'),
+                        const SizedBox(width: 30,),
+                        Container(child: Text(widget._subject.memo),)
+                      ],
+                    ),
+
+                  ],
+                ),
+              ),
+
+            )
+        );
       },
+
     );
   }
 }

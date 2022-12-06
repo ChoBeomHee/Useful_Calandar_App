@@ -42,6 +42,7 @@ class _AddPersonalState extends State<AddPersonal> {
   String? personalTime;
   String? memo;
   String? Time;
+  TextEditingController memocontrol = TextEditingController();
   TextEditingController ymdtPersonalController = TextEditingController();
   DateTime? personalDay;
   personalYearMonthDayTimePicker() async {
@@ -80,6 +81,7 @@ class _AddPersonalState extends State<AddPersonal> {
 
   @override
   Widget build(BuildContext context) {
+    memocontrol.text = ' ';
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -157,9 +159,6 @@ class _AddPersonalState extends State<AddPersonal> {
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                   ),
-                  onChanged: (value) {
-                    memo = value;
-                  },
                 ),
               ),
             ],
@@ -174,7 +173,7 @@ class _AddPersonalState extends State<AddPersonal> {
                 "time" : ymdtPersonalController.text,
                 "date" : personalDay,
                 "alarm" : _alarmSelected,
-                "memo" : memo,
+                "memo" : memocontrol.text,
                 "uid" : _authentication.currentUser!.uid, // 이 값이 현재 로그인 되어 있는 uid와 같은지 확인
                 "comparedate" : ymdtPersonalController.text.substring(0,10)
               });

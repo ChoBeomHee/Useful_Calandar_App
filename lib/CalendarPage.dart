@@ -152,7 +152,7 @@ class _CalendarPageState extends State<CalendarPage> {
           .personalname[i], context
           .read<Subs>()
           .personalday[i],
-          endTime, Color(0xFFB19f91)));
+          endTime, Color(0xFF898c89)));
     }
     return meetings;
   }

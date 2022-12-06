@@ -55,7 +55,7 @@ class _AddAssignExamState extends State<AddAssignExam> {
   String? AssignExamName;
   int? rate;
   String? memo;
-
+  TextEditingController memocontrol = TextEditingController();
   DateTime? ymdtStart;
   DateTime? ymdtEnd;
   TextEditingController ymdtStartController = TextEditingController();
@@ -127,6 +127,7 @@ class _AddAssignExamState extends State<AddAssignExam> {
 
   @override
   Widget build(BuildContext context) {
+    memocontrol.text = ' ';
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -297,12 +298,10 @@ class _AddAssignExamState extends State<AddAssignExam> {
               const SizedBox(width: 15,),
               Expanded(
                 child: TextFormField(
+                  controller: memocontrol,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                   ),
-                  onChanged: (value) {
-                    memo = value;
-                  },
                 ),
               ),
             ],
@@ -320,7 +319,7 @@ class _AddAssignExamState extends State<AddAssignExam> {
                 "rate" : rate,
                 "startYMDT" : ymdtStartController.text,
                 "endYMDT" : ymdtEndController.text,
-                "memo" : memo,
+                "memo" : memocontrol.text,
                 "UID" : _authentication.currentUser!.uid,
                 "startDate" : ymdtStart,
                 "endDate" : ymdtEnd,
