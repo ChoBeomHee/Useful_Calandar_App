@@ -116,8 +116,8 @@ class _CalendarPageState extends State<CalendarPage> {
     final List<Meeting> meetings = <Meeting>[];
     final DateTime today = DateTime.now();
     final DateTime startTime = DateTime(
-        today.year, today.month, today.day, 0, 0, 0);
-    final DateTime endTime = startTime.add(const Duration(hours: 5));
+        today.year, today.month, today.day, 9, 0, 0);
+    final DateTime endTime = startTime.add(const Duration(hours: 2));
 
 
     for (int i = 0; i < context.read<Subs>().startDay.length; i++) {
@@ -131,7 +131,8 @@ class _CalendarPageState extends State<CalendarPage> {
       else if (context.read<Subs>().type[i] == '퀴즈'){
         typeColor = 0xFF9c9c94;
       }
-
+      print(context.read<Subs>()
+          .startDay[i]);
       meetings.add(Meeting(context
           .read<Subs>()
           .prov_subjectname[i], context
