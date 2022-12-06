@@ -6,21 +6,35 @@ class SuccessRegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Success Register'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('You have successfully registered,',
-              style: TextStyle(fontSize: 20),),
-            SizedBox(height: 20,),
-            ElevatedButton(onPressed: (){
-              Navigator.popUntil(context, (route) => route.isFirst);
-            },
-                child: const Text('Login')),
-          ],
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage('Assets/Images/olaf.gif'),
+          ),
+        ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text('회원가입을 축하합니다!!', style: TextStyle(
+                  fontFamily: 'title', fontSize: 25),),
+              const SizedBox(height: 200,),
+              FloatingActionButton(
+                backgroundColor: Color(0xffdd6b35),
+                  child: const Text('시작', style: TextStyle(
+                    fontFamily: 'title',
+                    fontSize: 18,
+                    color: Colors.white,
+                  ),
+                  ),
+                  onPressed: (){
+                    Navigator.popUntil(context, (route) => route.isFirst);
+                  },
+              ),
+              const SizedBox(height: 220,),
+            ],
+          ),
         ),
       ),
     );
