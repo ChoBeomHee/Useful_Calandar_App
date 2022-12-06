@@ -149,31 +149,6 @@ class _AddPersonalState extends State<AddPersonal> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left : 8.0),
-                child: const Text('알림'),
-              ),
-              const SizedBox(width: 30,),
-              DropdownButton(
-                  value: _alarmSelected,
-                  items: _alramList.map(
-                          (value){
-                        return DropdownMenuItem(
-                            value: value,
-                            child: Text(value));
-                      }).toList(),
-                  onChanged: (String? value){
-                    setState(() {
-                      _alarmSelected = value!;
-                    });
-                  }
-              )
-            ],
-          ),
-          const SizedBox(height: 15,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left : 8.0),
                 child: const Text('메모'),
               ),
               const SizedBox(width: 15,),

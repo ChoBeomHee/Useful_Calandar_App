@@ -161,7 +161,7 @@ class _AddSubjectsState extends State<AddSubjects> {
               ),
             ],
           ),
-          
+
           const SizedBox(
             height: 15,
           ),

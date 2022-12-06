@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -331,10 +330,6 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
               .read<Subs>()
               .anoder_type
               .add('퀴즈');
-
-
-
-
         }
       }
     }
@@ -380,7 +375,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
     }
     else
       return false;
-    }
+  }
 
   bool intoDay_per(String startDay, String endDay){
     String newToDay = getcompareDay().substring(0,11);
@@ -394,7 +389,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
     }
     else
       return false;
-    }
+  }
   @override
   Widget build(BuildContext context) {
     context
@@ -452,11 +447,16 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(50),
               child: AppBar(
+                backgroundColor: Color(0xFFF6F9FD),
                 bottom: TabBar(tabs: [
                   Tab(icon: Icon(Icons.schedule),),
                   Tab(icon: Icon(Icons.book),),
                   Tab(icon: Icon(Icons.book),),
-                ]),
+                ],
+                  indicatorColor: Color(0xFF343434),
+                  labelColor: Color(0xFF343434),
+                  unselectedLabelColor: Color(0xFFA1A3A8),
+                ),
               ),
             ),
             body: TabBarView(
@@ -466,7 +466,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(60), // 모서리를 둥글게
-                        border: Border.all(color: Colors.indigo, width: 10)),
+                        border: Border.all(color: Color(0xFF343434), width: 10)),
                     child: Column(
                       children: <Widget>[
                         Text('\n\n오늘 일정 (${getToday()})', // 제목
@@ -508,8 +508,8 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                         title: Row(
                                           children: [
                                             Text('     ${slicedDate(docs[index]['time'])} :',style: const TextStyle(
-                                      height: 3, fontSize: 18, fontFamily: 'title',
-                                      ),),
+                                              height: 3, fontSize: 18, fontFamily: 'title',
+                                            ),),
                                             Text(
                                                 '    ${docs[index]['title'].toString()}',
                                                 style: const TextStyle(
@@ -557,7 +557,6 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                                           Container(
                                                             height: 3.0,
                                                             width: 200.0,
-                                                            color: Colors.indigo,
                                                           ), // 실선
                                                           const Text('\n메모',
                                                               style: TextStyle(
@@ -581,9 +580,8 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                                                     22.0)),
                                                                 border:
                                                                 Border.all(
-                                                                  width: 1,
-                                                                  color: Colors
-                                                                      .indigo,
+                                                                    width: 1,
+                                                                    color: Color(0xFF343434)
                                                                 )),
                                                             child: Text(
                                                               '${docs[index]['memo']}',
@@ -615,7 +613,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(60), // 모서리를 둥글게
-                        border: Border.all(color: Colors.indigo, width: 10)),
+                        border: Border.all(color: Color(0xFF343434), width: 10)),
                     child: Column(
                       children: <Widget>[
                         Text('\n\n오늘 일정(${getToday()})',
@@ -702,15 +700,15 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                             }
                                             print(context.read<Subs>().type[index]);
                                             print(context.read<Subs>().quizname[index]);
-                                              context.read<Subs>().prov_subjectname.removeAt(index);
-                                              context.read<Subs>().prov_memo.removeAt(index);
-                                              context.read<Subs>().start.removeAt(index);
-                                              context.read<Subs>().end.removeAt(index);
-                                              context.read<Subs>().type.removeAt(index);
-                                              context.read<Subs>().quizname.removeAt(index);
+                                            context.read<Subs>().prov_subjectname.removeAt(index);
+                                            context.read<Subs>().prov_memo.removeAt(index);
+                                            context.read<Subs>().start.removeAt(index);
+                                            context.read<Subs>().end.removeAt(index);
+                                            context.read<Subs>().type.removeAt(index);
+                                            context.read<Subs>().quizname.removeAt(index);
 
-                                              context.read<Subs>().startDay.removeAt(index);
-                                              context.read<Subs>().endDay.removeAt(index);
+                                            context.read<Subs>().startDay.removeAt(index);
+                                            context.read<Subs>().endDay.removeAt(index);
                                           },
                                         );
                                       },
@@ -728,7 +726,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(60), // 모서리를 둥글게
-                        border: Border.all(color: Colors.indigo, width: 10)),
+                        border: Border.all(color: Color(0xFF343434), width: 10)),
                     child: Column(
                       children: <Widget>[
                         Text('\n\n모든 일정(${getToday()})',
@@ -916,7 +914,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                                                 Container(
                                                                   height: 3.0,
                                                                   width: 200.0,
-                                                                  color: Colors.indigo,
+                                                                  color: Color(0xFF343434),
                                                                 ), // 실선
                                                                 const Text('\n메모',
                                                                     style: TextStyle(
@@ -940,9 +938,8 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                                                           22.0)),
                                                                       border:
                                                                       Border.all(
-                                                                        width: 1,
-                                                                        color: Colors
-                                                                            .indigo,
+                                                                          width: 1,
+                                                                          color: Color(0xFF343434)
                                                                       )),
                                                                   child: Text(
                                                                     '${docs[index]['memo']}',

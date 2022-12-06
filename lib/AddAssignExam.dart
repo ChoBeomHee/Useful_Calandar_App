@@ -221,31 +221,6 @@ class _AddAssignExamState extends State<AddAssignExam> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
-                child: const Text('비율'),
-              ),
-              const SizedBox(width: 15,),
-              Expanded(
-                child: SizedBox(
-                  height: 35,
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: '숫자만 입력',
-                    ),
-                    onChanged: (value) {
-                      rate = int.parse(value);
-                    },
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 15,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
                 child: const Text('시작'),
               ),
               const SizedBox(width: 15,),
@@ -366,7 +341,6 @@ class _AddAssignExamState extends State<AddAssignExam> {
               ymdtStartController.clear();
               ymdtEndController.clear();
               Navigator.pop(context);
-
             },
             child: const Text('확인'),
           ),

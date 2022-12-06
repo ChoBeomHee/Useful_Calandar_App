@@ -5,9 +5,11 @@ import 'package:provider/provider.dart';
 import 'package:team/SubjectsProvider.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
+import'package:team/AddSubject.dart';
+import'package:team/AddPersonal.dart';
+
 import 'AddAssignExam.dart';
-import 'AddPersonal.dart';
-import 'AddSubject.dart';
+
 
 class SubjectInfo extends StatefulWidget {
   SubjectInfo({Key? key}) : super(key: key);
@@ -70,9 +72,10 @@ class _SubjectInfoState extends State<SubjectInfo> {
         children: [
           SpeedDialChild(
             child: Icon(Icons.subject),
-            backgroundColor: Colors.lightBlueAccent,
+            backgroundColor: Color(0xFFFdf6eb),
             label: '과목',
             labelStyle: TextStyle(fontSize: 18.0),
+            labelBackgroundColor: Color(0x0),
             onTap: () =>
                 showDialog(
                   context: context,
@@ -84,7 +87,7 @@ class _SubjectInfoState extends State<SubjectInfo> {
                                 Radius.circular(22.0))),
                         title: Container(
                           child: Column(
-                            children: const [
+                            children: [
                               AddSubjects(),
                             ],
                           ),
@@ -95,9 +98,11 @@ class _SubjectInfoState extends State<SubjectInfo> {
           ),
           SpeedDialChild(
             child: Icon(Icons.task),
-            backgroundColor: Colors.lightBlueAccent,
+            backgroundColor:Color(0xFFFdf6eb),
             label: '과제/시험',
             labelStyle: TextStyle(fontSize: 18.0),
+            labelBackgroundColor: Color(0x0),
+
             onTap: () =>
                 showDialog(
                   context: context,
@@ -120,9 +125,11 @@ class _SubjectInfoState extends State<SubjectInfo> {
           ),
           SpeedDialChild(
             child: Icon(Icons.access_time),
-            backgroundColor: Colors.lightBlueAccent,
+            backgroundColor: Color(0xFFFdf6eb),
             label: '개인 일정',
             labelStyle: TextStyle(fontSize: 18.0),
+            labelBackgroundColor: Color(0x0),
+
             onTap: () =>
                 showDialog(
                   context: context,
@@ -145,9 +152,11 @@ class _SubjectInfoState extends State<SubjectInfo> {
           ),
           SpeedDialChild(
             child: Icon(Icons.logout_outlined),
-            backgroundColor: Colors.lightBlueAccent,
+            backgroundColor: Color(0xFFFdf6eb),
             label: '로그아웃',
             labelStyle: TextStyle(fontSize: 18.0),
+            labelBackgroundColor: Color(0x0),
+
             onTap: () =>
                 showDialog(
                   context: context,
@@ -192,7 +201,7 @@ class _SubjectInfoState extends State<SubjectInfo> {
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(60), // 모서리를 둥글게
-              border: Border.all(color: Color(0xFF343434), width: 10)),
+              border: Border.all(color: Colors.indigo, width: 10)),
           child: Column(
             children: [
               Text('\n과목 상세 정보\n',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23, fontFamily: 'title'),),
@@ -213,10 +222,10 @@ class _SubjectInfoState extends State<SubjectInfo> {
                           child: ListTile(title: Row(
                             children: [
                               Text(
-                                '      ${docs[index]['SubjectName']}',
+                                  '      ${docs[index]['SubjectName']}',
                                   style: const TextStyle(height: 1, fontSize: 15,fontFamily: 'title'),
                                   textAlign: TextAlign.left
-                                ),
+                              ),
                               Text('(${docs[index]['credit'].toString()})',style: const TextStyle(height: 1, fontSize: 15, fontWeight: FontWeight.bold,),
                                   textAlign: TextAlign.left)
                             ],
@@ -354,22 +363,22 @@ class _SubjectInfoState extends State<SubjectInfo> {
                 ),
               ),
               Container(
-                height: 30,
-              child: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance.collection('Subject').where('uid',isEqualTo: _authentication.currentUser!.uid)
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                final docs = snapshot.data!.docs;
-                totalCredit = 0;
-                docs.forEach((element) { totalCredit += element['credit']; });
+                  height: 30,
+                  child: StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance.collection('Subject').where('uid',isEqualTo: _authentication.currentUser!.uid)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const Center(child: CircularProgressIndicator());
+                        }
+                        final docs = snapshot.data!.docs;
+                        totalCredit = 0;
+                        docs.forEach((element) { totalCredit += element['credit']; });
 
-                return Text('총 학점: $totalCredit',style: TextStyle(fontSize: 18,fontFamily: 'title'),);
-              })
+                        return Text('총 학점: $totalCredit',style: TextStyle(fontSize: 18,fontFamily: 'title'),);
+                      })
               ),
-          ],
+            ],
           ),
         ),
       ),

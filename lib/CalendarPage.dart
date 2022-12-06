@@ -125,13 +125,13 @@ class _CalendarPageState extends State<CalendarPage> {
     for (int i = 0; i < context.read<Subs>().startDay.length; i++) {
       int typeColor = 0;
       if (context.read<Subs>().type[i] == '시험'){
-        typeColor = 0xFF745c54;
+        typeColor = 0xFFA47c6c;
       }
       else if (context.read<Subs>().type[i] == '과제'){
         typeColor = 0xFFA89b92;
       }
       else if (context.read<Subs>().type[i] == '퀴즈'){
-        typeColor = 0xFF867464;
+        typeColor = 0xFF9c9c94;
       }
 
       meetings.add(Meeting(context
@@ -149,7 +149,7 @@ class _CalendarPageState extends State<CalendarPage> {
           .read<Subs>()
           .personalday[i], context
           .read<Subs>()
-          .personalday[i], Color(0xA925E0FF)));
+          .personalday[i], Color(0xFFB19f91)));
     }
     return meetings;
   }
