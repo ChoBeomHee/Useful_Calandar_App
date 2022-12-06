@@ -10,9 +10,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-      ),
+      backgroundColor: Colors.black,
       body: LoginForm(),
     );
   }
@@ -39,202 +37,181 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     return ModalProgressHUD(
       inAsyncCall: showSpinner,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          // global key를 사용하는 거의 유일한 사용
-          key: _formkey,
-          child: ListView(
-            children: [
-<<<<<<< HEAD
-              SizedBox(height: 100,),
-              Container(
-                child: Text('아.. 맞다!', style: TextStyle(fontSize: 40,
-                  fontWeight : FontWeight.bold , color: Color(0xFFA89b92), fontFamily: 'title' ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              SizedBox(height: 40,),
-              TextFormField(        // Email 입력 창
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.people),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      borderSide: BorderSide(
-                          color : Color(0xFFA89b92),
-                          width: 3
-                      )
+      child: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage('Assets/Images/snow7.gif'),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            // global key를 사용하는 거의 유일한 사용
+            key: _formkey,
+            child: ListView(
+              children: [
+                SizedBox(height: 100,),
+                Container(
+                  child: Text('아.. 맞다!', style: TextStyle(fontSize: 40,
+                      fontWeight : FontWeight.bold , color: Color(0xFFFdf6eb
+                      ), fontFamily: 'title' ),
+                    textAlign: TextAlign.center,
                   ),
-=======
-              TextFormField(
-                decoration: const InputDecoration(
->>>>>>> f9cb5c46b55d88ff47fa801fc1dd9c8b869ba996
-                  labelText: 'Email',
                 ),
-                onChanged: (value) { // value를 input 으로 넣음
-                  email = value; // 입력할 때 마다 변할거임
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-<<<<<<< HEAD
-              TextFormField(        // 비밀번호 입력 창
-                decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.password),
-                  suffixIcon: IconButton(
-                      onPressed: (){
-                        setState(() {
-                          this._showPw = !this._showPw;
-                        });
-                      },
-                      icon: _showPw ? Icon(Icons.visibility_off) : Icon(Icons.visibility)),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                SizedBox(height: 40,),
+                TextFormField(
+                  style: TextStyle(color: Colors.white),
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.people, color: Color(0xFF9c9c94),),
+                    border: InputBorder.none,
+                    enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color : Colors.black,
-                          width: 3
-                      )
-                  ),
-=======
-              TextFormField(
-                obscureText: true, // 입력시 ****** 처리
-                decoration: const InputDecoration(
->>>>>>> f9cb5c46b55d88ff47fa801fc1dd9c8b869ba996
-                  labelText: 'Password',
-                ),
-                obscureText: _showPw, // 입력시 ****** 처리
-                obscuringCharacter: '*',
-                onChanged: (value) {
-                  password = value;
-                },
-              ),
-<<<<<<< HEAD
-              SizedBox(height: 20,),
-              ElevatedButton(                             // 로그인 버튼
-                  style: ElevatedButton.styleFrom(elevation: 10,
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0),
-                      side: BorderSide(color: Color(0xFF343434)),
+                        width: 3, color: Color(0xFF9c9c94),
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(20),
+                      ),
                     ),
+                    labelText: 'Email',
+                    labelStyle: TextStyle(color: Color(0xFF9c9c94),),
                   ),
-=======
-              ElevatedButton(
->>>>>>> f9cb5c46b55d88ff47fa801fc1dd9c8b869ba996
-                  onPressed: () async {
-                    try {
-                      // onPressed 누르고 직후부터 로그인 되기전까지 돌리고 싶음
-                      // onPressed 누르고 바로 하게 하기 위해 setState를 통해 새로 빌드를 해야겠지
-                      if(email == ''){                          // Email을 입력하지 않은 경우
-                        final snackBar = SnackBar(
-                          content: const Text('Email은 필수 입력사항입니다.'),
-                          action: SnackBarAction(
-                            label: '닫기',
-                            onPressed: () {},
-                          ),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }else if(password == ''){                          // Password를 입력하지 않은 경우
-                        final snackBar = SnackBar(
-                          content: const Text('Password은 필수 입력사항입니다.'),
-                          action: SnackBarAction(
-                            label: '닫기',
-                            onPressed: () {},
-                          ),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }else{
-                        setState(() {
-                          showSpinner = true;
-                        });
-                        final currentUser = await _authentication
-                            .signInWithEmailAndPassword(
-                            email: email, password: password);
-                        if (currentUser.user != null) {
-                          _formkey.currentState!.reset();
-                          if (!mounted) return;
+                  onChanged: (value) { // value를 input 으로 넣음
+                    email = value; // 입력할 때 마다 변할거임
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  style: TextStyle(color: Colors.white),
+                  obscureText: true, // 입력시 ****** 처리
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.password, color: Color(0xFF9c9c94),),
+                    border: InputBorder.none,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 3, color: Color(0xFF9c9c94),
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(20),
+                      ),
+                    ),
+                    labelText: 'Password',
+                    labelStyle: TextStyle(color: Color(0xFF9c9c94),),
+                  ),
+                  onChanged: (value) {
+                    password = value;
+                  },
+                ),
+                SizedBox(height: 20,),
+                ElevatedButton(                             // 로그인 버튼
+                    style: ElevatedButton.styleFrom(elevation: 10,
+                      backgroundColor: Color(0xFF9c9c94),
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0),
+                        side: BorderSide(color: Color(0xFF9c9c94),),
+                      ),
+                    ),
+                    onPressed: () async {
+                      try {
+                        // onPressed 누르고 직후부터 로그인 되기전까지 돌리고 싶음
+                        // onPressed 누르고 바로 하게 하기 위해 setState를 통해 새로 빌드를 해야겠지
+                        if(email == ''){                          // Email을 입력하지 않은 경우
+                          final snackBar = SnackBar(
+                            content: const Text('Email은 필수 입력사항입니다.'),
+                            action: SnackBarAction(
+                              label: '닫기',
+                              onPressed: () {},
+                            ),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }else if(password == ''){                          // Password를 입력하지 않은 경우
+                          final snackBar = SnackBar(
+                            content: const Text('Password은 필수 입력사항입니다.'),
+                            action: SnackBarAction(
+                              label: '닫기',
+                              onPressed: () {},
+                            ),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }else{
+                          setState(() {
+                            showSpinner = true;
+                          });
+                          final currentUser = await _authentication
+                              .signInWithEmailAndPassword(
+                              email: email, password: password);
+                          if (currentUser.user != null) {
+                            _formkey.currentState!.reset();
+                            if (!mounted) return;
+                          }
                         }
-                      }
-                    } on FirebaseAuthException catch (e) {   // 로그인 에러 발생
-                      setState(() {
-                        showSpinner = false;
-                      });
-                      //print('error message: ${e.message} error code: ${e.code}');
-                      if(e.code == 'wrong-password'){         // 비밀번호가 틀린 경우
-                        final snackBar = SnackBar(
-                          content: const Text('Password가 올바르지 않습니다.'),
-                          action: SnackBarAction(
-                            label: '닫기',
-                            onPressed: () {},
-                          ),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }else if(e.code == 'user-not-found'){     // 이메일이 틀린 경우
-                        final snackBar = SnackBar(
-                          content: const Text('존재하지 않는 사용자입니다.'),
-                          action: SnackBarAction(
-                            label: '닫기',
-                            onPressed: () {},
-                          ),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }
-                    }
-<<<<<<< HEAD
-                  }, child: const Text('로그인')),
-              SizedBox(height: 20,),
-              Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container( height:1.0,
-                        width:150.0,
-                        color:Colors.black,),
-                      Text('  또는  ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Colors.grey),),
-                      Container( height:1.0,
-                        width:150.0,
-                        color:Colors.black,),
-                    ],
-                  )
-              ),
-              SizedBox(height: 20,),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    const Text('아직 계정이 없으신가요?'),
-                    TextButton(
-                      child: const Text('가입하기'),
-                      onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage()));
-                        // 페이지 넘어가면 다시 없어지게 해야지
+                      } on FirebaseAuthException catch (e) {   // 로그인 에러 발생
                         setState(() {
                           showSpinner = false;
                         });
-                      },
-                    ),
-                  ],
+                        //print('error message: ${e.message} error code: ${e.code}');
+                        if(e.code == 'wrong-password'){         // 비밀번호가 틀린 경우
+                          final snackBar = SnackBar(
+                            content: const Text('Password가 올바르지 않습니다.'),
+                            action: SnackBarAction(
+                              label: '닫기',
+                              onPressed: () {},
+                            ),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }else if(e.code == 'user-not-found'){     // 이메일이 틀린 경우
+                          final snackBar = SnackBar(
+                            content: const Text('존재하지 않는 사용자입니다.'),
+                            action: SnackBarAction(
+                              label: '닫기',
+                              onPressed: () {},
+                            ),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
+                      }
+                    }, child: const Text('로그인', style: TextStyle(fontFamily: 'title'),)),
+                SizedBox(height: 20,),
+                Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container( height:1.0,
+                          width:150.0,
+                          color:Color(0xFFFdf6eb),),
+                        Text('  또는  ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Colors.grey),),
+                        Container( height:1.0,
+                          width:150.0,
+                          color:Color(0xFFFdf6eb),),
+                      ],
+                    )
                 ),
-=======
-                  }, child: const Text('Enter')),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  const Text('If you did not register, '),
-                  TextButton(
-                    child: const Text('Register your email'),
-                    onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage()));
-                      // 페이지 넘어가면 다시 없어지게 해야지
-                      setState(() {
-                        showSpinner = false;
-                      });
-                    },
+                SizedBox(height: 20,),
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      const Text('아직 계정이 없으신가요?', style: TextStyle(
+                        color: Color(0xFFFdf6eb),
+                      ),),
+                      TextButton(
+                        child: const Text('가입하기', style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'title',
+                        ),),
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage()));
+                          // 페이지 넘어가면 다시 없어지게 해야지
+                          setState(() {
+                            showSpinner = false;
+                          });
+                        },
+                      ),
+                    ],
                   ),
-                ],
->>>>>>> f9cb5c46b55d88ff47fa801fc1dd9c8b869ba996
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),

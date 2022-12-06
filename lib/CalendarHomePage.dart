@@ -39,147 +39,147 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
   Widget build(BuildContext context) {
     // 메인
     return Scaffold(
-      // floatingActionButton: SpeedDial(
-      //   animatedIcon: AnimatedIcons.menu_close,
-      //   animatedIconTheme: IconThemeData(size: 22.0),
-      //   // this is ignored if animatedIcon is non null
-      //   // child: Icon(Icons.add),
-      //   visible: true,
-      //   curve: Curves.bounceIn,
-      //   overlayColor: Colors.black,
-      //   overlayOpacity: 0.5,
-      //   onOpen: () => print('OPENING DIAL'),
-      //   onClose: () => print('DIAL CLOSED'),
-      //   tooltip: 'Speed Dial',
-      //   heroTag: 'speed-dial-hero-tag',
-      //   backgroundColor: Colors.white,
-      //   foregroundColor: Colors.black,
-      //   elevation: 8.0,
-      //   shape: CircleBorder(),
-      //   children: [
-      //     SpeedDialChild(
-      //       child: Icon(Icons.subject),
-      //       backgroundColor: Color(0xFFFdf6eb),
-      //       label: '과목',
-      //       labelStyle: TextStyle(fontSize: 18.0),
-      //       labelBackgroundColor: Color(0x0),
-      //       onTap: () =>
-      //           showDialog(
-      //             context: context,
-      //             barrierDismissible: true,
-      //             builder: (BuildContext context) =>
-      //                 AlertDialog(
-      //                   shape: const RoundedRectangleBorder(
-      //                       borderRadius: BorderRadius.all(
-      //                           Radius.circular(22.0))),
-      //                   title: Container(
-      //                     child: Column(
-      //                       children: const [
-      //                         AddSubjects(),
-      //                       ],
-      //                     ),
-      //                   ),
-      //                   scrollable: true,
-      //                 ),
-      //           ),
-      //     ),
-      //     SpeedDialChild(
-      //       child: Icon(Icons.task),
-      //       backgroundColor: Color(0xFFFdf6eb),
-      //       label: '과제/시험',
-      //       labelStyle: TextStyle(fontSize: 18.0),
-      //       labelBackgroundColor: Color(0xFfffff),
-      //       onTap: () =>
-      //           showDialog(
-      //             context: context,
-      //             barrierDismissible: true,
-      //             builder: (BuildContext context) =>
-      //                 AlertDialog(
-      //                   shape: const RoundedRectangleBorder(
-      //                       borderRadius: BorderRadius.all(
-      //                           Radius.circular(22.0))),
-      //                   title: Container(
-      //                     child: Column(
-      //                       children: const [
-      //                         AddAssignExam(),
-      //                       ],
-      //                     ),
-      //                   ),
-      //                   scrollable: true,
-      //                 ),
-      //           ),
-      //     ),
-      //     SpeedDialChild(
-      //       child: Icon(Icons.access_time),
-      //       backgroundColor: Color(0xFFFdf6eb),
-      //       label: '개인 일정',
-      //       labelStyle: TextStyle(fontSize: 18.0),
-      //       labelBackgroundColor: Color(0xFfffff),
-      //       onTap: () =>
-      //           showDialog(
-      //             context: context,
-      //             barrierDismissible: true,
-      //             builder: (BuildContext context) =>
-      //                 AlertDialog(
-      //                   shape: const RoundedRectangleBorder(
-      //                       borderRadius: BorderRadius.all(
-      //                           Radius.circular(22.0))),
-      //                   title: Container(
-      //                     child: Column(
-      //                       children: const [
-      //                         AddPersonal(),
-      //                       ],
-      //                     ),
-      //                   ),
-      //                   scrollable: true,
-      //                 ),
-      //           ),
-      //     ),
-      //     SpeedDialChild(
-      //       child: Icon(Icons.logout_outlined),
-      //       backgroundColor: Color(0xFFFdf6eb),
-      //       label: '로그아웃',
-      //       labelStyle: TextStyle(fontSize: 18.0),
-      //       labelBackgroundColor: Color(0xFfffff),
-      //       onTap: () =>
-      //           showDialog(
-      //             context: context,
-      //             barrierDismissible: true,
-      //             builder: (BuildContext context) =>
-      //                 AlertDialog(
-      //                   shape: const RoundedRectangleBorder(
-      //                       borderRadius: BorderRadius.all(
-      //                           Radius.circular(22.0))),
-      //                   title: Container(
-      //                     child: Column(
-      //                       children: [
-      //                         const Text('로그아웃 하시겠습니까?'),
-      //                         SizedBox(height: 30,),
-      //                         Row(
-      //                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      //                           children: [
-      //                             OutlinedButton(
-      //                                 onPressed: () {
-      //                                   FirebaseAuth.instance.signOut(); // 로그아웃
-      //                                   Navigator.pop(context);
-      //                                 },
-      //                                 child: const Text('확인')),
-      //                             OutlinedButton(
-      //                                 onPressed: () {
-      //                                   Navigator.pop(context);
-      //                                 },
-      //                                 child: const Text('취소')),
-      //                           ],
-      //                         ),
-      //                         // 이 부분에 함수 넣으면 됨
-      //                       ],
-      //                     ),
-      //                   ),
-      //                 ),
-      //           ),
-      //     ),
-      //   ],
-      // ),
+     /* floatingActionButton: SpeedDial(
+        animatedIcon: AnimatedIcons.menu_close,
+        animatedIconTheme: IconThemeData(size: 22.0),
+        // this is ignored if animatedIcon is non null
+        // child: Icon(Icons.add),
+        visible: true,
+        curve: Curves.bounceIn,
+        overlayColor: Colors.black,
+        overlayOpacity: 0.5,
+        onOpen: () => print('OPENING DIAL'),
+        onClose: () => print('DIAL CLOSED'),
+        tooltip: 'Speed Dial',
+        heroTag: 'speed-dial-hero-tag',
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 8.0,
+        shape: CircleBorder(),
+        children: [
+          SpeedDialChild(
+            child: Icon(Icons.subject),
+            backgroundColor: Color(0xFFFdf6eb),
+            label: '과목',
+            labelStyle: TextStyle(fontSize: 18.0),
+            labelBackgroundColor: Color(0x0),
+            onTap: () =>
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) =>
+                      AlertDialog(
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(22.0))),
+                        title: Container(
+                          child: Column(
+                            children: const [
+                              AddSubjects(),
+                            ],
+                          ),
+                        ),
+                        scrollable: true,
+                      ),
+                ),
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.task),
+            backgroundColor: Color(0xFFFdf6eb),
+            label: '과제/시험',
+            labelStyle: TextStyle(fontSize: 18.0),
+            labelBackgroundColor: Color(0xFfffff),
+            onTap: () =>
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) =>
+                      AlertDialog(
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(22.0))),
+                        title: Container(
+                          child: Column(
+                            children: const [
+                              AddAssignExam(),
+                            ],
+                          ),
+                        ),
+                        scrollable: true,
+                      ),
+                ),
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.access_time),
+            backgroundColor: Color(0xFFFdf6eb),
+            label: '개인 일정',
+            labelStyle: TextStyle(fontSize: 18.0),
+            labelBackgroundColor: Color(0xFfffff),
+            onTap: () =>
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) =>
+                      AlertDialog(
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(22.0))),
+                        title: Container(
+                          child: Column(
+                            children: const [
+                              AddPersonal(),
+                            ],
+                          ),
+                        ),
+                        scrollable: true,
+                      ),
+                ),
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.logout_outlined),
+            backgroundColor: Color(0xFFFdf6eb),
+            label: '로그아웃',
+            labelStyle: TextStyle(fontSize: 18.0),
+            labelBackgroundColor: Color(0xFfffff),
+            onTap: () =>
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (BuildContext context) =>
+                      AlertDialog(
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(22.0))),
+                        title: Container(
+                          child: Column(
+                            children: [
+                              const Text('로그아웃 하시겠습니까?'),
+                              SizedBox(height: 30,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  OutlinedButton(
+                                      onPressed: () {
+                                        FirebaseAuth.instance.signOut(); // 로그아웃
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text('확인')),
+                                  OutlinedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text('취소')),
+                                ],
+                              ),
+                              // 이 부분에 함수 넣으면 됨
+                            ],
+                          ),
+                        ),
+                      ),
+                ),
+          ),
+        ],
+      ),*/
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),

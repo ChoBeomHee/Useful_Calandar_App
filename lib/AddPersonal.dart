@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:team/SubjectsProvider.dart';
 
 class AddPersonal extends StatefulWidget {
   const AddPersonal({Key? key}) : super(key: key);
@@ -41,7 +43,7 @@ class _AddPersonalState extends State<AddPersonal> {
   String? memo;
   String? Time;
   TextEditingController ymdtPersonalController = TextEditingController();
-
+  DateTime? personalDay;
   personalYearMonthDayTimePicker() async {
     final year = DateTime
         .now()
@@ -71,6 +73,7 @@ class _AddPersonalState extends State<AddPersonal> {
         }
         Time = '${dateTime.toString().split(' ')[0]} $hour:$min';
         ymdtPersonalController.text = '${dateTime.toString().split(' ')[0]} $hour:$min';
+        personalDay = dateTime;
       }
     }
   }
@@ -81,6 +84,10 @@ class _AddPersonalState extends State<AddPersonal> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          const Text('개인 일정 추가'),
+          const SizedBox(
+            height: 15,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -90,72 +97,53 @@ class _AddPersonalState extends State<AddPersonal> {
               ),
               const SizedBox(width: 15,),
               Expanded(
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                child: SizedBox(
+                  height: 35,
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                    onChanged: (value) {
+                      personalTitle = value;
+                    },
                   ),
-                  onChanged: (value) {
-                    personalTitle = value;
-                  },
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(height: 15,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               const Text('약속시간'),
               const SizedBox(width: 25,),
               Expanded(
-                child: GestureDetector(
-                  onTap: personalYearMonthDayTimePicker,
-                  child: AbsorbPointer(
-                    child: TextFormField(
-                      controller: ymdtPersonalController,
-                      decoration: InputDecoration(
-                        labelText: '약속 연월일 시간',
-                        border: OutlineInputBorder(),
-                        filled: true,
+                child: SizedBox(
+                  height: 35,
+                  child: GestureDetector(
+                    onTap: personalYearMonthDayTimePicker,
+                    child: AbsorbPointer(
+                      child: TextFormField(
+                        controller: ymdtPersonalController,
+                        decoration: InputDecoration(
+                          labelText: '약속 연월일 시간',
+                          border: OutlineInputBorder(),
+                          filled: true,
+                        ),
+                        validator: (val) {
+                          if (val == null || val.isEmpty) {
+                            return '입력해주세요';
+                          }
+                          return null;
+                        },
                       ),
-                      validator: (val) {
-                        if (val == null || val.isEmpty) {
-                          return '입력해주세요';
-                        }
-                        return null;
-                      },
                     ),
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 10,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left : 8.0),
-                child: const Text('알림'),
-              ),
-              const SizedBox(width: 40,),
-              DropdownButton(
-                  value: _alarmSelected,
-                  items: _alramList.map(
-                          (value){
-                        return DropdownMenuItem(
-                            value: value,
-                            child: Text(value));
-                      }).toList(),
-                  onChanged: (String? value){
-                    setState(() {
-                      _alarmSelected = value!;
-                    });
-                  }
-              )
-            ],
-          ),
-          const SizedBox(height: 10,),
+          const SizedBox(height: 15,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -179,10 +167,11 @@ class _AddPersonalState extends State<AddPersonal> {
           const SizedBox(height: 10,),
           OutlinedButton(
             onPressed: () async {
-              final personalAdd = FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).collection('Personal').doc(personalTitle);
+              final personalAdd = FirebaseFirestore.instance.collection('Personal').doc(personalTitle);
               personalAdd.set({
                 "title" : personalTitle,
                 "time" : ymdtPersonalController.text,
+                "date" : personalDay,
                 "alarm" : _alarmSelected,
                 "memo" : memo,
                 "uid" : _authentication.currentUser!.uid, // 이 값이 현재 로그인 되어 있는 uid와 같은지 확인
