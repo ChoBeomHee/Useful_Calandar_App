@@ -51,7 +51,7 @@ class _SubjectInfoState extends State<SubjectInfo> {
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(60), // 모서리를 둥글게
-              border: Border.all(color: Colors.indigo, width: 10)),
+              border: Border.all(color: Color(0xFF343434), width: 10)),
           child: Column(
             children: [
               Text('\n과목 상세 정보\n',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23, fontFamily: 'title'),),

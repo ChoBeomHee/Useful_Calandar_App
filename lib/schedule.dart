@@ -176,6 +176,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(50),
             child: AppBar(
+              backgroundColor: Color(0xFFF6F9FD),
               bottom: TabBar(tabs: [
                 Tab(
                   icon: Icon(Icons.schedule),
@@ -184,6 +185,9 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                   icon: Icon(Icons.book),
                 )
               ],
+                indicatorColor: Color(0xFF343434),
+                labelColor: Color(0xFF343434),
+                unselectedLabelColor: Color(0xFFA1A3A8),
               ),
             ),
           ),
@@ -229,12 +233,20 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                               itemBuilder: (context, index) {
                                 return Container(
                                   child: ListTile(
-                                    title: Text(
-                                        '     ${slicedDate(docs[index]['time'])} :    ${docs[index]['title'].toString()}',
-                                        style: const TextStyle(
-                                          height: 3,
-                                        ),
-                                        textAlign: TextAlign.start),
+                                    title: Row(
+                                      children: [
+                                        Text(
+                                            '     ${slicedDate(docs[index]['time'])}  : ',
+                                            style: const TextStyle(
+                                              height: 3, fontSize: 16, fontFamily:
+                                            'title'
+                                            ),
+                                            textAlign: TextAlign.start),
+                                        const SizedBox(width: 20,),
+                                        Text('${docs[index]['title'].toString()}',style: const TextStyle(
+                                            height: 3, fontSize: 20,), textAlign: TextAlign.start),
+                                      ],
+                                    ),
                                     onTap: () {
                                       // 개인 일정이 클릭되면 메모 띄우기
                                       showDialog(
@@ -450,7 +462,7 @@ class _SubjectTileState extends State<SubjectTile> {
                           child: Text(
                             widget._subject.memo,
                             style: TextStyle(
-                                fontSize: 17, fontWeight: FontWeight.bold),
+                                fontSize: 15, fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],
