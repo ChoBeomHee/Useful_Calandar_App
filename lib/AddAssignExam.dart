@@ -365,7 +365,7 @@ class _AddAssignExamState extends State<AddAssignExam> {
               });
               ymdtStartController.clear();
               ymdtEndController.clear();
-              context.read<Subs>().prov_subjectname.add(Subject.toString());
+              //context.read<Subs>().prov_subjectname.add(Subject.toString());
               Navigator.pop(context);
 
 

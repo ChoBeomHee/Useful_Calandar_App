@@ -10,6 +10,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: LoginForm(),
     );
   }
@@ -34,119 +35,140 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     return ModalProgressHUD(
       inAsyncCall: showSpinner,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          // global key를 사용하는 거의 유일한 사용
-          key: _formkey,
-          child: ListView(
-            children: [
-              SizedBox(height: 100,),
-              Container(
-                child: Text('아.. 맞다!', style: TextStyle(fontSize: 40,
-                  fontWeight : FontWeight.bold , color: Colors.lightBlue, fontFamily: 'title' ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              SizedBox(height: 40,),
-              TextFormField(
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.people),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      borderSide: BorderSide(
-                          color : Colors.black,
-                          width: 3
-                      )
+      child: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage('Assets/Images/snow7.gif'),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            // global key를 사용하는 거의 유일한 사용
+            key: _formkey,
+            child: ListView(
+              children: [
+                SizedBox(height: 100,),
+                Container(
+                  child: Text('아.. 맞다!', style: TextStyle(fontSize: 40,
+                    fontWeight : FontWeight.bold , color: Color(0xFFFdf6eb
+                      ), fontFamily: 'title' ),
+                    textAlign: TextAlign.center,
                   ),
-                  labelText: 'Email',
                 ),
-                onChanged: (value) { // value를 input 으로 넣음
-                  email = value; // 입력할 때 마다 변할거임
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextFormField(
-                obscureText: true, // 입력시 ****** 처리
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.password),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                SizedBox(height: 40,),
+                TextFormField(
+                  style: TextStyle(color: Colors.white),
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.people, color: Color(0xFF9c9c94),),
+                    border: InputBorder.none,
+                    enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color : Colors.black,
-                          width: 3
-                      )
-                  ),
-                  labelText: 'Password',
-                ),
-                onChanged: (value) {
-                  password = value;
-                },
-              ),
-              SizedBox(height: 20,),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(elevation: 10,
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0),
-                      side: BorderSide(color: Colors.lightBlueAccent),
+                        width: 3, color: Color(0xFF9c9c94),
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(20),
+                      ),
                     ),
+                    labelText: 'Email',
+                    labelStyle: TextStyle(color: Color(0xFF9c9c94),),
                   ),
-                  onPressed: () async {
-                    try {
-                      // onPressed 누르고 직후부터 로그인 되기전까지 돌리고 싶음
-                      // onPressed 누르고 바로 하게 하기 위해 setState를 통해 새로 빌드를 해야겠지
-                      setState(() {
-                        showSpinner = true;
-                      });
-                      // future Type
-                      final currentUser = await _authentication
-                          .signInWithEmailAndPassword(
-                          email: email, password: password);
-                      if (currentUser.user != null) {
-                        _formkey.currentState!.reset();
-                        if (!mounted) return;
-                      }
-                    } catch (e) {
-                      print(e);
-                    }
-                  }, child: const Text('로그인')),
-              SizedBox(height: 20,),
-              Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container( height:1.0,
-                        width:150.0,
-                        color:Colors.black,),
-                      Text('  또는  ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Colors.grey),),
-                      Container( height:1.0,
-                        width:150.0,
-                        color:Colors.black,),
-                    ],
-                  )
-              ),
-              SizedBox(height: 20,),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    const Text('아직 계정이 없으신가요?'),
-                    TextButton(
-                      child: const Text('가입하기'),
-                      onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage()));
-                        // 페이지 넘어가면 다시 없어지게 해야지
+                  onChanged: (value) { // value를 input 으로 넣음
+                    email = value; // 입력할 때 마다 변할거임
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  style: TextStyle(color: Colors.white),
+                  obscureText: true, // 입력시 ****** 처리
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.password, color: Color(0xFF9c9c94),),
+                    border: InputBorder.none,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        width: 3, color: Color(0xFF9c9c94),
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(20),
+                      ),
+                    ),
+                    labelText: 'Password',
+                    labelStyle: TextStyle(color: Color(0xFF9c9c94),),
+                  ),
+                  onChanged: (value) {
+                    password = value;
+                  },
+                ),
+                SizedBox(height: 20,),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(elevation: 10,
+                      backgroundColor: Color(0xFF9c9c94),
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0),
+                        side: BorderSide(color: Color(0xFFFdf6eb),),
+                      ),
+                    ),
+                    onPressed: () async {
+                      try {
+                        // onPressed 누르고 직후부터 로그인 되기전까지 돌리고 싶음
+                        // onPressed 누르고 바로 하게 하기 위해 setState를 통해 새로 빌드를 해야겠지
                         setState(() {
-                          showSpinner = false;
+                          showSpinner = true;
                         });
-                      },
-                    ),
-                  ],
+                        // future Type
+                        final currentUser = await _authentication
+                            .signInWithEmailAndPassword(
+                            email: email, password: password);
+                        if (currentUser.user != null) {
+                          _formkey.currentState!.reset();
+                          if (!mounted) return;
+                        }
+                      } catch (e) {
+                        print(e);
+                      }
+                    }, child: const Text('로그인', style: TextStyle(fontFamily: 'title'),)),
+                SizedBox(height: 20,),
+                Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container( height:1.0,
+                          width:150.0,
+                          color:Color(0xFFFdf6eb),),
+                        Text('  또는  ', style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Colors.grey),),
+                        Container( height:1.0,
+                          width:150.0,
+                          color:Color(0xFFFdf6eb),),
+                      ],
+                    )
                 ),
-              )
-            ],
+                const SizedBox(height: 20,),
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      const Text('아직 계정이 없으신가요?', style: TextStyle(
+                        color: Color(0xFFFdf6eb),
+                      ),),
+                      TextButton(
+                        child: const Text('가입하기', style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'title',
+                        ),),
+                        onPressed: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage()));
+                          // 페이지 넘어가면 다시 없어지게 해야지
+                          setState(() {
+                            showSpinner = false;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
