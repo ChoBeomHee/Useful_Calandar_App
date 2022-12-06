@@ -23,11 +23,10 @@ class _CalendarPageState extends State<CalendarPage> {
   final _authentication = FirebaseAuth.instance;
 
   Future<void> setSchedure_Assingment() async {
-    var sub = FirebaseFirestore.instance.collection('Subject').
-    where('uid', isEqualTo: _authentication.currentUser!.uid).get();
+    var sub = FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).collection('Subject').get();
     var check = await sub;
     for (int i = 0; i < check.docs.length; i++) {
-      var todayAssingn = FirebaseFirestore.instance.collection('Subject').
+      var todayAssingn =  FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).collection('Subject').
       doc(check.docs[i]['SubjectName']).collection('Assignment').get();
       var list = await todayAssingn;
       for (int i = 0; i < list.docs.length; i++) {
@@ -50,7 +49,7 @@ class _CalendarPageState extends State<CalendarPage> {
       }
     }
     for (int i = 0; i < check.docs.length; i++) {
-      var todayExam = FirebaseFirestore.instance.collection('Subject').
+      var todayExam =  FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).collection('Subject').
       doc(check.docs[i]['SubjectName']).collection('Exam').get();
 
       var list = await todayExam;
@@ -76,7 +75,7 @@ class _CalendarPageState extends State<CalendarPage> {
     }
     
     for (int i = 0; i < check.docs.length; i++) {
-      var todayQuiz = FirebaseFirestore.instance.collection('Subject').
+      var todayQuiz =  FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).collection('Subject').
       doc(check.docs[i]['SubjectName']).collection('Quiz').get();
 
       var list = await todayQuiz;
@@ -103,8 +102,7 @@ class _CalendarPageState extends State<CalendarPage> {
     }
 
 
-    var personal = FirebaseFirestore.instance.collection('Personal').
-    where('uid', isEqualTo: _authentication.currentUser!.uid).get();
+    var personal =  FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).collection('Personal').get();
     final iterator = await personal;
 
     for(int i = 0; i < iterator.docs.length; i++){

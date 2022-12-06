@@ -276,7 +276,7 @@ class _AddSubjectsState extends State<AddSubjects> {
           OutlinedButton(
             onPressed: () async {
               // FirebaseFirestore 의 데이터베이스에 연결하여 'Subject' collection 의 'Subject' document 에 접근하겠다.
-              final subjectadd = FirebaseFirestore.instance.collection('Subject').doc(Subject);
+              final subjectadd = FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).collection('Subject').doc(Subject);
               // 'Subject' collection 의 'Subject' document 에 현재 입력 받은 정보들을 추가하겠다.
               subjectadd.set({
                 "Midterm" : MidTest,

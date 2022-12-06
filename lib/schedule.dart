@@ -41,12 +41,12 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
 
   // 이 페이지가 생성될 그 때만 인스턴스 전달만 해주면 됨
   Future<void> setSchedure_Assingment() async {
-    var sub = FirebaseFirestore.instance.collection('Subject').
+    var sub =  FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).collection('Subject').
     where('uid', isEqualTo: _authentication.currentUser!.uid).get();
     var check = await sub;
 
     for (int i = 0; i < check.docs.length; i++) {
-      var todayAssingn = FirebaseFirestore.instance.collection('Subject').
+      var todayAssingn =  FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).collection('Subject').
       doc(check.docs[i]['SubjectName']).collection('Assignment').get();
 
       var list = await todayAssingn;
@@ -105,7 +105,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
       }
     }
     for (int i = 0; i < check.docs.length; i++) {
-      var todayExam = FirebaseFirestore.instance.collection('Subject').
+      var todayExam =  FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).collection('Subject').
       doc(check.docs[i]['SubjectName']).collection('Exam').get();
 
       var list = await todayExam;
@@ -164,7 +164,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
       }
     }
     for (int i = 0; i < check.docs.length; i++) {
-      var todayQuiz = FirebaseFirestore.instance.collection('Subject').
+      var todayQuiz =  FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).collection('Subject').
       doc(check.docs[i]['SubjectName']).collection('Quiz').get();
 
       var list = await todayQuiz;
@@ -223,12 +223,12 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
     }
   }
   Future<void> setanother_() async{
-    var sub = FirebaseFirestore.instance.collection('Subject').
+    var sub =  FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).collection('Subject').
     where('uid', isEqualTo: _authentication.currentUser!.uid).get();
     var check = await sub;
 
     for (int i = 0; i < check.docs.length; i++) {
-      var todayAssingn = FirebaseFirestore.instance.collection('Subject').
+      var todayAssingn =  FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).collection('Subject').
       doc(check.docs[i]['SubjectName']).collection('Assignment').get();
 
       var list = await todayAssingn;
@@ -265,7 +265,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
 
 
     for (int i = 0; i < check.docs.length; i++) {
-      var todayExam = FirebaseFirestore.instance.collection('Subject').
+      var todayExam =  FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).collection('Subject').
       doc(check.docs[i]['SubjectName']).collection('Exam').get();
 
       var list = await todayExam;
@@ -300,7 +300,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
       }
     }
     for (int i = 0; i < check.docs.length; i++) {
-      var todayQuiz = FirebaseFirestore.instance.collection('Subject').
+      var todayQuiz =  FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).collection('Subject').
       doc(check.docs[i]['SubjectName']).collection('Quiz').get();
 
       var list = await todayQuiz;
@@ -482,10 +482,8 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                 fontSize: 18, fontWeight: FontWeight.bold)),
                         Expanded(
                           child: StreamBuilder<QuerySnapshot>(
-                            stream: FirebaseFirestore.instance
+                            stream:  FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid)
                                 .collection('Personal')
-                                .where('uid',
-                                isEqualTo: _authentication.currentUser!.uid)
                                 .where('comparedate',
                                 isEqualTo: getcompareDay().substring(0, 10))
                                 .snapshots(),
@@ -596,7 +594,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                         },
                                       ),
                                       onDismissed: (direction){
-                                        FirebaseFirestore.instance.collection('Personal').doc(docs[index]['title']).delete();},
+                                        FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).collection('Personal').doc(docs[index]['title']).delete();},
                                     ),
                                   );
                                 },
@@ -664,7 +662,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                                   .type[index])),
                                           onDismissed: (direction) {
                                             if(context.read<Subs>().type[index] == '시험') {
-                                              FirebaseFirestore.instance
+                                              FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid)
                                                   .collection('Subject')
                                                   .doc(context
                                                   .read<Subs>()
@@ -675,7 +673,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                                   .quizname[index])
                                                   .delete();
                                             }else if(context.read<Subs>().type[index] == '과제') {
-                                              FirebaseFirestore.instance
+                                              FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid)
                                                   .collection('Subject')
                                                   .doc(context
                                                   .read<Subs>()
@@ -687,7 +685,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                                   .delete();
                                             }
                                             else if(context.read<Subs>().type[index].toString() == '퀴즈') {
-                                              FirebaseFirestore.instance
+                                              FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid)
                                                   .collection('Subject')
                                                   .doc(context
                                                   .read<Subs>()
@@ -777,7 +775,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                                   .anoder_type[index])),
                                           onDismissed: (direction) {
                                             if(context.read<Subs>().anoder_type[index] == '시험') {
-                                              FirebaseFirestore.instance
+                                              FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid)
                                                   .collection('Subject')
                                                   .doc(context
                                                   .read<Subs>()
@@ -788,7 +786,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                                   .anoder_quizname[index])
                                                   .delete();
                                             }else if(context.read<Subs>().anoder_type[index] == '과제') {
-                                              FirebaseFirestore.instance
+                                              FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid)
                                                   .collection('Subject')
                                                   .doc(context
                                                   .read<Subs>()
@@ -800,7 +798,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                                   .delete();
                                             }
                                             else if(context.read<Subs>().anoder_type[index].toString() == '퀴즈') {
-                                              FirebaseFirestore.instance
+                                              FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid)
                                                   .collection('Subject')
                                                   .doc(context
                                                   .read<Subs>()
@@ -841,7 +839,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
 
                               Expanded(
                                 child: StreamBuilder<QuerySnapshot>(
-                                  stream: FirebaseFirestore.instance
+                                  stream:  FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid)
                                       .collection('Personal')
                                       .where('uid',
                                       isEqualTo: _authentication.currentUser!.uid)
@@ -954,7 +952,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                               },
                                             ),
                                             onDismissed: (direction){
-                                              FirebaseFirestore.instance.collection('Personal').doc(docs[index]['title']).delete();},
+                                              FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).collection('Personal').doc(docs[index]['title']).delete();},
                                           ),
                                         );
                                       },

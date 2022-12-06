@@ -36,7 +36,7 @@ class _AddAssignExamState extends State<AddAssignExam> {
   void initState() {
     super.initState(); // 이걸 먼저 해줘야함(부모 클래스로부터 받아옴, Stateful 위젯 안에 initState가 있기때문에)
     // 현재 로그인한 ID가 추가했던 과목들만 불러옴
-    _subjectSelect= FirebaseFirestore.instance.collection("Subject").where('uid',isEqualTo: _authentication.currentUser!.uid).snapshots();
+    _subjectSelect= FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).collection("Subject").snapshots();
     return super.initState();
   }
 
@@ -312,8 +312,8 @@ class _AddAssignExamState extends State<AddAssignExam> {
           ),
           OutlinedButton(
             onPressed: () async {
-              final assignexamAdd = FirebaseFirestore.instance
-                  .collection('Subject').doc(subjectSelected).collection(_typeSelected).doc(AssignExamName);
+              final assignexamAdd = FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).
+                  collection('Subject').doc(subjectSelected).collection(_typeSelected).doc(AssignExamName);
               assignexamAdd.set({
                 "assignexamname" : AssignExamName,
                 "subject" : subjectSelected,
@@ -326,18 +326,6 @@ class _AddAssignExamState extends State<AddAssignExam> {
                 "endDate" : ymdtEnd,
               });
 
-              final subjectadd = FirebaseFirestore.instance.collection(_typeSelected).doc();
-              subjectadd.set({
-                "assignexamname" : AssignExamName,
-                "subject" : subjectSelected,
-                "rate" : rate,
-                "startYMDT" : ymdtStartController.text,
-                "endYMDT" : ymdtEndController.text,
-                "memo" : memo,
-                "UID" : _authentication.currentUser!.uid,
-                "startDate" : ymdtStart,
-                "endDate" : ymdtEnd,
-              });
               ymdtStartController.clear();
               ymdtEndController.clear();
               Navigator.pop(context);

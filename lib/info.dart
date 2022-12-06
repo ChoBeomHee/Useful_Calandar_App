@@ -201,13 +201,13 @@ class _SubjectInfoState extends State<SubjectInfo> {
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(60), // 모서리를 둥글게
-              border: Border.all(color: Colors.indigo, width: 10)),
+              border: Border.all(color: Color(0xFF343434), width: 10)),
           child: Column(
             children: [
               Text('\n과목 상세 정보\n',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23, fontFamily: 'title'),),
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance.collection('Subject').where('uid',isEqualTo: _authentication.currentUser!.uid)
+                  stream:  FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).collection('Subject')
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -347,7 +347,7 @@ class _SubjectInfoState extends State<SubjectInfo> {
                           ),
                           onDismissed: (direction){
                             setState(() {
-                              FirebaseFirestore.instance.collection('Subject')
+                              FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).collection('Subject')
                                   .doc(docs[index]['SubjectName']).delete();
                             });
                           },
@@ -365,7 +365,7 @@ class _SubjectInfoState extends State<SubjectInfo> {
               Container(
                   height: 30,
                   child: StreamBuilder<QuerySnapshot>(
-                      stream: FirebaseFirestore.instance.collection('Subject').where('uid',isEqualTo: _authentication.currentUser!.uid)
+                      stream:  FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).collection('Subject')
                           .snapshots(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
