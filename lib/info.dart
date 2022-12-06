@@ -216,7 +216,7 @@ class _SubjectInfoState extends State<SubjectInfo> {
 
                 docs.forEach((element) { totalCredit += element['credit']; });
 
-                return Text('총 학점: $totalCredit',style: TextStyle(fontSize: 18,fontFamily: 'title'),);
+                return Text('총 학점: $totalCredit',style: TextStyle(fontSize: 18, fontFamily: 'title'),);
               })
               ),
           ],
