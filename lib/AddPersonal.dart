@@ -192,7 +192,7 @@ class _AddPersonalState extends State<AddPersonal> {
           const SizedBox(height: 10,),
           OutlinedButton(
             onPressed: () async {
-              final personalAdd = FirebaseFirestore.instance.collection('Personal').doc(personalTitle);
+              final personalAdd = FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).collection('Personal').doc(personalTitle);
               personalAdd.set({
                 "title" : personalTitle,
                 "time" : ymdtPersonalController.text,

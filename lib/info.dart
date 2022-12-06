@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'AddAssignExam.dart';
+import 'AddSubject.dart';
 import 'package:team/SubjectsProvider.dart';
+import 'AddPersonal.dart';
 
 class SubjectInfo extends StatefulWidget {
   SubjectInfo({Key? key}) : super(key: key);
@@ -45,7 +49,145 @@ class _SubjectInfoState extends State<SubjectInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+        floatingActionButton: SpeedDial(
+        animatedIcon: AnimatedIcons.menu_close,
+        animatedIconTheme: IconThemeData(size: 22.0),
+    // this is ignored if animatedIcon is non null
+    // child: Icon(Icons.add),
+    visible: true,
+    curve: Curves.bounceIn,
+    overlayColor: Colors.black,
+    overlayOpacity: 0.5,
+    onOpen: () => print('OPENING DIAL'),
+    onClose: () => print('DIAL CLOSED'),
+    tooltip: 'Speed Dial',
+    heroTag: 'speed-dial-hero-tag',
+    backgroundColor: Colors.white,
+    foregroundColor: Colors.black,
+    elevation: 8.0,
+    shape: CircleBorder(),
+    children: [
+    SpeedDialChild(
+    child: Icon(Icons.subject),
+    backgroundColor: Color(0xFFFdf6eb),
+    label: '과목',
+    labelStyle: TextStyle(fontSize: 18.0),
+    labelBackgroundColor: Color(0x0),
+    onTap: () =>
+    showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) =>
+    AlertDialog(
+    shape: const RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(
+    Radius.circular(22.0))),
+    title: Container(
+    child: Column(
+    children: const [
+    AddSubjects(),
+    ],
+    ),
+    ),
+    scrollable: true,
+    ),
+    ),
+    ),
+    SpeedDialChild(
+    child: Icon(Icons.task),
+    backgroundColor: Color(0xFFFdf6eb),
+    label: '과제/시험',
+    labelStyle: TextStyle(fontSize: 18.0),
+    labelBackgroundColor: Color(0xFfffff),
+    onTap: () =>
+    showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) =>
+    AlertDialog(
+    shape: const RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(
+    Radius.circular(22.0))),
+    title: Container(
+    child: Column(
+    children: const [
+    AddAssignExam(),
+    ],
+    ),
+    ),
+    scrollable: true,
+    ),
+    ),
+    ),
+    SpeedDialChild(
+    child: Icon(Icons.access_time),
+    backgroundColor: Color(0xFFFdf6eb),
+    label: '개인 일정',
+    labelStyle: TextStyle(fontSize: 18.0),
+    labelBackgroundColor: Color(0xFfffff),
+    onTap: () =>
+    showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) =>
+    AlertDialog(
+    shape: const RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(
+    Radius.circular(22.0))),
+    title: Container(
+    child: Column(
+    children: const [
+    AddPersonal(),
+    ],
+    ),
+    ),
+    scrollable: true,
+    ),
+    ),
+    ),
+    SpeedDialChild(
+    child: Icon(Icons.logout_outlined),
+    backgroundColor: Color(0xFFFdf6eb),
+    label: '로그아웃',
+    labelStyle: TextStyle(fontSize: 18.0),
+    labelBackgroundColor: Color(0xFfffff),
+    onTap: () =>
+    showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) =>
+    AlertDialog(
+    shape: const RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(
+    Radius.circular(22.0))),
+    title: Container(
+    child: Column(
+    children: [
+    const Text('로그아웃 하시겠습니까?'),
+    SizedBox(height: 30,),
+    Row(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+    OutlinedButton(
+    onPressed: () {
+    FirebaseAuth.instance.signOut(); // 로그아웃
+    Navigator.pop(context);
+    },
+    child: const Text('확인')),
+    OutlinedButton(
+    onPressed: () {
+    Navigator.pop(context);
+    },
+    child: const Text('취소')),
+    ],
+    ),
+    // 이 부분에 함수 넣으면 됨
+    ],
+    ),
+    ),
+    ),
+    ),
+    )]),
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.all(10),
@@ -57,7 +199,7 @@ class _SubjectInfoState extends State<SubjectInfo> {
               Text('\n과목 상세 정보\n',style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23, fontFamily: 'title'),),
               Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance.collection('Subject').where('uid',isEqualTo: _authentication.currentUser!.uid)
+                  stream: FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).collection('Subject').where('uid',isEqualTo: _authentication.currentUser!.uid)
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -206,14 +348,14 @@ class _SubjectInfoState extends State<SubjectInfo> {
               Container(
                 height: 30,
               child: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance.collection('Subject').where('uid',isEqualTo: _authentication.currentUser!.uid)
+              stream: FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid).collection('Subject').where('uid',isEqualTo: _authentication.currentUser!.uid)
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
                 final docs = snapshot.data!.docs;
-
+                totalCredit = 0;
                 docs.forEach((element) { totalCredit += element['credit']; });
 
                 return Text('총 학점: $totalCredit',style: TextStyle(fontSize: 18,fontFamily: 'title'),);

@@ -32,14 +32,13 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
 
   // 이 페이지가 생성될 그 때만 인스턴스 전달만 해주면 됨
   Future<void> setSchedure_Assingment() async {
-    var sub = FirebaseFirestore.instance
+    var sub = FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid)
         .collection('Subject')
-        .where('uid', isEqualTo: _authentication.currentUser!.uid)
         .get();
     var check = await sub;
 
     for (int i = 0; i < check.docs.length; i++) {
-      var todayAssingn = FirebaseFirestore.instance
+      var todayAssingn = FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid)
           .collection('Subject')
           .doc(check.docs[i]['SubjectName'])
           .collection('Assignment')
@@ -58,7 +57,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
       }
     }
     for (int i = 0; i < check.docs.length; i++) {
-      var todayExam = FirebaseFirestore.instance
+      var todayExam = FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid)
           .collection('Subject')
           .doc(check.docs[i]['SubjectName'])
           .collection('Exam')
@@ -77,7 +76,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
       }
     }
     for (int i = 0; i < check.docs.length; i++) {
-      var todayQuiz = FirebaseFirestore.instance
+      var todayQuiz = FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid)
           .collection('Subject')
           .doc(check.docs[i]['SubjectName'])
           .collection('Quiz')
@@ -214,10 +213,8 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                               fontSize: 18, fontWeight: FontWeight.bold)),
                       Expanded(
                         child: StreamBuilder<QuerySnapshot>(
-                          stream: FirebaseFirestore.instance
+                          stream: FirebaseFirestore.instance.collection('user').doc(_authentication.currentUser!.uid)
                               .collection('Personal')
-                              .where('uid',
-                                  isEqualTo: _authentication.currentUser!.uid)
                               .where('comparedate',
                                   isEqualTo: getcompareDay().substring(0, 10))
                               .snapshots(),

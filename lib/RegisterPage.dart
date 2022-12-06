@@ -106,7 +106,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 style: ElevatedButton.styleFrom(elevation: 10,
                   shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30.0),
-                    side: BorderSide(color: Colors.lightBlueAccent),
+                    side: BorderSide(color: Color(0xFF343434)),
                   ),
                 ),
                 // 버튼 눌렀을 때 register 하는 기능
