@@ -993,11 +993,11 @@ class _SubjectTileState extends State<SubjectTile> {
       _endTime += widget._subject.end[i];
     }
     return ListTile(
-      trailing:Icon( Icons.check, color: _check ?  Colors.green : Colors.grey),
+      //trailing:Icon( Icons.check, color: _check ?  Colors.green : Colors.grey),
       title: Row(
         children: [
           SizedBox(
-              width: 80,
+              width: 120,
               child:
               Text(widget._subject.title,
                   style: const TextStyle(height: 1, fontSize: 16, fontFamily: 'title'),
