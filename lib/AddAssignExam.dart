@@ -87,7 +87,7 @@ class _AddAssignExamState extends State<AddAssignExam> {
           min = pickedTime.minute.toString();
         }
         ymdtStartController.text = '${dateTime.toString().split(' ')[0]} $hour:$min';
-        ymdtStart = dateTime;
+        ymdtStart = dateTime.add(new Duration(days: 0, hours: pickedTime.hour, minutes: pickedTime.minute, milliseconds: 0, microseconds: 0));
       }
     }
   }
@@ -120,7 +120,7 @@ class _AddAssignExamState extends State<AddAssignExam> {
           min = pickedTime.minute.toString();
         }
         ymdtEndController.text = '${dateTime.toString().split(' ')[0]} $hour:$min';
-        ymdtEnd = dateTime;
+        ymdtEnd = dateTime.add(new Duration(days: 0, hours: pickedTime.hour, minutes: pickedTime.minute, milliseconds: 0, microseconds: 0));
       }
     }
   }
