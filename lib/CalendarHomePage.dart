@@ -187,7 +187,7 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Color(0xFF343434),
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_month), label: '달력'),
           BottomNavigationBarItem(icon: Icon(Icons.subject), label: '상세 일정'),
           BottomNavigationBarItem(icon: Icon(Icons.info), label: '과목 정보'),
         ],

@@ -451,7 +451,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                 bottom: TabBar(tabs: [
                   Tab(icon: Icon(Icons.schedule),),
                   Tab(icon: Icon(Icons.book),),
-                  Tab(icon: Icon(Icons.book),),
+                  Tab(icon: Icon(Icons.auto_awesome_motion_rounded),),
                 ],
                   indicatorColor: Color(0xFF343434),
                   labelColor: Color(0xFF343434),

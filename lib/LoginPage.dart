@@ -85,6 +85,7 @@ class _LoginFormState extends State<LoginForm> {
                 TextFormField(
                   style: TextStyle(color: Colors.white),
                   obscureText: true, // 입력시 ****** 처리
+                  obscuringCharacter: "*",
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.password, color: Color(0xFF9c9c94),),
                     border: InputBorder.none,
