@@ -26,6 +26,18 @@ class ScheduleDetail extends StatefulWidget {
 }
 
 class _ScheduleDetailState extends State<ScheduleDetail> {
+
+  /*List<Subject> todoList = [                          // 그냥 예시입니다!!
+    Subject('DB','13:00-14:30','DB레포트 작성'),
+    Subject('Graphics', '15:00-18:00', 'Texture, Lighting, 할거 짱 많네 아오'),
+    Subject('Algorithm', '21:00-23:00', 'BFS'),
+    Subject('DB','13:00-14:30','DB레포트 작성'),
+    Subject('Graphics', '15:00-18:00', 'Texture, Lighting'),
+    Subject('Algorithm', '21:00-23:00', 'BFS'),
+    Subject('DB','13:00-14:30','DB레포트 작성'),
+    Subject('Grahics', '15:00-18:00', 'Texture, Lighting'),
+  ];*/
+
   final _authentication = FirebaseAuth.instance;
 
   // 이 페이지가 생성될 그 때만 인스턴스 전달만 해주면 됨
@@ -93,9 +105,6 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
         }
       }
     }
-
-
-
     for (int i = 0; i < check.docs.length; i++) {
       var todayExam = FirebaseFirestore.instance.collection('Subject').
       doc(check.docs[i]['SubjectName']).collection('Exam').get();
@@ -452,7 +461,7 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
             ),
             body: TabBarView(
               children: [
-                // 개인
+                //////////////////////////////////////////////////////////// 개인 일정
                 SafeArea(
                   child: Container(
                     decoration: BoxDecoration(
@@ -969,7 +978,6 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
       );
   }
 }
-
 class SubjectTile extends StatefulWidget {
   SubjectTile(this._subject);
   final Subject _subject;

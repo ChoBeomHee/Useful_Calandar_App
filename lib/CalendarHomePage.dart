@@ -59,9 +59,10 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
         children: [
           SpeedDialChild(
             child: Icon(Icons.subject),
-            backgroundColor: Colors.lightBlueAccent,
+            backgroundColor: Color(0xFFFdf6eb),
             label: '과목',
             labelStyle: TextStyle(fontSize: 18.0),
+            labelBackgroundColor: Color(0x0),
             onTap: () =>
                 showDialog(
                   context: context,
@@ -84,9 +85,10 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
           ),
           SpeedDialChild(
             child: Icon(Icons.task),
-            backgroundColor: Colors.lightBlueAccent,
+            backgroundColor: Color(0xFFFdf6eb),
             label: '과제/시험',
             labelStyle: TextStyle(fontSize: 18.0),
+            labelBackgroundColor: Color(0xFfffff),
             onTap: () =>
                 showDialog(
                   context: context,
@@ -109,9 +111,10 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
           ),
           SpeedDialChild(
             child: Icon(Icons.access_time),
-            backgroundColor: Colors.lightBlueAccent,
+            backgroundColor: Color(0xFFFdf6eb),
             label: '개인 일정',
             labelStyle: TextStyle(fontSize: 18.0),
+            labelBackgroundColor: Color(0xFfffff),
             onTap: () =>
                 showDialog(
                   context: context,
@@ -134,9 +137,10 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
           ),
           SpeedDialChild(
             child: Icon(Icons.logout_outlined),
-            backgroundColor: Colors.lightBlueAccent,
+            backgroundColor: Color(0xFFFdf6eb),
             label: '로그아웃',
             labelStyle: TextStyle(fontSize: 18.0),
+            labelBackgroundColor: Color(0xFfffff),
             onTap: () =>
                 showDialog(
                   context: context,
@@ -155,11 +159,11 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
                                   OutlinedButton(
-                                    onPressed: () {
-                                      FirebaseAuth.instance.signOut(); // 로그아웃
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text('확인')),
+                                      onPressed: () {
+                                        FirebaseAuth.instance.signOut(); // 로그아웃
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text('확인')),
                                   OutlinedButton(
                                       onPressed: () {
                                         Navigator.pop(context);
@@ -181,7 +185,7 @@ class _CalendarHomePageState extends State<CalendarHomePage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Color(0xFF1D5DA2),
+        selectedItemColor: Color(0xFF343434),
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
           BottomNavigationBarItem(icon: Icon(Icons.subject), label: '상세 일정'),
