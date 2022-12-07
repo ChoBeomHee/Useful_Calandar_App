@@ -508,18 +508,20 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                         docs[index]['title'],
                                       ),
                                       child: ListTile(
-                                        title: Row(
-                                          children: [
-                                            Text('     ${slicedDate(docs[index]['time'])} :',style: const TextStyle(
-                                              height: 3, fontSize: 18, fontFamily: 'title',
-                                            ),),
-                                            Text(
-                                                '    ${docs[index]['title'].toString()}',
-                                                style: const TextStyle(
-                                                  height: 3, fontSize: 21,
-                                                ),
-                                                textAlign: TextAlign.start),
-                                          ],
+                                        title: Expanded(
+                                          child: Row(
+                                            children: [
+                                              Text('     ${slicedDate(docs[index]['time'])} :',style: const TextStyle(
+                                                height: 3, fontSize: 18, fontFamily: 'title',
+                                              ),),
+                                              Text(
+                                                  '    ${docs[index]['title'].toString()}',
+                                                  style: const TextStyle(
+                                                    height: 3, fontSize: 21,
+                                                  ),
+                                                  textAlign: TextAlign.start),
+                                            ],
+                                          ),
                                         ),
                                         onTap: () {
                                           // 개인 일정이 클릭되면 메모 띄우기
@@ -586,10 +588,12 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                                                     width: 1,
                                                                     color: Color(0xFF343434)
                                                                 )),
-                                                            child: Text(
-                                                              '${docs[index]['memo']}',
-                                                              style: TextStyle(
-                                                                  fontSize: 17),
+                                                            child: Expanded(
+                                                              child: Text(
+                                                                '${docs[index]['memo']}',
+                                                                style: TextStyle(
+                                                                    fontSize: 17),
+                                                              ),
                                                             ),
                                                           ),
                                                         ],
@@ -948,10 +952,12 @@ class _ScheduleDetailState extends State<ScheduleDetail> {
                                                                           width: 1,
                                                                           color: Color(0xFF343434)
                                                                       )),
-                                                                  child: Text(
+                                                                  child:Expanded(
+                                                                  child : Text(
                                                                     '${docs[index]['memo']}',
                                                                     style: TextStyle(
                                                                         fontSize: 17),
+                                                                  ),
                                                                   ),
                                                                 ),
                                                               ],
@@ -1157,13 +1163,13 @@ class _SubjectTileState extends State<SubjectTile> {
                       ],
                     ),
                     const SizedBox(height: 30,),
-                    Row(
-                      children: [
-                        const Text('메모'),
-                        const SizedBox(width: 30,),
-                        Container(child: Text(widget._subject.memo),)
-                      ],
-                    ),
+                      Row(
+                        children: [
+                          const Text('메모'),
+                          const SizedBox(width: 30,),
+                          Container(child: Expanded(child: Text(widget._subject.memo)),)
+                        ],
+                      ),
 
                   ],
                 ),

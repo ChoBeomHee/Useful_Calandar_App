@@ -81,7 +81,7 @@ class _AddPersonalState extends State<AddPersonal> {
 
   @override
   Widget build(BuildContext context) {
-    memocontrol.text = ' ';
+    memocontrol.text = " ";
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -156,6 +156,7 @@ class _AddPersonalState extends State<AddPersonal> {
               const SizedBox(width: 15,),
               Expanded(
                 child: TextFormField(
+                  controller: memocontrol,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                   ),
