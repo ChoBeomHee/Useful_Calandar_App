@@ -97,7 +97,7 @@ class _CalendarPageState extends State<CalendarPage> {
         context
             .read<Subs>()
             .type
-            .add('퀴즈');
+            .add('퀴즈 ');
       }
     }
 
