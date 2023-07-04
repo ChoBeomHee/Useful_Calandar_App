@@ -1,9 +1,9 @@
 ![image](https://github.com/ChoBeomHee/Useful_Calandar_App/assets/68563167/25ebc38c-4a9a-476b-bc48-73c4d4071f3e)
 
-# 소개
+#  :computer: 소개
 ![image](https://github.com/ChoBeomHee/Useful_Calandar_App/assets/68563167/50436434-4a56-4731-a1c5-a55e30c1e957)
 
-#   :sparkles: 주요 기능
+#  :sparkles: 주요 기능
 ![image](https://github.com/ChoBeomHee/Useful_Calandar_App/assets/68563167/6f0ffd46-acd8-4338-a0f4-7b52488decd8)
 
 ![image](https://github.com/ChoBeomHee/Useful_Calandar_App/assets/68563167/93a80179-270b-4178-9905-83136ec3b7c1)
