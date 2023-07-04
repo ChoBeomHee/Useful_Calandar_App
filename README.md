@@ -18,7 +18,7 @@
 
 ![image](https://github.com/ChoBeomHee/Useful_Calandar_App/assets/68563167/feb1ee42-1018-48f9-9774-f868225d2a20)
 
-#   Teams
+# 🧑‍🤝‍🧑 팀원
 - [김진성](https://github.com/PaidInSeoul)
 - [김유미](https://github.com/Youmi-Kim)
 - [이나연](https://github.com/nayeone)
