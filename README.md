@@ -1,6 +1,3 @@
-![image](https://github.com/ChoBeomHee/Useful_Calandar_App/assets/68563167/4d7629c0-c97d-4b50-8e03-1a7f93889d6d)
-
-# 사용설명서
 ![image](https://github.com/ChoBeomHee/Useful_Calandar_App/assets/68563167/25ebc38c-4a9a-476b-bc48-73c4d4071f3e)
 
 # 소개
